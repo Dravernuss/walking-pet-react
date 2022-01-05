@@ -5,7 +5,6 @@ const Home = () => {
     <div className='home'>
       <p>Home</p>
       <p>Hola Mundo</p>
-      <p>Hola Mundo</p>
     </div>
   );
 };
