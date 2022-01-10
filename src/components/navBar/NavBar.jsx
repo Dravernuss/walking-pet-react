@@ -31,7 +31,7 @@ const  NavBar = () => {
           onClick={handleClick}
         >
             <Avatar />
-           <img src={imagenes.img3} alt=" "></img>
+           <img src={imagenes.img2} alt=" "></img>
         </Button>
         <Menu
           id="basic-menu"
