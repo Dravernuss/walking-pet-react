@@ -1,0 +1,146 @@
+.home {
+  background-color: #fafafa;
+}
+.main_container {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  margin-left: 2%;
+}
+section {
+  width: 25%;
+  display: flex;
+  align-self: stretch;
+  border-right: 1px solid #b7b7b7;
+  justify-content: center;
+
+  h2 {
+    font-family: "Roboto-Bold";
+    padding-bottom: 20px;
+    padding-top: 40px;
+  }
+
+  .btn {
+    background: #ffffff;
+    font-family: "Roboto-Regular";
+    border: 0.01px solid #b7b7b7;
+    color: black;
+    text-transform: none;
+    font-size: 1.3rem;
+  }
+}
+
+aside {
+  width: 75%;
+  padding: 30px;
+  text-align: center;
+
+  .card_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    column-gap: 30px;
+    row-gap: 30px;
+  }
+
+  .card {
+    background-color: #ffffff;
+    border: 0.01px solid #b7b7b7;
+    box-sizing: border-box;
+    border-radius: 19px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    min-width: 395px;
+    max-width: 395px;
+
+    figcaption {
+      background: #f9ba3e;
+      border-radius: 23px;
+      width: 25%;
+      color: #ffffff;
+      font-family: "Roboto-Bold";
+      position: relative;
+      left: 60%;
+      font-size: 1.5rem;
+      bottom: 3rem;
+      margin-bottom: -10%;
+    }
+    .card-img-top {
+      max-width: 240px;
+      max-height: 240px;
+      align-self: center;
+      margin-top: 10px;
+      box-sizing: border-box;
+      border-radius: 120px;
+    }
+    .card-title {
+      font-family: "Roboto-Regular";
+      font-size: 1.875rem;
+      margin-bottom: 10px;
+    }
+    .card-calification {
+      font-family: "Roboto-Bold";
+      font-size: 1.5625rem;
+      margin: 0px;
+    }
+    .card-text {
+      font-family: "Roboto-Regular";
+      font-style: italic;
+      font-size: 1.15rem;
+      padding: 15px;
+      margin: 0px;
+      span {
+        font-weight: bold;
+        font-style: normal;
+      }
+    }
+    .btn {
+      background: #ffffff;
+      border: 0.01px solid #888888;
+      box-sizing: border-box;
+      border-radius: 19px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      margin-bottom: 10px;
+      font-family: "Rambla-Bold";
+      color: black;
+      text-transform: none;
+      font-size: 1.3rem;
+      line-height: 30px;
+    }
+    .dogButton {
+      max-width: 30px;
+      margin-right: 5px;
+    }
+  }
+}
+
+@media (max-width: 1480px) {
+  section {
+    padding-right: 10px;
+    text-align: center;
+    .btn {
+      font-size: 1.15rem;
+    }
+    article {
+      h2 {
+        font-size: 25px;
+      }
+    }
+  }
+}
+
+@media (max-width: 880px) {
+  .home {
+    min-width: 700px;
+  }
+  section {
+    .btn {
+      font-size: 1rem;
+    }
+    article {
+      h2 {
+        font-size: 20px;
+      }
+    }
+  }
+}
