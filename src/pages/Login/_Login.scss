@@ -1,0 +1,13 @@
+.login {
+  &__footer {
+    margin: 40px 43px;
+    padding: 29px 0px;
+    border-top: 1px solid #4a4a4a;
+    width: 680px;
+    &-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
