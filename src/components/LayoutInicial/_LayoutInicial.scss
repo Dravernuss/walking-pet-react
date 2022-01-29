@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+}
+.layoutInicial {
+  background-color: #f9ba3e;
+  background-image: url(../../images/fondo.svg);
+  min-width: 100vw;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+}
+.home {
+  &__box {
+    background-color: rgba(249, 187, 62, 0.6);
+    width: 50rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    padding: 70px;
+    height: 20rem;
+    &-title {
+      color: #fff;
+      font-family: "Roboto-Bold";
+      font-size: 72px;
+      margin: 0 auto 60px;
+    }
+    &-description {
+      font-family: "Roboto-Regular";
+      font-size: 28px;
+    }
+    &-button {
+      font-family: "Roboto-Regular";
+      font-size: 28px;
+      border-radius: 5px;
+      border: none;
+      padding: 0 20px 20px;
+      margin: 60px auto 0px;
+      background-color: #fff;
+      a {
+        text-decoration: none;
+        color: #000;
+      }
+      &::after {
+        content: url(../../images/logoPerrito.png);
+        position: relative;
+        top: 10px;
+        left: 10px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}

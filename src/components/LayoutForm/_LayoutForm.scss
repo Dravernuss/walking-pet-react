@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+}
+.layoutForm {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  &__title {
+    background-color: #f9ba3e;
+    height: 105px;
+    width: 745px;
+    border-radius: 45px;
+    text-align: center;
+    display: block;
+    position: relative;
+    z-index: 2;
+    font-size: 36px;
+    font-family: "Roboto-Bold";
+    line-height: 105px;
+  }
+  &__body {
+    width: 645px;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    top: -50px;
+    padding: 100px 50px 50px;
+    border-radius: 43px;
+  }
+}

@@ -1,19 +1,21 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home/Home';
-import PrincipalPage from './pages/PrincipalPage/PrincipalPage';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import PrincipalPage from "./pages/PrincipalPage/PrincipalPage";
+import Login from "./pages/Login/Login";
 import "./_App.scss";
 
-const App= ()=> {
+const App = () => {
   return (
     <BrowserRouter>
-    <div>
+      <div>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/PrincipalPage" element={<PrincipalPage />} />
           <Route path="*" element={<p>404</p>} />
         </Routes>
-    </div>
-  </BrowserRouter>
+      </div>
+    </BrowserRouter>
   );
 };
 
