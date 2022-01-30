@@ -1,13 +1,22 @@
+* {
+  font-family: "Roboto-bold";
+}
 .login {
   &__footer {
-    margin: 40px 43px;
-    padding: 29px 0px;
+    margin: 40px 43px 0;
+    padding: 29px 0px 10px;
     border-top: 1px solid #4a4a4a;
     width: 680px;
     &-options {
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+    &-logo {
+      width: 285px;
+      height: 51px;
+      background-image: url(../../images/logo.svg);
+      margin: 55px auto 0px;
     }
   }
 }

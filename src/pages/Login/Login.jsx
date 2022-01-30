@@ -2,7 +2,7 @@ import "./_Login.scss";
 import LayoutInicial from "../../components/LayoutInicial/LayoutInicial";
 import { Link } from "react-router-dom";
 import LayoutForm from "../../components/LayoutForm/LayoutForm";
-import * as React from "react";
+import React from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -53,8 +53,12 @@ const Login = () => {
             style={{
               backgroundColor: "#FFFF",
               color: "#000",
-              maxWidth: "300px",
-              margin: "10px auto 0",
+              width: "35%",
+              padding: "10px 0",
+              margin: "30px auto 0",
+              borderRadius: "15px",
+              fontSize: "19px",
+              fontFamily: "Roboto-bold",
             }}
           >
             Ingresar

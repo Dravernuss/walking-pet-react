@@ -3,6 +3,7 @@ import Home from "./pages/Home/Home";
 import PrincipalPage from "./pages/PrincipalPage/PrincipalPage";
 import Login from "./pages/Login/Login";
 import "./_App.scss";
+import { Register } from "./pages/Register/Register";
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/PrincipalPage" element={<PrincipalPage />} />
           <Route path="*" element={<p>404</p>} />
         </Routes>
