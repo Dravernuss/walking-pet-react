@@ -11,8 +11,8 @@
   flex-direction: column;
   &__title {
     background-color: #f9ba3e;
-    height: 105px;
-    width: 745px;
+    height: 90px;
+    width: 36rem;
     border-radius: 45px;
     text-align: center;
     display: block;
@@ -20,10 +20,11 @@
     z-index: 2;
     font-size: 36px;
     font-family: "Roboto-Bold";
-    line-height: 105px;
+    line-height: 90px;
+    margin: 50px 0px 0px 0px;
   }
   &__body {
-    width: 645px;
+    width: 30rem;
     background-color: rgba(255, 255, 255, 0.9);
     display: flex;
     align-items: center;
@@ -31,7 +32,7 @@
     flex-direction: column;
     position: relative;
     top: -50px;
-    padding: 100px 50px 50px;
+    padding: 80px 50px 30px 50px;
     border-radius: 43px;
   }
 }
