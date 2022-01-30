@@ -1,4 +1,4 @@
-.home {
+html {
   background-color: #fafafa;
 }
 .main_container {
@@ -43,75 +43,6 @@ aside {
     column-gap: 30px;
     row-gap: 30px;
   }
-
-  .card {
-    background-color: #ffffff;
-    border: 0.01px solid #b7b7b7;
-    box-sizing: border-box;
-    border-radius: 19px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    min-width: 395px;
-    max-width: 395px;
-
-    figcaption {
-      background: #f9ba3e;
-      border-radius: 23px;
-      width: 25%;
-      color: #ffffff;
-      font-family: "Roboto-Bold";
-      position: relative;
-      left: 60%;
-      font-size: 1.5rem;
-      bottom: 3rem;
-      margin-bottom: -10%;
-    }
-    .card-img-top {
-      max-width: 240px;
-      max-height: 240px;
-      align-self: center;
-      margin-top: 10px;
-      box-sizing: border-box;
-      border-radius: 120px;
-    }
-    .card-title {
-      font-family: "Roboto-Regular";
-      font-size: 1.875rem;
-      margin-bottom: 10px;
-    }
-    .card-calification {
-      font-family: "Roboto-Bold";
-      font-size: 1.5625rem;
-      margin: 0px;
-    }
-    .card-text {
-      font-family: "Roboto-Regular";
-      font-style: italic;
-      font-size: 1.15rem;
-      padding: 15px;
-      margin: 0px;
-      span {
-        font-weight: bold;
-        font-style: normal;
-      }
-    }
-    .btn {
-      background: #ffffff;
-      border: 0.01px solid #888888;
-      box-sizing: border-box;
-      border-radius: 19px;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      margin-bottom: 10px;
-      font-family: "Rambla-Bold";
-      color: black;
-      text-transform: none;
-      font-size: 1.3rem;
-      line-height: 30px;
-    }
-    .dogButton {
-      max-width: 30px;
-      margin-right: 5px;
-    }
-  }
 }
 
 @media (max-width: 1480px) {
@@ -139,7 +70,7 @@ aside {
     }
     article {
       h2 {
-        font-size: 20px;
+        font-size: 23px;
       }
     }
   }

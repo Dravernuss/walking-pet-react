@@ -1,0 +1,159 @@
+html {
+  background-color: #fafafa;
+}
+
+.walker-Container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  border-bottom: 1px solid #000000;
+}
+
+.cardP {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  width: 395px;
+
+  figcaption {
+    background: #f9ba3e;
+    border-radius: 23px;
+    width: 25%;
+    color: #ffffff;
+    font-family: "Roboto-Bold";
+    position: relative;
+    left: 25%;
+    font-size: 1.4rem;
+    bottom: 3rem;
+    margin-bottom: -20px;
+    text-align: center;
+  }
+  .card-img-topP {
+    max-width: 240px;
+    max-height: 240px;
+    align-self: center;
+    margin-top: 10px;
+    box-sizing: border-box;
+    border-radius: 120px;
+  }
+  .card-titleP {
+    font-family: "Rambla-Bold";
+    font-weight: 700;
+    font-size: 1.875rem;
+    margin-top: 3px;
+    margin-bottom: 5px;
+  }
+  .card-calificationP {
+    font-family: "Roboto-Bold";
+    font-size: 1.5625rem;
+    margin: 0px;
+  }
+  .card-textP {
+    font-family: "Rambla-Regular";
+    font-style: italic;
+    font-size: 1.15rem;
+    text-align: center;
+    padding: 10px;
+    margin: 0px;
+
+    span {
+      font-weight: bold;
+      font-style: normal;
+      line-height: 50px;
+    }
+  }
+}
+.chip-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+  row-gap: 0.5rem;
+}
+
+.info-container {
+  max-width: 30%;
+  padding: 2rem;
+}
+.info {
+  margin-bottom: 1rem;
+  font-family: "Rambla-Regular";
+  font-size: 22px;
+}
+.info-presentacion {
+  margin-bottom: 1rem;
+  font-family: "Rambla-Regular";
+  font-size: 20px;
+  text-align: justify;
+}
+.actions {
+  .boton {
+    background: #ffffff;
+    border: 0.01px solid #888888;
+    box-sizing: border-box;
+    border-radius: 19px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-top: 30px;
+    font-family: "Rambla-Bold";
+    color: black;
+    text-transform: none;
+    font-size: 1.3rem;
+    margin-right: 10px;
+  }
+  .dogButton {
+    margin-right: 10px;
+    max-width: 30px;
+  }
+}
+
+.valorations {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Roboto-Regular";
+  padding-top: 40px;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-family: "Roboto-Bold";
+    padding-bottom: 20px;
+  }
+
+  p {
+    font-style: italic;
+  }
+  .rows {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2%;
+    min-width: 70%;
+  }
+}
+.input {
+  width: 100%;
+  margin: 20px;
+}
+
+@media (max-width: 1150px) {
+  .valorations {
+    padding-top: 20px;
+  }
+  .walker-Container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .info-container {
+    min-width: 350px;
+  }
+}
