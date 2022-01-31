@@ -114,13 +114,13 @@ export const Register = () => {
               Registrarse
             </Button>
           </FormControl>
+        </div>
+        <div className="layoutForm__footer">
+          <div className="layoutForm__footer-center">
+            ¿Ya tienes cuenta? <Link to="/login"> Inicia Sesión</Link>
           </div>
-          <div className="layoutForm__footer">
-            <div className="layoutForm__footer-center">
-                ¿Ya tienes cuenta? <Link to="/login"> Inicia Sesión</Link>
-            </div>
-            <div className="layoutForm__footer-logo"/>
-          </div>
+          <div className="layoutForm__footer-logo" />
+        </div>
       </LayoutForm>
     </LayoutInicial>
   );

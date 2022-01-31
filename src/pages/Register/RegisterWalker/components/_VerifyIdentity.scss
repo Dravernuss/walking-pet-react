@@ -1,0 +1,42 @@
+.verifyIdentity {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &__dni {
+    width: 19rem;
+    height: 12rem;
+    background-size: cover;
+    background-image: url(../../../../images/dni.svg);
+  }
+  &__textDni {
+    font-size: 2rem;
+  }
+  &__upload {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(196, 196, 196, 0.4);
+    width: 70%;
+    border-radius: 8px;
+    height: 10%;
+    &-text {
+      color: #a5a5a5;
+      line-height: 50px;
+      margin-left: 15px;
+    }
+    &-information {
+      color: #a5a5a5;
+      text-align: center;
+      font-family: "Roboto-regular";
+      margin: 20px 0 0;
+    }
+  }
+  //   &__footer {
+  //     margin: 30px 43px 0;
+  //     padding: 29px 0px 10px;
+  //     border-top: 1px solid #4a4a4a;
+  //     width: 30rem;
+  //   }
+}
