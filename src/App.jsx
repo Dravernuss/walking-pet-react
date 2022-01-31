@@ -5,6 +5,7 @@ import Login from "./pages/Login/Login";
 import "./_App.scss";
 import { Register } from "./pages/Register/Register";
 import { RegisterWalker } from "./pages/Register/RegisterWalker/RegisterWalker";
+import { RegisterSuccess } from "./pages/Register/RegisterSuccess/RegisterSuccess";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/PrincipalPage" element={<PrincipalPage />} />
           <Route path="/registerWalker" element={<RegisterWalker />} />
+          <Route path="/registerSuccess" element={<RegisterSuccess />} />
           <Route path="*" element={<p>404</p>} />
         </Routes>
       </div>
