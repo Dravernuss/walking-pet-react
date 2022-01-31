@@ -111,7 +111,9 @@ export const Register = () => {
                 fontFamily: "Roboto-bold",
               }}
             >
-              Registrarse
+              <Link to="/registerSuccess" style={{  textDecoration: 'none'}}>
+                Registrarse
+              </Link>
             </Button>
           </FormControl>
         </div>
