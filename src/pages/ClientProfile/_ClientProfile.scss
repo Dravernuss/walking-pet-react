@@ -1,0 +1,119 @@
+html {
+  background-color: #fafafa;
+}
+
+.ClientProfile {
+  .addPet {
+    background: #ffffff;
+    border: 0.01px solid #888888;
+    box-sizing: border-box;
+    border-radius: 19px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin: 10px;
+    font-family: "Rambla-Bold";
+    color: black;
+    text-transform: none;
+    font-size: 1.3rem;
+    line-height: 30px;
+    .add {
+      margin-right: 10px;
+    }
+  }
+}
+
+.client-Container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  border-bottom: 1px solid #000000;
+}
+
+.cardC {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  width: 395px;
+
+  .card-img-top {
+    max-width: 240px;
+    max-height: 240px;
+    align-self: center;
+    margin-top: 10px;
+    box-sizing: border-box;
+    border-radius: 120px;
+  }
+  .card-title {
+    font-family: "Rambla-Bold";
+    font-weight: 700;
+    font-size: 1.875rem;
+    margin-top: 3px;
+    margin-bottom: 5px;
+  }
+}
+
+.info-container {
+  max-width: 30%;
+  padding: 2rem;
+}
+.info {
+  margin-bottom: 1rem;
+  font-family: "Rambla-Regular";
+  font-size: 22px;
+}
+.info-presentacion {
+  margin-bottom: 1rem;
+  font-family: "Rambla-Regular";
+  font-size: 20px;
+  text-align: justify;
+}
+.actions {
+  min-width: 880px;
+  .boton {
+    background: #ffffff;
+    border: 0.01px solid #888888;
+    box-sizing: border-box;
+    border-radius: 19px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-top: 30px;
+    font-family: "Rambla-Bold";
+    color: black;
+    text-transform: none;
+    font-size: 1.3rem;
+    margin-right: 10px;
+  }
+  .dogButton {
+    margin-right: 10px;
+    max-width: 30px;
+  }
+}
+
+.pets {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-family: "Roboto-Regular";
+
+  column-gap: 30px;
+  row-gap: 30px;
+}
+.input {
+  width: 100%;
+  margin: 20px;
+}
+
+@media (max-width: 880px) {
+  .ClientProfile {
+    min-width: 880px;
+  }
+  .client-Container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
