@@ -10,6 +10,7 @@ import ClientProfile from "./pages/ClientProfile/ClientProfile";
 import WalkerProfile from "./pages/WalkerProfile/WalkerProfile";
 import DatesClient from "./pages/DatesClient/DatesClient";
 import DatesWalker from "./pages/DatesWalker/DatesWalker";
+import { AskForDate } from "./pages/AskForDate/AskForDate";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/WalkerProfile" element={<WalkerProfile />} />
           <Route path="/DatesClient" element={<DatesClient />} />
           <Route path="/DatesWalker" element={<DatesWalker />} />
+          <Route path="/AskForDate" element={<AskForDate />} />
           <Route path="*" element={<p>404</p>} />
         </Routes>
       </div>
