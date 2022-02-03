@@ -51,6 +51,11 @@
       //   height: 36rem;
       border-left: 1px solid #000;
       width: 49.8%;
+      &-selected {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     }
   }
 }
