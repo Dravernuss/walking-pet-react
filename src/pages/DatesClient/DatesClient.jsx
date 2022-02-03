@@ -127,7 +127,7 @@ const DatesClient = () => {
           </Table>
         </TableContainer>
       </div>
-      <Button className="botonB" href="/ClientProfile">
+      <Button className="botonB" href="/clientprofile">
         Regresar a mi Perfil
       </Button>
     </div>

@@ -11,6 +11,9 @@ import pencil from "./pencil.png";
 import dog1 from "./dog1.png";
 import dog2 from "./dog2.png";
 import mas from "./+.png";
+import helenDNI from "./helenDNI.png";
+import helenSquare from "./helenSquare.png";
+import dogTired from "./dogTired.png";
 
 export default {
   img1: logo,
@@ -26,4 +29,7 @@ export default {
   img11: dog1,
   img12: dog2,
   img13: mas,
+  img14: helenDNI,
+  img15: helenSquare,
+  img16: dogTired,
 };

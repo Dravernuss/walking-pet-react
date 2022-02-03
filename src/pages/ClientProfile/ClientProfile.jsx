@@ -13,6 +13,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
+import { styled } from "@mui/material/styles";
 import PetCard from "../../components/PetCard/PetCard.jsx";
 
 const distritos = [
@@ -72,6 +73,10 @@ const ClientProfile = () => {
   const handleChangeCaracter = (event) => {
     setCaracter(event.target.value);
   };
+
+  const Input = styled("input")({
+    display: "none",
+  });
   return (
     <div className="ClientProfile">
       <NavBar />
@@ -88,7 +93,7 @@ const ClientProfile = () => {
 
           <div>
             <div className="actions">
-              <Button className="boton" href="/DatesClient">
+              <Button className="boton" href="/datesclient">
                 <img className="dogButton" src={imagenes.img9} alt="..."></img>
                 Ver mis Citas
               </Button>
@@ -153,15 +158,41 @@ const ClientProfile = () => {
                         size="small"
                         type="text"
                       />
-                      <label style={{ color: "#A5A5A5", marginLeft: "10px" }}>
+                      <p
+                        style={{
+                          color: "#A5A5A5",
+                          marginBottom: "5px",
+                          fontFamily: "Roboto-Regular",
+                        }}
+                      >
                         Subir una foto de perfil
-                      </label>
-                      <input
-                        className="input"
-                        label="Mensaje de Presentación"
-                        size="small"
-                        type="file"
-                      />
+                      </p>
+                      <div className="input-file">
+                        <span className="input-file-text">Choose file...</span>
+                        <label htmlFor="contained-button-file">
+                          <Input
+                            accept="image/*"
+                            id="contained-button-file"
+                            type="file"
+                          />
+
+                          <Button
+                            variant="contained"
+                            style={{
+                              backgroundColor: "#FFFF",
+                              color: "#000",
+                              width: "10srem",
+                              marginRight: "10px",
+                              borderRadius: "10px",
+                              fontSize: "14px",
+                              fontFamily: "Roboto-bold",
+                            }}
+                            component="span"
+                          >
+                            Choose File
+                          </Button>
+                        </label>
+                      </div>
                       <div
                         style={{
                           display: "flex",
@@ -305,10 +336,41 @@ const ClientProfile = () => {
                 multiline
                 rows={4}
               />
-              <label style={{ color: "#A5A5A5", marginLeft: "10px" }}>
+              <p
+                style={{
+                  color: "#A5A5A5",
+                  marginBottom: "5px",
+                  fontFamily: "Roboto-Regular",
+                }}
+              >
                 Subir una foto de su mascota
-              </label>
-              <input className="input" size="small" type="file" />
+              </p>
+              <div className="input-file">
+                <span className="input-file-text">Choose file...</span>
+                <label htmlFor="contained-button-file">
+                  <Input
+                    accept="image/*"
+                    id="contained-button-file"
+                    type="file"
+                  />
+
+                  <Button
+                    variant="contained"
+                    style={{
+                      backgroundColor: "#FFFF",
+                      color: "#000",
+                      width: "10srem",
+                      marginRight: "10px",
+                      borderRadius: "10px",
+                      fontSize: "14px",
+                      fontFamily: "Roboto-bold",
+                    }}
+                    component="span"
+                  >
+                    Choose File
+                  </Button>
+                </label>
+              </div>
               <div
                 style={{
                   display: "flex",

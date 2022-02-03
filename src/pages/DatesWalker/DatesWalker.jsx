@@ -128,7 +128,7 @@ const DatesWalker = () => {
           </Table>
         </TableContainer>
       </div>
-      <Button className="botonB" href="/WalkerProfile">
+      <Button className="botonB" href="/walkerprofile">
         Regresar a mi Perfil
       </Button>
     </div>

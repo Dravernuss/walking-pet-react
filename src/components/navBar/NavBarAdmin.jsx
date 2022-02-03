@@ -6,7 +6,7 @@ import Avatar from "@mui/material/Avatar";
 import imagenes from "../../images/imagenes.jsx";
 import "./_NavBar.scss";
 
-const NavBar = () => {
+const NavBarAdmin = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -18,11 +18,11 @@ const NavBar = () => {
 
   return (
     <div className="navbar">
-      <Button variant="text" href="/principalpage">
+      <Button variant="text" href="">
         <img src={imagenes.img1} alt=" " width="200"></img>
       </Button>
       <div className="userInfo">
-        <p>Manuel Baella</p>
+        <p>Administrador</p>
         <Button
           id="basic-button"
           aria-controls={open ? "basic-menu" : undefined}
@@ -43,19 +43,33 @@ const NavBar = () => {
           }}
         >
           <MenuItem onClick={handleClose}>
-            <Button href="/clientprofile">
+            <Button href="/reservedtours">
               <p
                 style={{
                   color: "black",
                   fontFamily: "Roboto-Regular",
                 }}
               >
-                Ver Perfil
+                Paseos Reservados
               </p>
             </Button>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <Button href="/">
+            <Button href="/walkerregistration">
+              <p style={{ color: "black", fontFamily: "Roboto-Regular" }}>
+                Registro de Paseadores
+              </p>
+            </Button>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Button href="/reports">
+              <p style={{ color: "black", fontFamily: "Roboto-Regular" }}>
+                Reportes y Quejas
+              </p>
+            </Button>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Button href="/admin">
               <p style={{ color: "black", fontFamily: "Roboto-Regular" }}>
                 Cerrar Sesión
               </p>
@@ -67,4 +81,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default NavBarAdmin;

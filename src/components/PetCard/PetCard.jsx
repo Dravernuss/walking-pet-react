@@ -10,6 +10,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
+import { styled } from "@mui/material/styles";
 import "./_PetCard.scss";
 
 const PetCard = ({ name, age, size, nature, photo, extraInfo }) => {
@@ -28,6 +29,10 @@ const PetCard = ({ name, age, size, nature, photo, extraInfo }) => {
   const handleChangeCaracter = (event) => {
     setCaracter(event.target.value);
   };
+
+  const Input = styled("input")({
+    display: "none",
+  });
   return (
     <div>
       <Button className="Button" onClick={handleOpenEdit}>
@@ -113,14 +118,76 @@ const PetCard = ({ name, age, size, nature, photo, extraInfo }) => {
                 multiline
                 rows={4}
               />
-              <label style={{ color: "#A5A5A5", marginLeft: "10px" }}>
+              <p
+                style={{
+                  color: "#A5A5A5",
+                  marginBottom: "5px",
+                  fontFamily: "Roboto-Regular",
+                }}
+              >
                 Subir una foto de su mascota
-              </label>
-              <input className="input" size="small" type="file" />
-              <label style={{ color: "#A5A5A5", marginLeft: "10px" }}>
+              </p>
+              <div className="input-file">
+                <span className="input-file-text">Choose file...</span>
+                <label htmlFor="contained-button-file">
+                  <Input
+                    accept="image/*"
+                    id="contained-button-file"
+                    type="file"
+                  />
+
+                  <Button
+                    variant="contained"
+                    style={{
+                      backgroundColor: "#FFFF",
+                      color: "#000",
+                      width: "10srem",
+                      marginRight: "10px",
+                      borderRadius: "10px",
+                      fontSize: "14px",
+                      fontFamily: "Roboto-bold",
+                    }}
+                    component="span"
+                  >
+                    Choose File
+                  </Button>
+                </label>
+              </div>
+              <p
+                style={{
+                  color: "#A5A5A5",
+                  marginBottom: "5px",
+                  fontFamily: "Roboto-Regular",
+                }}
+              >
                 Subir una foto de su Carnet de Vacunación
-              </label>
-              <input className="input" size="small" type="file" />
+              </p>
+              <div className="input-file">
+                <span className="input-file-text">Choose file...</span>
+                <label htmlFor="contained-button-file">
+                  <Input
+                    accept="image/*"
+                    id="contained-button-file"
+                    type="file"
+                  />
+
+                  <Button
+                    variant="contained"
+                    style={{
+                      backgroundColor: "#FFFF",
+                      color: "#000",
+                      width: "10srem",
+                      marginRight: "10px",
+                      borderRadius: "10px",
+                      fontSize: "14px",
+                      fontFamily: "Roboto-bold",
+                    }}
+                    component="span"
+                  >
+                    Choose File
+                  </Button>
+                </label>
+              </div>
               <div
                 style={{
                   display: "flex",

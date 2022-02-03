@@ -144,6 +144,22 @@ html {
   margin: 20px;
 }
 
+.input-file {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(196, 196, 196, 0.4);
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  height: 10%;
+}
+.input-file-text {
+  color: #a5a5a5;
+  line-height: 50px;
+  margin-left: 15px;
+}
+
 @media (max-width: 1150px) {
   .valorations {
     padding-top: 20px;

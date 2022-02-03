@@ -11,6 +11,10 @@ import WalkerProfile from "./pages/WalkerProfile/WalkerProfile";
 import DatesClient from "./pages/DatesClient/DatesClient";
 import DatesWalker from "./pages/DatesWalker/DatesWalker";
 import { AskForDate } from "./pages/AskForDate/AskForDate";
+import AdminLogin from "./pagesAdmin/AdminLogin/AdminLogin";
+import ReservedTours from "./pagesAdmin/ReservedTours/ReservedTours";
+import WalkerRegistration from "./pagesAdmin/WalkerRegistration/WalkerRegistration";
+
 
 const App = () => {
   return (
@@ -19,15 +23,22 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/principalpage" element={<PrincipalPage />} />
+          <Route path="/clientprofile" element={<ClientProfile />} />
+          <Route path="/walkerprofile" element={<WalkerProfile />} />
+          <Route path="/datesclient" element={<DatesClient />} />
+          <Route path="/dateswalker" element={<DatesWalker />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/PrincipalPage" element={<PrincipalPage />} />
           <Route path="/registerWalker" element={<RegisterWalker />} />
           <Route path="/registerSuccess" element={<RegisterSuccess />} />
-          <Route path="/ClientProfile" element={<ClientProfile />} />
-          <Route path="/WalkerProfile" element={<WalkerProfile />} />
-          <Route path="/DatesClient" element={<DatesClient />} />
-          <Route path="/DatesWalker" element={<DatesWalker />} />
-          <Route path="/AskForDate" element={<AskForDate />} />
+
+          {/* Rutas Administrador */}
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/askForDate" element={<AskForDate />} />
+          <Route path="/reservedtours" element={<ReservedTours />} />
+          <Route path="/walkerregistration" element={<WalkerRegistration />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="*" element={<p>404</p>} />
           <Route path="*" element={<p>404</p>} />
         </Routes>
       </div>

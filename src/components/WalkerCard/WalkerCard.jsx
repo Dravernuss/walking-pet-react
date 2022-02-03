@@ -32,7 +32,7 @@ const WalkerCard = ({
         <br></br>
         <span>{calification}</span>
       </p>
-      <Button className="btn" href="/WalkerProfile">
+      <Button className="btn" href="/walkerprofile">
         <img className="dogButton" src={imagenes.img9} alt="..."></img>
         Quiero un paseo
       </Button>
