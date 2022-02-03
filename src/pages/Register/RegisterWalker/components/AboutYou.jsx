@@ -7,7 +7,8 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { Box, Button, TextField } from "@mui/material";
 
-export const AboutYou = () => {
+
+export const AboutYou = ({changeView}) => {
   return (
     <>
       <div
@@ -80,6 +81,7 @@ export const AboutYou = () => {
               fontSize: "16px",
               fontFamily: "Roboto-bold",
             }}
+            onClick={()=>{changeView(3)}}
           >
             Finalizar
           </Button>

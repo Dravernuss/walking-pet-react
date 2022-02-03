@@ -9,7 +9,7 @@ import FormLabel from "@mui/material/FormLabel";
 import { Box, Button, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const VerifyIdentity = () => {
+export const VerifyIdentity = ({changeView}) => {
   const Input = styled("input")({
     display: "none",
   });
@@ -50,6 +50,7 @@ export const VerifyIdentity = () => {
       </div>
 
       <Button
+        onClick={()=>{changeView(2)}}
         variant="contained"
         style={{
           backgroundColor: "#FFFF",
