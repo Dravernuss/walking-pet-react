@@ -13,10 +13,14 @@ import Checkbox from "@mui/material/Checkbox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useState } from "react";
+import { styled } from "@mui/material/styles";
 import ModalStyle from "../../components/ModalStyle/ModalStyle.jsx";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
+const Input = styled("input")({
+  display: "none",
+});
 
 const distritos = [
   "San Miguel",
@@ -85,7 +89,7 @@ const WalkerProfile = () => {
               </div>
             ) : (
               <div className="actions">
-                <Button className="boton" href="/DatesWalker">
+                <Button className="boton" href="/dateswalker">
                   <img
                     className="dogButton"
                     src={imagenes.img9}
@@ -182,15 +186,44 @@ const WalkerProfile = () => {
                           multiline
                           rows={3}
                         />
-                        <label style={{ color: "#A5A5A5", marginLeft: "10px" }}>
-                          Subir una foto de perfil
-                        </label>
-                        <input
-                          className="input"
-                          label="Mensaje de Presentación"
-                          size="small"
-                          type="file"
-                        />
+                        <p
+                          style={{
+                            color: "#A5A5A5",
+                            marginBottom: "5px",
+                            fontFamily: "Roboto-Regular",
+                          }}
+                        >
+                          Subir una foto para su perfil
+                        </p>
+                        <div className="input-file">
+                          <span className="input-file-text">
+                            Choose file...
+                          </span>
+                          <label htmlFor="contained-button-file">
+                            <Input
+                              accept="image/*"
+                              id="contained-button-file"
+                              type="file"
+                            />
+
+                            <Button
+                              variant="contained"
+                              style={{
+                                backgroundColor: "#FFFF",
+                                color: "#000",
+                                width: "10srem",
+                                marginRight: "10px",
+                                borderRadius: "10px",
+                                fontSize: "14px",
+                                fontFamily: "Roboto-bold",
+                              }}
+                              component="span"
+                            >
+                              Choose File
+                            </Button>
+                          </label>
+                        </div>
+
                         <div
                           style={{
                             display: "flex",

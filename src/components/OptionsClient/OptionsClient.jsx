@@ -7,6 +7,7 @@ import Rating from "@mui/material/Rating";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import imagenes from "../../images/imagenes.jsx";
+import { styled } from "@mui/material/styles";
 import "./_OptionsClient.scss";
 
 const OptionsClient = ({ calificado, estado }) => {
@@ -43,6 +44,9 @@ const OptionsClient = ({ calificado, estado }) => {
   const handleCloseChild = () => setOpenChild(false);
   const handleOpenDetails = () => setOpenDetails(true);
   const handleCloseDetails = () => setOpenDetails(false);
+  const Input = styled("input")({
+    display: "none",
+  });
   return (
     <>
       <Button
@@ -241,12 +245,41 @@ const OptionsClient = ({ calificado, estado }) => {
               multiline
               rows={6}
             />
-            <label
-              style={{ color: "black", fontWeight: "bold", marginLeft: "10px" }}
+            <p
+              style={{
+                color: "#A5A5A5",
+                marginBottom: "5px",
+                fontFamily: "Roboto-Regular",
+              }}
             >
               ¿Desea agregar alguna imagen?
-            </label>
-            <input className="input" size="small" type="file" />
+            </p>
+            <div className="input-file">
+              <span className="input-file-text">Choose file...</span>
+              <label htmlFor="contained-button-file">
+                <Input
+                  accept="image/*"
+                  id="contained-button-file"
+                  type="file"
+                />
+
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#FFFF",
+                    color: "#000",
+                    width: "10srem",
+                    marginRight: "10px",
+                    borderRadius: "10px",
+                    fontSize: "14px",
+                    fontFamily: "Roboto-bold",
+                  }}
+                  component="span"
+                >
+                  Choose File
+                </Button>
+              </label>
+            </div>
             <div
               style={{
                 display: "flex",
