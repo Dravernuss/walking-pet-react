@@ -11,19 +11,20 @@
   flex-direction: column;
   &__title {
     background-color: #f9ba3e;
-    height: 105px;
-    width: 745px;
+    height: 70px;
+    width: 31rem;
     border-radius: 45px;
     text-align: center;
     display: block;
     position: relative;
     z-index: 2;
-    font-size: 36px;
+    font-size: 30px;
     font-family: "Roboto-Bold";
-    line-height: 105px;
+    line-height: 70px;
+    margin: 50px 0px 0px 0px;
   }
   &__body {
-    width: 645px;
+    width: 27rem;
     background-color: rgba(255, 255, 255, 0.9);
     display: flex;
     align-items: center;
@@ -31,7 +32,40 @@
     flex-direction: column;
     position: relative;
     top: -50px;
-    padding: 100px 50px 50px;
+    max-height: 500px;
+    padding: 65px 30px 30px 30px;
     border-radius: 43px;
+  }
+  &__scroll {
+    max-height: 50vh;
+    overflow-y: scroll;
+    padding: 0 0 20px 0;
+  }
+  &__footer {
+    margin: 20px auto 0px 0px;
+    padding: 29px 0px 0px;
+    border-top: 1px solid #4a4a4a;
+    width: 27rem;
+    &-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &-center {
+      display: flex;
+      justify-content: center;
+    }
+    &-logo {
+      width: 285px;
+      height: 51px;
+      background-image: url(../../images/logo.svg);
+      margin: 20px auto 0px;
+      transform: scale(0.8);
+    }
+    &-smallContainer {
+      margin: 25px 43px -13px;
+      border-top: 1px solid #4a4a4a;
+      width: 26rem;
+    }
   }
 }
