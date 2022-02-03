@@ -2,8 +2,19 @@ import { Rating } from "@mui/material";
 import React from "react";
 import NavBar from "../../components/navBar/NavBar";
 import imagenes from "../../images/imagenes";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { distritos } from "../../utils/constants";
 import "./_AskForDate.scss";
 export const AskForDate = () => {
+  const [age, setAge] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   return (
     <div className="askForDate">
       <NavBar />
@@ -42,6 +53,83 @@ export const AskForDate = () => {
                 </p>
               </div>
             </div>
+          </div>
+          <div class="askForDate__container-data-select">
+            <Box sx={{ minWidth: 120, textAlign: "center" }}>
+              <FormControl
+                variant="standard"
+                style={{ width: "30%", margin: "20px 0" }}
+              >
+                <InputLabel id="demo-simple-select-label">Distrito</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  {distritos.map((distrito) => (
+                    <MenuItem value={distrito}>{distrito}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <br />
+              <FormControl
+                variant="standard"
+                style={{ width: "30%", margin: "20px 0" }}
+              >
+                <InputLabel id="demo-simple-select-label">Fecha</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+              <br />
+              <FormControl
+                variant="standard"
+                style={{ width: "30%", margin: "20px 0" }}
+              >
+                <InputLabel id="demo-simple-select-label">Hora</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+              <br />
+              <FormControl
+                variant="standard"
+                style={{ width: "30%", margin: "20px 0" }}
+              >
+                <InputLabel id="demo-simple-select-label">
+                  Tiempo de paseo
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
           </div>
         </div>
         <div className="askForDate__container-fares"></div>
