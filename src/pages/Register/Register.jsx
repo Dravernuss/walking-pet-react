@@ -52,6 +52,7 @@ export const Register = () => {
     setDistrito(event.target.value);
   }
   const handleChangeRadio = (event) => {
+    console.log('changeRadio')
     setType(event.target.value);
   }
   const handleSubmit = () => {
@@ -60,12 +61,14 @@ export const Register = () => {
 
   useEffect(() => {
     if(type === 'paseador'){
+      console.log('useeffect paseador')
       setButtonRegister(
         <Link to={ '/registerWalker' } style={{  textDecoration: 'none'}}>
           Registrarse
         </Link>
       )
     }else if(type ==='cliente'){
+      console.log('useeffect cliente')
       setButtonRegister(
         <Link to={ '/registerSuccess' } style={{  textDecoration: 'none'}}>
           Registrarse
