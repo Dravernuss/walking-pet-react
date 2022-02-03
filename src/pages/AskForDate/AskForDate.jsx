@@ -1,4 +1,5 @@
 import {
+  Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -17,6 +18,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { distritos, horasPaseo } from "../../utils/constants";
 import "./_AskForDate.scss";
+import { Price } from "./components/Price";
 export const AskForDate = () => {
   const [age, setAge] = React.useState("");
 
@@ -77,8 +79,10 @@ export const AskForDate = () => {
                   label="Age"
                   onChange={handleChange}
                 >
-                  {distritos.map((distrito) => (
-                    <MenuItem value={distrito}>{distrito}</MenuItem>
+                  {distritos.map((distrito, i) => (
+                    <MenuItem key={i} value={distrito}>
+                      {distrito}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -95,9 +99,15 @@ export const AskForDate = () => {
                   label="Age"
                   onChange={handleChange}
                 >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem key={1} value={10}>
+                    Ten
+                  </MenuItem>
+                  <MenuItem key={2} value={20}>
+                    Twenty
+                  </MenuItem>
+                  <MenuItem key={3} value={30}>
+                    Thirty
+                  </MenuItem>
                 </Select>
               </FormControl>
               <br />
@@ -150,34 +160,64 @@ export const AskForDate = () => {
                 margin: "20px 0",
               }}
             >
-              Tarifas por hora:{" "}
+              TARIFAS: (Por Hora){" "}
             </p>
-            <div>
-              <FormControl>
+            <div className="askForDate__container-fares-selected-amount">
+              <FormControl style={{ width: "100%" }}>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
                   defaultValue="1"
                   name="radio-buttons-group"
                 >
-                  <FormControlLabel
-                    value="1"
-                    control={<Radio />}
-                    label="1 Perro"
-                  />
-                  <FormControlLabel
-                    value="2"
-                    control={<Radio />}
-                    label="2 Perros"
-                  />
-                  <FormControlLabel
-                    value="3"
-                    control={<Radio />}
-                    label="3 Perros"
-                  />
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <FormControlLabel
+                      value="1"
+                      control={<Radio />}
+                      label="1 Perro"
+                    />
+                    <Price price={16} />
+                  </div>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <FormControlLabel
+                      value="2"
+                      control={<Radio />}
+                      label="2 Perros"
+                    />
+                    <Price price={30} />
+                  </div>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <FormControlLabel
+                      value="3"
+                      control={<Radio />}
+                      label="3 Perros"
+                    />
+                    <Price price={45} />
+                  </div>
                 </RadioGroup>
               </FormControl>
             </div>
-            <div>
+            <div className="askForDate__container-fares-selected-pets">
               <FormControl
                 sx={{ m: 3 }}
                 component="fieldset"
@@ -209,7 +249,40 @@ export const AskForDate = () => {
               </FormControl>
             </div>
           </div>
-          <div className="askForDate__container-fares-confirm"></div>
+          <div className="askForDate__container-fares-confirm">
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "#FFFF",
+                color: "#000",
+                width: "35%",
+                padding: "10px 0",
+                margin: "30px auto 0",
+                borderRadius: "15px",
+                fontSize: "16px",
+                fontFamily: "Roboto-bold",
+              }}
+              onClick={console.log("submited")}
+            >
+              SOLICITAR CITA
+            </Button>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "#FFFF",
+                color: "#000",
+                width: "35%",
+                padding: "10px 0",
+                margin: "30px auto 0",
+                borderRadius: "15px",
+                fontSize: "16px",
+                fontFamily: "Roboto-bold",
+              }}
+              onClick={console.log("submited")}
+            >
+              CANCELAR
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -3,17 +3,20 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    border: 1px solid #000;
+    border: 1px solid rgba(0, 0, 0, 0.37);
     // height: 40rem;
     margin: 2rem 6rem;
     flex-wrap: wrap;
     &-title {
       padding: 0.5rem 0;
-      height: 3rem;
-      border-bottom: 1px solid #000;
+      height: 4rem;
+      line-height: 4rem;
+      font-family: "Roboto-Bold";
+      color: rgb(249, 187, 62);
+      background-color: rgba(249, 187, 62, 0.2);
+      // border-bottom: 1px solid rgba(0, 0, 0, 0.37);
       width: 100%;
       text-align: center;
-      line-height: 3rem;
     }
     &-data {
       width: 49.8%;
@@ -49,12 +52,28 @@
     }
     &-fares {
       //   height: 36rem;
-      border-left: 1px solid #000;
+      border-left: 1px solid rgba(0, 0, 0, 0.37);
       width: 49.8%;
       &-selected {
         display: flex;
         flex-direction: column;
         align-items: center;
+        &-amount {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: space-between;
+        }
+        &-pets {
+          margin-left: 10%;
+          align-self: flex-start;
+        }
+      }
+      &-confirm {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
       }
     }
   }
