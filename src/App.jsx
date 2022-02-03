@@ -39,7 +39,6 @@ const App = () => {
           <Route path="/walkerregistration" element={<WalkerRegistration />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="*" element={<p>404</p>} />
-          <Route path="*" element={<p>404</p>} />
         </Routes>
       </div>
     </BrowserRouter>
