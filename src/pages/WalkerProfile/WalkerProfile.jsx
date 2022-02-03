@@ -78,7 +78,7 @@ const WalkerProfile = () => {
           <div>
             {false ? (
               <div className="actions">
-                <Button className="boton" href="/AskForDate">
+                <Button className="boton" href="/askForDate">
                   <img
                     className="dogButton"
                     src={imagenes.img9}

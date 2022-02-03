@@ -14,7 +14,7 @@ import { AskForDate } from "./pages/AskForDate/AskForDate";
 import AdminLogin from "./pagesAdmin/AdminLogin/AdminLogin";
 import ReservedTours from "./pagesAdmin/ReservedTours/ReservedTours";
 import WalkerRegistration from "./pagesAdmin/WalkerRegistration/WalkerRegistration";
-
+import Reports from "./pagesAdmin/Reports/Reports";
 
 const App = () => {
   return (
