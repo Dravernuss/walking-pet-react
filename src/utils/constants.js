@@ -9,3 +9,4 @@ export const distritos = [
   "San Martin de Porres",
   "San Miguel",
 ];
+export const horasPaseo = [1, 2, 3];

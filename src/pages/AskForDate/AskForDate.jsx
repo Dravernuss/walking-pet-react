@@ -1,4 +1,12 @@
-import { Rating } from "@mui/material";
+import {
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Rating,
+} from "@mui/material";
 import React from "react";
 import NavBar from "../../components/navBar/NavBar";
 import imagenes from "../../images/imagenes";
@@ -7,7 +15,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { distritos } from "../../utils/constants";
+import { distritos, horasPaseo } from "../../utils/constants";
 import "./_AskForDate.scss";
 export const AskForDate = () => {
   const [age, setAge] = React.useState("");
@@ -15,6 +23,7 @@ export const AskForDate = () => {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   return (
     <div className="askForDate">
       <NavBar />
@@ -112,7 +121,7 @@ export const AskForDate = () => {
               <br />
               <FormControl
                 variant="standard"
-                style={{ width: "30%", margin: "20px 0" }}
+                style={{ width: "30%", margin: "20px 0 50px" }}
               >
                 <InputLabel id="demo-simple-select-label">
                   Tiempo de paseo
@@ -124,15 +133,84 @@ export const AskForDate = () => {
                   label="Age"
                   onChange={handleChange}
                 >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  {horasPaseo.map((horaPaseo) => (
+                    <MenuItem value={horaPaseo}>{horaPaseo}</MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Box>
           </div>
         </div>
-        <div className="askForDate__container-fares"></div>
+        <div className="askForDate__container-fares">
+          <div className="askForDate__container-fares-selected">
+            <p
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: "1.3rem",
+                margin: "20px 0",
+              }}
+            >
+              Tarifas por hora:{" "}
+            </p>
+            <div>
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="1"
+                  name="radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value="1"
+                    control={<Radio />}
+                    label="1 Perro"
+                  />
+                  <FormControlLabel
+                    value="2"
+                    control={<Radio />}
+                    label="2 Perros"
+                  />
+                  <FormControlLabel
+                    value="3"
+                    control={<Radio />}
+                    label="3 Perros"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl
+                sx={{ m: 3 }}
+                component="fieldset"
+                variant="standard"
+              >
+                <FormLabel component="legend">Seleccionar mascotas</FormLabel>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={gilad}
+                        // onChange={handleChange}
+                        name="pirata"
+                      />
+                    }
+                    label="Pirata"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={jason}
+                        // onChange={handleChange}
+                        name="balto"
+                      />
+                    }
+                    label="Balto"
+                  />
+                </FormGroup>
+              </FormControl>
+            </div>
+          </div>
+          <div className="askForDate__container-fares-confirm"></div>
+        </div>
       </div>
     </div>
   );
