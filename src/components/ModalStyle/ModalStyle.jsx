@@ -1,4 +1,4 @@
-export default {
+const ModalStyle = {
   style: {
     position: "absolute",
     top: "50%",
@@ -78,3 +78,5 @@ export default {
     padding: "0 1rem",
   },
 };
+
+export default ModalStyle;

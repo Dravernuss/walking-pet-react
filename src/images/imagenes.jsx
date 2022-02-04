@@ -15,7 +15,7 @@ import helenDNI from "./helenDNI.png";
 import helenSquare from "./helenSquare.png";
 import dogTired from "./dogTired.png";
 
-export default {
+const Imagenes = {
   img1: logo,
   img2: menu,
   img3: person1,
@@ -33,3 +33,5 @@ export default {
   img15: helenSquare,
   img16: dogTired,
 };
+
+export default Imagenes;

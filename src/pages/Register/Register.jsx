@@ -7,22 +7,22 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import Select from '@mui/material/Select';
+import Select from "@mui/material/Select";
 import { Box, Button, TextField } from "@mui/material";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 
 export const Register = () => {
-  const [linkRedirect, setLinkRedirect] = useState('./register');
-  const [type, setType] = useState('');
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [distrito, setDistrito] = useState('');
-  const [address, setAddress] = useState('');
-  const [buttonRegister, setButtonRegister] = useState('Registrarse');
+  // const [linkRedirect, setLinkRedirect] = useState('./register');
+  const [type, setType] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [distrito, setDistrito] = useState("");
+  const [address, setAddress] = useState("");
+  const [buttonRegister, setButtonRegister] = useState("Registrarse");
 
   const handleChangeInput = (event) => {
     switch (event.target.id) {
@@ -50,33 +50,33 @@ export const Register = () => {
   };
   const handleChangeSelect = (event) => {
     setDistrito(event.target.value);
-  }
+  };
   const handleChangeRadio = (event) => {
-    console.log('changeRadio')
+    console.log("changeRadio");
     setType(event.target.value);
-  }
+  };
   const handleSubmit = () => {
     //guardar los estados en react redux
-  }
+  };
 
   useEffect(() => {
-    if(type === 'paseador'){
-      console.log('useeffect paseador')
+    if (type === "paseador") {
+      console.log("useeffect paseador");
       setButtonRegister(
-        <Link to={ '/registerWalker' } style={{  textDecoration: 'none'}}>
+        <Link to={"/registerWalker"} style={{ textDecoration: "none" }}>
           Registrarse
         </Link>
-      )
-    }else if(type ==='cliente'){
-      console.log('useeffect cliente')
+      );
+    } else if (type === "cliente") {
+      console.log("useeffect cliente");
       setButtonRegister(
-        <Link to={ '/registerSuccess' } style={{  textDecoration: 'none'}}>
+        <Link to={"/registerSuccess"} style={{ textDecoration: "none" }}>
           Registrarse
         </Link>
-      )
+      );
     }
   }, [type]);
-  
+
   return (
     <LayoutInicial>
       <LayoutForm title="Registro">
@@ -123,32 +123,32 @@ export const Register = () => {
                 required
                 id="name"
                 label="Nombre"
-                value={ name }
-                onChange={handleChangeInput }
+                value={name}
+                onChange={handleChangeInput}
               />
               <TextField
                 style={{ width: "45%" }}
                 required
                 id="lastName"
                 label="Apellido"
-                value={ lastName }
-                onChange={ handleChangeInput }
+                value={lastName}
+                onChange={handleChangeInput}
               />
               <TextField
                 style={{ width: "100%" }}
                 required
                 id="email"
                 label="Correo electrónico"
-                value={ email }
-                onChange={ handleChangeInput }
+                value={email}
+                onChange={handleChangeInput}
               />
               <TextField
                 style={{ width: "100%" }}
                 required
                 id="password"
                 label="Contraseña"
-                value={ password }
-                onChange={ handleChangeInput }
+                value={password}
+                onChange={handleChangeInput}
               />
               <TextField
                 style={{ width: "100%" }}
@@ -161,34 +161,34 @@ export const Register = () => {
                 required
                 id="phone"
                 label="Teléfono Fijo/Móvil"
-                value={ phone }
-                onChange={ handleChangeInput }
+                value={phone}
+                onChange={handleChangeInput}
               />
-              <FormControl  style={{ width: "100%", margin:"10px" }}>
-              <InputLabel id="distrito-label">Distrito*</InputLabel>
-              <Select
-                labelId="distrito-label"
-                id="distrito"
-                value={ distrito }
-                onChange={ handleChangeSelect }
-                label="Distrito*"
-                required
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-            <TextField
+              <FormControl style={{ width: "100%", margin: "10px" }}>
+                <InputLabel id="distrito-label">Distrito*</InputLabel>
+                <Select
+                  labelId="distrito-label"
+                  id="distrito"
+                  value={distrito}
+                  onChange={handleChangeSelect}
+                  label="Distrito*"
+                  required
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
                 style={{ width: "100%" }}
                 required
                 id="address"
                 label="Dirección"
                 value={address}
-                onChange={handleChangeInput }
+                onChange={handleChangeInput}
               />
             </Box>
             <Button
@@ -203,9 +203,9 @@ export const Register = () => {
                 fontSize: "16px",
                 fontFamily: "Roboto-bold",
               }}
-              onClick={ handleSubmit }
+              onClick={handleSubmit}
             >
-              { buttonRegister }
+              {buttonRegister}
             </Button>
           </FormControl>
         </div>

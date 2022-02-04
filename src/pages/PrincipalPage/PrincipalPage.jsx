@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import NavBar from "../../components/navBar/NavBar";
 import imagenes from "../../images/imagenes.jsx";
-import Rating from "@mui/material/Rating";
 import "./_PrincipalPage.scss";
 import WalkerCard from "../../components/WalkerCard/WalkerCard";
 

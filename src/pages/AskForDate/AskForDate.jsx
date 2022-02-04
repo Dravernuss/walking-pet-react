@@ -25,7 +25,7 @@ export const AskForDate = () => {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
   return (
     <div className="askForDate">
       <NavBar />

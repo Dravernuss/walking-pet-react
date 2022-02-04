@@ -53,13 +53,13 @@ const AdminLogin = () => {
             marginTop: "20px",
           }}
         >
-          <div className="layoutForm__footer-options">
+          <div className="layoutFormAdmin__footer-options">
             <div
               style={{
-                marginTop: "20px",
                 width: "100%",
                 gap: "2px",
                 fontFamily: "Roboto-Bold",
+                marginTop: "-5px",
               }}
             >
               Ir a la pagina principal
@@ -67,7 +67,6 @@ const AdminLogin = () => {
             </div>
             <img style={{ marginTop: "20px" }} src={imagenes.img1} alt=" " />
           </div>
-          <div className="layoutForm__footer-logo"></div>
         </div>
       </LayoutForm>
     </div>

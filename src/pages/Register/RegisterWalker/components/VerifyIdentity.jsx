@@ -1,15 +1,9 @@
 import React from "react";
 import "./_VerifyIdentity.scss";
-import { Link } from "react-router-dom";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import { Box, Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const VerifyIdentity = ({changeView}) => {
+export const VerifyIdentity = ({ changeView }) => {
   const Input = styled("input")({
     display: "none",
   });
@@ -50,7 +44,9 @@ export const VerifyIdentity = ({changeView}) => {
       </div>
 
       <Button
-        onClick={()=>{changeView(2)}}
+        onClick={() => {
+          changeView(2);
+        }}
         variant="contained"
         style={{
           backgroundColor: "#FFFF",
