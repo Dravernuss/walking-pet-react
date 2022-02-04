@@ -8,8 +8,8 @@ const Home = () => {
       <div className="home__box">
         <h1 className="home__box-title">WALKINGPET</h1>
         <p className="home__box-description">
-          La aplicación web donde puedes encontrar de manera segura de encontrar
-          a alguien que cuide y pasee a tu canino favorito.
+          La aplicación web donde puedes encontrar de manera segura a alguien
+          que cuide y pasee a tu canino favorito.
         </p>
 
         <button className="home__box-button">
