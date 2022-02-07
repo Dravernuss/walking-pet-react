@@ -46,7 +46,12 @@ const Login = () => {
             autoComplete="off"
           >
             <TextField required id="email" label="Correo electrónico" />
-            <TextField required id="password" label="Contraseña" />
+            <TextField
+              type="password"
+              required
+              id="password"
+              label="Contraseña"
+            />
           </Box>
           <Button
             variant="contained"
