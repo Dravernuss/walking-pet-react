@@ -11,6 +11,7 @@ import Select from "@mui/material/Select";
 import { Box, Button, TextField } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+import { distritos } from "../../utils/constants";
 
 export const Register = () => {
   // const [linkRedirect, setLinkRedirect] = useState('./register');
@@ -146,6 +147,7 @@ export const Register = () => {
                 style={{ width: "100%" }}
                 required
                 id="password"
+                type="password"
                 label="Contraseña"
                 value={password}
                 onChange={handleChangeInput}
@@ -153,12 +155,14 @@ export const Register = () => {
               <TextField
                 style={{ width: "100%" }}
                 required
+                type="password"
                 id="confirmPassword"
                 label="Confirmar contraseña"
               />
               <TextField
                 style={{ width: "100%" }}
                 required
+                type="number"
                 id="phone"
                 label="Teléfono Fijo/Móvil"
                 value={phone}
@@ -174,12 +178,11 @@ export const Register = () => {
                   label="Distrito*"
                   required
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  {distritos.map((distrito, i) => (
+                    <MenuItem key={i} value={distrito}>
+                      {distrito}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
               <TextField
@@ -211,7 +214,11 @@ export const Register = () => {
         </div>
         <div className="layoutForm__footer">
           <div className="layoutForm__footer-center">
-            ¿Ya tienes cuenta? <Link to="/login"> Inicia Sesión</Link>
+            ¿Ya tienes cuenta?{" "}
+            <Link to="/login" style={{ marginLeft: "10px", color: "#0030DA" }}>
+              {" "}
+              Inicia Sesión
+            </Link>
           </div>
           <div className="layoutForm__footer-logo" />
         </div>
