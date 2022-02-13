@@ -5,8 +5,137 @@ import NavBar from "../../components/navBar/NavBar";
 import imagenes from "../../images/imagenes.jsx";
 import "./_PrincipalPage.scss";
 import WalkerCard from "../../components/WalkerCard/WalkerCard";
+import { useState } from "react";
+
+const Distritos = [
+  "Todos los Distritos",
+  "Miraflores",
+  "Breña",
+  "San Isidro",
+  "Barranco",
+  "La Molina",
+  "Callao",
+  "Cercado de Lima",
+  "San Martin de Porres",
+  "San Miguel",
+];
+
+const Paseadores = [
+  {
+    photo: imagenes.img3,
+    price: 16,
+    name: "Helen Arias",
+    ratingValue: 4.9,
+    text: "Los perros tambien son el mejor amigo de las mujeres.",
+    calification: "15 calificaciones | 19 paseos realizados",
+    distrito: ["Miraflores", "Breña", "San Martin de Porres"],
+  },
+  {
+    photo: imagenes.img4,
+    price: 15,
+    name: "Alex Marino",
+    ratingValue: 4.8,
+    text: "Entrenador de perros profesional.",
+    calification: "7 calificaciones | 13 paseos realizados",
+    distrito: ["Breña", "San Isidro", "San Miguel"],
+  },
+  {
+    photo: imagenes.img5,
+    price: 18,
+    name: "Javier Sandoval",
+    ratingValue: 5.0,
+    text: "El más confiable para tu amigo canino!",
+    calification: "21 calificaciones | 24 paseos realizados",
+    distrito: ["San Isidro", "Barranco"],
+  },
+  {
+    photo: imagenes.img6,
+    price: 20,
+    name: "Susan Avila",
+    ratingValue: 5.0,
+    text: "Tu perruno y yo nos vamos a llevar muy bien!",
+    calification: "15 calificaciones | 19 paseos realizados",
+    distrito: ["Barranco", "La Molina", "Miraflores"],
+  },
+  {
+    photo: imagenes.img7,
+    price: 18,
+    name: "Nestor Magariño",
+    ratingValue: 4.9,
+    text: "El mejor cuidador de perros!",
+    calification: "7 calificaciones | 13 paseos realizados",
+    distrito: ["La Molina", "Callao"],
+  },
+  {
+    photo: imagenes.img8,
+    price: 15,
+    name: "Luna Agreda",
+    ratingValue: 4.5,
+    text: "Solo un alma buena simpatiza con el alma de un perro.",
+    calification: "21 calificaciones | 24 paseos realizados",
+    distrito: ["Callao", "Cercado de Lima", "Miraflores"],
+  },
+];
 
 const PrincipalPage = () => {
+  const [, setDistritoSelected] = useState(() => {
+    return;
+  });
+
+  const [paseadoresD, setPaseadoresD] = useState(() => {
+    return Paseadores.map((key) => {
+      return (
+        <WalkerCard
+          photo={key.photo}
+          price={key.price}
+          name={key.name}
+          ratingValue={key.ratingValue}
+          text={key.text}
+          calification={key.calification}
+        />
+      );
+    });
+  });
+
+  function changePaseadores(distrito) {
+    let paseadoresPintar = [];
+
+    Paseadores.map((key) => {
+      for (let i = 0; i < key.distrito.length; i++) {
+        if (key.distrito[i] === distrito) paseadoresPintar.push(key);
+      }
+      return paseadoresPintar;
+    });
+
+    return setPaseadoresD(
+      distrito !== "Todos los Distritos"
+        ? paseadoresPintar.map((key) => {
+            return (
+              <WalkerCard
+                photo={key.photo}
+                price={key.price}
+                name={key.name}
+                ratingValue={key.ratingValue}
+                text={key.text}
+                calification={key.calification}
+              />
+            );
+          })
+        : Paseadores.map((key) => {
+            return (
+              <WalkerCard
+                photo={key.photo}
+                price={key.price}
+                name={key.name}
+                ratingValue={key.ratingValue}
+                text={key.text}
+                calification={key.calification}
+              />
+            );
+          })
+    );
+  }
+
   return (
     <div className="home">
       <NavBar />
@@ -19,70 +148,25 @@ const PrincipalPage = () => {
                 orientation="vertical"
                 aria-label="vertical outlined button group"
               >
-                <Button className="btn">Miraflores</Button>
-                <Button className="btn">Breña</Button>
-                <Button className="btn">San Isidro</Button>
-                <Button className="btn">Barranco</Button>
-                <Button className="btn">La Molina</Button>
-                <Button className="btn">Callao</Button>
-                <Button className="btn">Cercado de Lima</Button>
-                <Button className="btn">San Martin de Porres</Button>
-                <Button className="btn">San Miguel</Button>
+                {Distritos.map((key) => {
+                  return (
+                    <Button
+                      onClick={() => {
+                        setDistritoSelected(key);
+                        changePaseadores(key);
+                      }}
+                      className="btn"
+                    >
+                      {key}
+                    </Button>
+                  );
+                })}
               </ButtonGroup>
             </div>
           </article>
         </section>
         <aside>
-          <div className="card_container">
-            <WalkerCard
-              photo={imagenes.img3}
-              price="16"
-              name="Helen Arias"
-              ratingValue="4.9"
-              text="Los perros tambien son el mejor amigo de las mujeres."
-              calification="15 calificaciones | 19 paseos realizados"
-            />
-            <WalkerCard
-              photo={imagenes.img4}
-              price="15"
-              name="Alex Marino"
-              ratingValue="4.8"
-              text="Entrenador de perros profesional."
-              calification="7 calificaciones | 13 paseos realizados"
-            />
-            <WalkerCard
-              photo={imagenes.img5}
-              price="18"
-              name="Javier Sandoval"
-              ratingValue="5.0"
-              text="El más confiable para tu amigo canino!"
-              calification="21 calificaciones | 24 paseos realizados"
-            />
-            <WalkerCard
-              photo={imagenes.img6}
-              price="20"
-              name="Susan Avila"
-              ratingValue="5.0"
-              text="Tu perruno y yo nos vamos a llevar muy bien!"
-              calification="15 calificaciones | 19 paseos realizados"
-            />
-            <WalkerCard
-              photo={imagenes.img7}
-              price="18"
-              name="Nestor Magariño"
-              ratingValue="4.9"
-              text="El mejor cuidador de perros!"
-              calification="7 calificaciones | 13 paseos realizados"
-            />
-            <WalkerCard
-              photo={imagenes.img8}
-              price="15"
-              name="Luna Agreda"
-              ratingValue="4.5"
-              text="Solo un alma buena simpatiza con el alma de un perro."
-              calification="21 calificaciones | 24 paseos realizados"
-            />
-          </div>
+          <div className="card_container">{paseadoresD}</div>
         </aside>
       </div>
     </div>
