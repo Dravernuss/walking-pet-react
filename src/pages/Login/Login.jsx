@@ -8,13 +8,14 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import imagenes from "../../images/imagenes.jsx";
 import { Box, Button, TextField } from "@mui/material";
 
 const Login = () => {
   return (
     <LayoutInicial>
       <LayoutForm title="Iniciar sesión">
-        <FormControl>
+        <FormControl className="formContainer">
           <FormLabel id="demo-radio-buttons-group-label"></FormLabel>
           <RadioGroup
             row
@@ -27,11 +28,13 @@ const Login = () => {
             name="radio-buttons-group"
           >
             <FormControlLabel
+              className="radio_button"
               value="paseador"
               control={<Radio />}
               label="Soy paseador"
             />
             <FormControlLabel
+              className="radio_button"
               value="cliente"
               control={<Radio />}
               label="Soy cliente"
@@ -55,16 +58,8 @@ const Login = () => {
           </Box>
           <Button
             variant="contained"
-            style={{
-              backgroundColor: "#FFFF",
-              color: "#000",
-              width: "35%",
-              padding: "10px 0",
-              margin: "30px auto 0",
-              borderRadius: "15px",
-              fontSize: "19px",
-              fontFamily: "Roboto-bold",
-            }}
+            className="button_login"
+            style={{}}
             href="/principalpage"
           >
             Ingresar
@@ -79,7 +74,9 @@ const Login = () => {
               ¿Aún no tienes cuenta? <Link to="/register"> Regístrate</Link>
             </div>
           </div>
-          <div className="layoutForm__footer-logo"></div>
+          <div className="layoutForm__footer-logo">
+            <img className="logo" src={imagenes.img1} width="200" alt="" />
+          </div>
         </div>
       </LayoutForm>
     </LayoutInicial>

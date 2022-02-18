@@ -1,5 +1,6 @@
 import "./_Home.scss";
 import LayoutInicial from "../../components/LayoutInicial/LayoutInicial";
+import imagenes from "../../images/imagenes.jsx";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -13,7 +14,8 @@ const Home = () => {
         </p>
 
         <button className="home__box-button">
-          <Link to="/login">Ingresar a WALKINGPET</Link>
+          <Link to="/login">Ingresar a</Link>
+          <img className="logoPerrito" src={imagenes.img1} alt="..."></img>
         </button>
       </div>
     </LayoutInicial>

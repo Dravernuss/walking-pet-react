@@ -55,17 +55,26 @@
       display: flex;
       justify-content: center;
     }
-    &-logo {
-      width: 285px;
-      height: 51px;
-      background-image: url(../../images/logo.svg);
-      margin: 20px auto 0px;
-      transform: scale(0.8);
-    }
     &-smallContainer {
       margin: 25px 43px -13px;
       border-top: 1px solid #4a4a4a;
       width: 26rem;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .layoutForm{
+    &__title {
+      font-size: 25px;
+      width: 70%; 
+    }
+    &__body {
+      width: 70%; 
+    }
+    &__footer {
+      width: 100%; 
+
     }
   }
 }

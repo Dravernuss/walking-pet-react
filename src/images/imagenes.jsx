@@ -14,6 +14,7 @@ import mas from "./+.png";
 import helenDNI from "./helenDNI.png";
 import helenSquare from "./helenSquare.png";
 import dogTired from "./dogTired.png";
+import logoPerrito from "./logoPerrito.png";
 
 const Imagenes = {
   img1: logo,
@@ -32,6 +33,7 @@ const Imagenes = {
   img14: helenDNI,
   img15: helenSquare,
   img16: dogTired,
+  img17: logoPerrito,
 };
 
 export default Imagenes;

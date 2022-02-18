@@ -28,20 +28,68 @@
       font-size: 28px;
       border-radius: 5px;
       border: none;
-      padding: 0 20px 20px;
+      padding: 10px 20px 10px;
       margin: 60px auto 0px;
       background-color: #fff;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       a {
         text-decoration: none;
         color: #000;
       }
-      &::after {
-        content: url(../../images/logoPerrito.png);
-        position: relative;
-        top: 10px;
-        left: 10px;
-        width: 20px;
-        height: 20px;
+      .logoPerrito{
+        margin-left: 10px;
+      }
+    }
+    &-button:hover {
+      background-color: rgba(91, 91, 91, 0.5);
+      a{
+        color:white
+      }
+
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  .home {
+    &__box {
+      width: 30rem;
+      &-title {
+        font-size: 50px;
+      }
+      &-description {
+        font-size: 20px;
+      }
+      &-button {
+        font-size: 18px;
+      }
+      .logoPerrito{
+        width: 35px;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .home {
+    &__box {
+      width: 10rem;
+      padding: 30px 45px;
+      &-title {
+        font-size: 25px;
+        margin: 0 auto 27px;
+      }
+      &-description {
+        font-size: 15px;
+      }
+      &-button {
+        font-size: 10px;
+        margin: 36px auto 0; 
+      }
+      .logoPerrito{
+        width: 25px;
       }
     }
   }

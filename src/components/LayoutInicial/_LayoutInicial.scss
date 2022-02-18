@@ -3,7 +3,8 @@
 }
 .layoutInicial {
   background-color: #f9ba3e;
-  background-image: url(../../images/fondo.svg);
+  background-image: url(../../images/patita.png);
+  background-position: center;
   min-width: 100vw;
   min-height: 100vh;
   background-repeat: no-repeat;
@@ -11,4 +12,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 600px) {
+  .layoutInicial {
+    height: 10rem;
+  }
 }
