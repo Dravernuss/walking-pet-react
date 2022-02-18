@@ -66,6 +66,9 @@ aside {
   .home {
     min-width: 700px;
   }
+  aside .card_container{
+    justify-content: flex-start;
+  }
   section {
     .btn {
       font-size: 1rem;
