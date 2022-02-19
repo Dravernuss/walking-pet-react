@@ -14,8 +14,10 @@ const Home = () => {
         </p>
 
         <button className="home__box-button">
-          <Link to="/login">Ingresar a</Link>
-          <img className="logoPerrito" src={imagenes.img1} alt="..."></img>
+          <Link to="/login" className="home__box-button-link">
+            <p>Ingresar a</p>
+            <img className="logoPerrito" src={imagenes.img1} alt="..."></img>
+          </Link>
         </button>
       </div>
     </LayoutInicial>

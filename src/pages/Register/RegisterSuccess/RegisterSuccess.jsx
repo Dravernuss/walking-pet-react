@@ -3,32 +3,24 @@ import "./_RegisterSuccess.scss";
 import { Link } from "react-router-dom";
 import LayoutInicial from "../../../components/LayoutInicial/LayoutInicial";
 import LayoutForm from "../../../components/LayoutForm/LayoutForm";
-import { Button} from "@mui/material";
+import { Button } from "@mui/material";
 
 export const RegisterSuccess = () => {
   return (
     <LayoutInicial>
       <LayoutForm title="Gracias por registrarte">
-        <p className="registerSuccess__message">¡BIENVENIDO A LA COMUNIDAD DE WALKING PET!</p>
-        <Button
-          variant="contained"
-          style={{
-            backgroundColor: "#FFFF",
-            color: "#000",
-            width: "35%",
-            padding: "10px 0",
-            margin: "30px auto 0",
-            borderRadius: "15px",
-            fontSize: "16px",
-            fontFamily: "Roboto-bold",
-          }}
-        >
-          <Link to="/" style={{  textDecoration: 'none'}}>
-            Ir al inicio
-          </Link>
-        </Button>
-        <div className="layoutForm__footer-small">
-          <div className="layoutForm__footer-logo" />
+        <div className="SuccessContainer">
+          <p className="registerSuccess__message">
+            ¡BIENVENIDO A LA COMUNIDAD DE WALKING PET!
+          </p>
+          <Button className="buttonSuccess" variant="contained">
+            <Link to="/" style={{ textDecoration: "none" }}>
+              Ir al inicio
+            </Link>
+          </Button>
+          <div className="layoutForm__footer-small">
+            <div className="layoutForm__footer-logo" />
+          </div>
         </div>
       </LayoutForm>
     </LayoutInicial>

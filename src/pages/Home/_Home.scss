@@ -38,17 +38,17 @@
         text-decoration: none;
         color: #000;
         padding-top: 5px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
       }
-      .logoPerrito{
+      .logoPerrito {
         margin-left: 10px;
+        padding-bottom: 5px;
       }
     }
     &-button:hover {
-      background-color: rgba(91, 91, 91, 0.5);
-      a{
-        color:white
-      }
-
+      background-color: #e6e6e6;
     }
   }
 }
@@ -65,11 +65,11 @@
       }
       &-button {
         font-size: 18px;
-        a{
+        a {
           padding-top: 2px;
         }
       }
-      .logoPerrito{
+      .logoPerrito {
         width: 150px;
       }
     }
@@ -90,9 +90,9 @@
       }
       &-button {
         font-size: 10px;
-        margin: 36px auto 0; 
+        margin: 36px auto 0;
       }
-      .logoPerrito{
+      .logoPerrito {
         margin-left: 5px;
         width: 85px;
       }

@@ -2,6 +2,7 @@ import React from "react";
 import "./_VerifyIdentity.scss";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import imagenes from "../../../../images/imagenes";
 
 export const VerifyIdentity = ({ changeView }) => {
   const Input = styled("input")({
@@ -9,7 +10,7 @@ export const VerifyIdentity = ({ changeView }) => {
   });
   return (
     <div className="verifyIdentity">
-      <div className="verifyIdentity__dni"></div>
+      <div className="verifyIdentity__dni" />
       <p className="verifyIdentity__textDni">FOTO DE DNI</p>
       <div className="verifyIdentity__upload">
         <span className="verifyIdentity__upload-text">Choose file...</span>
@@ -21,19 +22,7 @@ export const VerifyIdentity = ({ changeView }) => {
             type="file"
           />
 
-          <Button
-            variant="contained"
-            style={{
-              backgroundColor: "#FFFF",
-              color: "#000",
-              width: "10srem",
-              marginRight: "10px",
-              borderRadius: "10px",
-              fontSize: "14px",
-              fontFamily: "Roboto-bold",
-            }}
-            component="span"
-          >
+          <Button variant="contained" className="buttonChoose" component="span">
             Choose File
           </Button>
         </label>
@@ -41,28 +30,21 @@ export const VerifyIdentity = ({ changeView }) => {
           Necesitamos la foto de tu DNI. Asegurate de que todos los detalles de
           la foto sean visibles.
         </p>
-      </div>
 
-      <Button
-        onClick={() => {
-          changeView(2);
-        }}
-        variant="contained"
-        style={{
-          backgroundColor: "#FFFF",
-          color: "#000",
-          width: "12rem",
-          padding: "10px 0",
-          margin: "80px 0 0",
-          borderRadius: "15px",
-          fontSize: "19px",
-          fontFamily: "Roboto-bold",
-        }}
-      >
-        Siguiente
-      </Button>
-      <div className="layoutForm__footer-smallContainer">
-        <div className="layoutForm__footer-logo" />
+        <div className="nextContainer">
+          <Button
+            onClick={() => {
+              changeView(2);
+            }}
+            variant="contained"
+            className="nextStep"
+          >
+            Siguiente
+          </Button>
+        </div>
+        <div className="footerStep">
+          <img className="logoStep" src={imagenes.img1} alt="" />
+        </div>
       </div>
     </div>
   );

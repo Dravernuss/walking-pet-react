@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LayoutInicial from "../../components/LayoutInicial/LayoutInicial";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LayoutForm from "../../components/LayoutForm/LayoutForm";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -12,6 +12,7 @@ import { Box, Button, TextField } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { distritos } from "../../utils/constants";
+import "./_Register.scss";
 
 export const Register = () => {
   // const [linkRedirect, setLinkRedirect] = useState('./register');
@@ -56,33 +57,44 @@ export const Register = () => {
     console.log("changeRadio");
     setType(event.target.value);
   };
-  const handleSubmit = () => {
-    //guardar los estados en react redux
-  };
+  const navigate = useNavigate();
 
-  useEffect(() => {
+  const handleSubmit = (e) => {
+    //guardar los estados en react redux
+    // Se hizo por mientras con el local storage
+    e.preventDefault();
     if (type === "paseador") {
       console.log("useeffect paseador");
-      setButtonRegister(
-        <Link to={"/registerWalker"} style={{ textDecoration: "none" }}>
-          Registrarse
-        </Link>
-      );
+      navigate("/registerWalker");
     } else if (type === "cliente") {
       console.log("useeffect cliente");
-      setButtonRegister(
-        <Link to={"/registerSuccess"} style={{ textDecoration: "none" }}>
-          Registrarse
-        </Link>
-      );
+      navigate("/registerSuccess");
     }
-  }, [type]);
+  };
+
+  // useEffect(() => {
+  //   if (type === "paseador") {
+  //     console.log("useeffect paseador");
+  //     setButtonRegister(
+  //       <Link to={"/registerWalker"} style={{ textDecoration: "none" }}>
+  //         Registrarse
+  //       </Link>
+  //     );
+  //   } else if (type === "cliente") {
+  //     console.log("useeffect cliente");
+  //     setButtonRegister(
+  //       <Link to={"/registerSuccess"} style={{ textDecoration: "none" }}>
+  //         Registrarse
+  //       </Link>
+  //     );
+  //   }
+  // }, [type]);
 
   return (
     <LayoutInicial>
       <LayoutForm title="Registro">
         <div className="layoutForm__scroll">
-          <FormControl>
+          <FormControl className="formContainerRegister">
             <FormLabel id="demo-radio-buttons-group-label"></FormLabel>
             <RadioGroup
               row
@@ -107,6 +119,7 @@ export const Register = () => {
               />
             </RadioGroup>
             <Box
+              className="boxRegister"
               component="div"
               sx={{
                 "& .MuiTextField-root": { m: 1, width: "" },
@@ -120,16 +133,16 @@ export const Register = () => {
               autoComplete="off"
             >
               <TextField
-                style={{ width: "45%" }}
                 required
+                className="nombreTextfield"
                 id="name"
                 label="Nombre"
                 value={name}
                 onChange={handleChangeInput}
               />
               <TextField
-                style={{ width: "45%" }}
                 required
+                className="apellidoTextfield"
                 id="lastName"
                 label="Apellido"
                 value={lastName}
@@ -196,16 +209,7 @@ export const Register = () => {
             </Box>
             <Button
               variant="contained"
-              style={{
-                backgroundColor: "#FFFF",
-                color: "#000",
-                width: "35%",
-                padding: "10px 0",
-                margin: "30px auto 0",
-                borderRadius: "15px",
-                fontSize: "16px",
-                fontFamily: "Roboto-bold",
-              }}
+              className="botonRegister"
               onClick={handleSubmit}
             >
               {buttonRegister}
