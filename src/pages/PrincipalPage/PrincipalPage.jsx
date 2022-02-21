@@ -7,6 +7,20 @@ import "./_PrincipalPage.scss";
 import WalkerCard from "../../components/WalkerCard/WalkerCard";
 import { useState } from "react";
 
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import AppBar from "@mui/material/AppBar";
+import CssBaseline from "@mui/material/CssBaseline";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+
 const Distritos = [
   "Todos los Distritos",
   "Miraflores",
@@ -137,39 +151,61 @@ const PrincipalPage = () => {
   }
 
   return (
-    <div className="home">
-      <NavBar />
-      <div className="main_container">
-        <section>
-          <article>
-            <h2>Selecciona tu distrito</h2>
-            <div className="list-group">
-              <ButtonGroup
-                orientation="vertical"
-                aria-label="vertical outlined button group"
-              >
-                {Distritos.map((key) => {
-                  return (
-                    <Button
-                      onClick={() => {
-                        setDistritoSelected(key);
-                        changePaseadores(key);
-                      }}
-                      className="btn"
-                    >
-                      {key}
-                    </Button>
-                  );
-                })}
-              </ButtonGroup>
-            </div>
-          </article>
-        </section>
-        <aside>
-          <div className="card_container">{paseadoresD}</div>
-        </aside>
-      </div>
-    </div>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className="appBar"
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        style={{ backgroundColor: "white" }}
+      >
+        <NavBar>
+          <Typography variant="h6" noWrap component="div">
+            Clipped drawer
+          </Typography>
+        </NavBar>
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: 240,
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: {
+            width: 240,
+            boxSizing: "border-box",
+          },
+        }}
+      >
+        <Toolbar />
+        <Box sx={{ overflow: "auto" }} className="buttonBox">
+          <ButtonGroup
+            orientation="vertical"
+            aria-label="vertical outlined button group"
+            className="buttonGroup"
+          >
+            {Distritos.map((key) => {
+              return (
+                // <ListItem>
+                <Button
+                  onClick={() => {
+                    setDistritoSelected(key);
+                    changePaseadores(key);
+                  }}
+                  className="btn"
+                >
+                  {key}
+                </Button>
+                // </ListItem>
+              );
+            })}
+          </ButtonGroup>
+        </Box>
+      </Drawer>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Toolbar />
+        <div className="card_container">{paseadoresD}</div>
+      </Box>
+    </Box>
   );
 };
 

@@ -67,3 +67,8 @@
     margin-right: 5px;
   }
 }
+@media (max-width: 500px) {
+  .card {
+    min-width: 335px;
+  }
+}
