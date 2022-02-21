@@ -1,0 +1,36 @@
+.buttonChoose {
+  background-color: #ffff;
+  color: #000;
+  width: 10rem;
+  margin-right: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: "Roboto-bold";
+  &:hover {
+    background-color: #fff;
+  }
+}
+.inputFileContent {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  border-radius: 50px;
+  padding: 12px;
+  margin-top: -8px;
+  margin-bottom: 5px;
+  gap: 8px;
+  &:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+}
+
+.photoIcon {
+  margin-top: -2px;
+  margin-left: -1px;
+  color: #757575;
+}
+
+.inputFile {
+  display: none;
+}

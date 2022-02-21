@@ -12,6 +12,7 @@ import { Box, Button, TextField } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { distritos } from "../../utils/constants";
+import imagenes from "../../images/imagenes.jsx";
 import "./_Register.scss";
 
 export const Register = () => {
@@ -224,7 +225,9 @@ export const Register = () => {
               Inicia Sesión
             </Link>
           </div>
-          <div className="layoutForm__footer-logo" />
+          <div className="layoutForm__footer-logo">
+            <img className="logo" src={imagenes.img1} width="200" alt="" />
+          </div>
         </div>
       </LayoutForm>
     </LayoutInicial>

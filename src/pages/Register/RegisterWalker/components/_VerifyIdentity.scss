@@ -12,6 +12,9 @@
     border-radius: 10px;
     font-size: 14px;
     font-family: "Roboto-bold";
+    &:hover {
+      background-color: #fff;
+    }
   }
   &__dni {
     width: 19rem;
@@ -72,8 +75,21 @@
   }
   @media (max-width: 500px) {
     .verifyIdentity {
+      &__dni {
+        width: 80%;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
       &__textDni {
         font-size: 1rem;
+      }
+      &__upload {
+        .buttonChoose {
+          width: 1rem;
+          font-size: 10px;
+          text-align: center;
+        }
       }
     }
     .nextContainer {

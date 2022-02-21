@@ -4,7 +4,13 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Input, TextField } from "@mui/material";
+import imagenes from "../../../../images/imagenes";
+// import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import CircularProgress from "@mui/material/CircularProgress";
+import "./_AboutYou.scss";
+// import CircularProgress from "@material-ui/core/CircularProgress";
 
 export const AboutYou = ({ changeView }) => {
   return (
@@ -64,7 +70,38 @@ export const AboutYou = ({ changeView }) => {
               <FormControlLabel value={true} control={<Radio />} label="Sí" />
               <FormControlLabel value={false} control={<Radio />} label="No" />
             </RadioGroup>
-            <span style={{ fontSize: "24" }}>Subir una foto de perfil</span>
+            {/* <p style={{ fontSize: "24" }}>Subir una foto de perfil</p> */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <label className="inputFileContent" htmlFor="profile123">
+                <AddAPhotoIcon className="photoIcon" fontSize="medium" /> Subir
+                una foto de perfil
+              </label>
+              <Input
+                style={{ display: "none" }}
+                accept=".jpg,.jpeg,.png"
+                type="file"
+                id="profile123"
+                // onChange={}
+              ></Input>
+              {/* {true && (
+                <CircularProgress
+                  size="25px"
+                  style={{
+                    position: "absolute",
+                    marginLeft: "180px",
+                    marginTop: "-13px",
+                    color: "#3493C2",
+                  }}
+                />
+              )} */}
+            </div>
           </Box>
 
           <Button
@@ -89,9 +126,15 @@ export const AboutYou = ({ changeView }) => {
       </div>
       <div className="layoutForm__footer">
         <div className="layoutForm__footer-center">
-          ¿Ya tienes cuenta? <Link to="/login"> Inicia Sesión</Link>
+          ¿Ya tienes cuenta?{" "}
+          <Link to="/login" style={{ marginLeft: "3px" }}>
+            {" "}
+            Inicia Sesión
+          </Link>
         </div>
-        <div className="layoutForm__footer-logo" />
+        <div className="layoutForm__footer-logo">
+          <img className="logo" src={imagenes.img1} alt="" />
+        </div>
       </div>
     </>
   );

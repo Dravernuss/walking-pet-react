@@ -23,7 +23,12 @@ const AdminLogin = () => {
             autoComplete="off"
           >
             <TextField required id="email" label="Correo electrónico" />
-            <TextField required id="password" label="Contraseña" />
+            <TextField
+              required
+              id="password"
+              type="password"
+              label="Contraseña"
+            />
           </Box>
           <Button
             variant="contained"
@@ -34,7 +39,7 @@ const AdminLogin = () => {
               padding: "10px 0",
               margin: "30px auto 0",
               borderRadius: "15px",
-              fontSize: "19px",
+              fontSize: "15px",
               fontFamily: "Roboto-bold",
             }}
             href="/reservedtours"

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import LayoutInicial from "../../../components/LayoutInicial/LayoutInicial";
 import LayoutForm from "../../../components/LayoutForm/LayoutForm";
 import { Button } from "@mui/material";
+import Imagenes from "../../../images/imagenes";
 
 export const RegisterSuccess = () => {
   return (
@@ -19,7 +20,9 @@ export const RegisterSuccess = () => {
             </Link>
           </Button>
           <div className="layoutForm__footer-small">
-            <div className="layoutForm__footer-logo" />
+            <div className="layoutForm__footer-logo">
+              <img className="logo" src={Imagenes.img1} alt="" />
+            </div>
           </div>
         </div>
       </LayoutForm>
