@@ -83,7 +83,7 @@ const DatesClient = () => {
           Mis Reservas
         </h1>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 390 }}>
+          <TableContainer className="tableContainer">
             <Table
               stickyHeader
               style={{ border: "1px solid #DADADA" }}
@@ -91,19 +91,19 @@ const DatesClient = () => {
             >
               <TableHead>
                 <TableRow>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Paseador
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Fecha
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Hora
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Estado
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Opciones
                   </StyledTableCell>
                 </TableRow>
@@ -111,15 +111,24 @@ const DatesClient = () => {
               <TableBody>
                 {dates.map((date) => (
                   <StyledTableRow key={date.fecha}>
-                    <StyledTableCell align="left" component="th" scope="row">
+                    <StyledTableCell
+                      className="cell"
+                      align="left"
+                      component="th"
+                      scope="row"
+                    >
                       {date.paseador}
                     </StyledTableCell>
-                    <StyledTableCell align="left">{date.fecha}</StyledTableCell>
-                    <StyledTableCell align="left">{date.hora}</StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell className="cell" align="left">
+                      {date.fecha}
+                    </StyledTableCell>
+                    <StyledTableCell className="cell" align="left">
+                      {date.hora}
+                    </StyledTableCell>
+                    <StyledTableCell className="cell" align="left">
                       {date.estado}
                     </StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell className="cell" align="left">
                       <OptionsClient
                         calificado={date.calificado}
                         estado={date.estado}

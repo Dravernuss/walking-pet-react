@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import imagenes from "../../images/imagenes.jsx";
 import { styled } from "@mui/material/styles";
 import "./_OptionsClient.scss";
+import "../../pages/DatesClient/_DatesClient.scss";
 
 const OptionsClient = ({ calificado, estado }) => {
   const [value, setValue] = useState(0);
@@ -51,8 +52,8 @@ const OptionsClient = ({ calificado, estado }) => {
     <>
       <Button
         onClick={handleOpenCalificar}
-        disabled={calificado}
         className="botonT"
+        disabled={calificado}
       >
         Calificar
       </Button>

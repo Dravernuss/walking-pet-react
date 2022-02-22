@@ -84,7 +84,7 @@ const DatesWalker = () => {
       <div className="datesWalkerContainer">
         <h1 style={{ marginBottom: "2rem", fontWeight: "400" }}>Mis Citas</h1>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 390 }}>
+          <TableContainer className="tableContainer">
             <Table
               stickyHeader
               style={{ border: "1px solid #DADADA" }}
@@ -92,35 +92,44 @@ const DatesWalker = () => {
             >
               <TableHead>
                 <TableRow>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Cliente
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Fecha
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Hora
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Estado
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Opciones
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody size="small">
                 {dates.map((date) => (
                   <StyledTableRow key={date.fecha}>
-                    <StyledTableCell align="left" component="th" scope="row">
+                    <StyledTableCell
+                      className="cell"
+                      align="left"
+                      component="th"
+                      scope="row"
+                    >
                       {date.cliente}
                     </StyledTableCell>
-                    <StyledTableCell align="left">{date.fecha}</StyledTableCell>
-                    <StyledTableCell align="left">{date.hora}</StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell className="cell" align="left">
+                      {date.fecha}
+                    </StyledTableCell>
+                    <StyledTableCell className="cell" align="left">
+                      {date.hora}
+                    </StyledTableCell>
+                    <StyledTableCell className="cell" align="left">
                       {date.estado}
                     </StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell className="cell" align="left">
                       <OptionsWalker
                         aceptado={date.aceptado}
                         estado={date.estado}

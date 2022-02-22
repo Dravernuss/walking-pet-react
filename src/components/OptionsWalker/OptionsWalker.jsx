@@ -21,7 +21,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
   const handleCloseDetails = () => setOpenDetails(false);
   return (
     <>
-      <ButtonGroup variant="none">
+      <ButtonGroup className="group" variant="none">
         {aceptado === 0 ? (
           <></>
         ) : (

@@ -54,7 +54,7 @@ const Reports = () => {
           Reportes y Quejas
         </h1>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 390 }}>
+          <TableContainer className="tableContainer">
             <Table
               stickyHeader
               style={{ border: "1px solid #DADADA" }}
@@ -62,22 +62,22 @@ const Reports = () => {
             >
               <TableHead>
                 <TableRow>
-                  <StyledTableCell style={{ width: "16.5%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Paseador
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "16.5%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Cliente
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "16.5%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Fecha
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "16.5%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Hora
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "16.5%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Estado
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "17.5%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Opciones
                   </StyledTableCell>
                 </TableRow>
@@ -85,22 +85,32 @@ const Reports = () => {
               <TableBody>
                 {reports.map((report) => (
                   <StyledTableRow key={report.fecha}>
-                    <StyledTableCell align="left" component="th" scope="row">
+                    <StyledTableCell
+                      className="cell"
+                      align="left"
+                      component="th"
+                      scope="row"
+                    >
                       {report.paseador}
                     </StyledTableCell>
-                    <StyledTableCell align="left" component="th" scope="row">
+                    <StyledTableCell
+                      className="cell"
+                      align="left"
+                      component="th"
+                      scope="row"
+                    >
                       {report.cliente}
                     </StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell className="cell" align="left">
                       {report.fecha}
                     </StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell className="cell" align="left">
                       {report.hora}
                     </StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell className="cell" align="left">
                       {report.estado}
                     </StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell className="cell" align="left">
                       <OptionsReport />
                     </StyledTableCell>
                   </StyledTableRow>

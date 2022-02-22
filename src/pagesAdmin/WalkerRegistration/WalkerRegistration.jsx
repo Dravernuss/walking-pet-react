@@ -52,7 +52,7 @@ const WalkerRegistration = () => {
           Registro de Paseadores
         </h1>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 390 }}>
+          <TableContainer className="tableContainer">
             <Table
               stickyHeader
               style={{ border: "1px solid #DADADA" }}
@@ -60,19 +60,19 @@ const WalkerRegistration = () => {
             >
               <TableHead>
                 <TableRow>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Nombre
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Correo
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Teléfono
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Estado
                   </StyledTableCell>
-                  <StyledTableCell style={{ width: "20%" }} align="left">
+                  <StyledTableCell className="cell" align="left">
                     Ver Información
                   </StyledTableCell>
                 </TableRow>
@@ -80,19 +80,29 @@ const WalkerRegistration = () => {
               <TableBody>
                 {walkers.map((walker) => (
                   <StyledTableRow key={walker.nombre}>
-                    <StyledTableCell align="left" component="th" scope="row">
+                    <StyledTableCell
+                      className="cell"
+                      align="left"
+                      component="th"
+                      scope="row"
+                    >
                       {walker.nombre}
                     </StyledTableCell>
-                    <StyledTableCell align="left" component="th" scope="row">
+                    <StyledTableCell
+                      className="cell"
+                      align="left"
+                      component="th"
+                      scope="row"
+                    >
                       {walker.correo}
                     </StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell className="cell" align="left">
                       {walker.telefono}
                     </StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell className="cell" align="left">
                       {walker.estado}
                     </StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell className="cell" align="left">
                       <OptionsRegisterWalker estado={walker.estado} />
                     </StyledTableCell>
                   </StyledTableRow>

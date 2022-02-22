@@ -1,9 +1,14 @@
-
 .DatesWalker {
   .datesWalkerContainer {
     padding: 3rem;
     font-family: "Roboto-Regular";
+    .tableContainer {
+      max-height: 690px;
 
+      .cell {
+        width: 20%;
+      }
+    }
     .botonT {
       color: black;
       font-weight: bold;
@@ -32,5 +37,38 @@
     font-size: 25px;
     padding: 0;
     margin-right: 15px;
+  }
+}
+
+@media (max-width: 500px) {
+  .DatesWalker {
+    .datesWalkerContainer {
+      padding: 5px;
+      h1 {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 25px;
+      }
+      .tableContainer {
+        max-height: 390px;
+        .cell {
+          font-size: 12px;
+          padding: 5px;
+          text-align: center;
+        }
+      }
+      .botonT {
+        font-size: 12px;
+        margin-right: 0px;
+      }
+    }
+    .botonC {
+      font-size: 15px;
+      margin-right: 0px;
+    }
+    .botonB {
+      margin-top: 15px;
+      font-size: 15px;
+    }
   }
 }
