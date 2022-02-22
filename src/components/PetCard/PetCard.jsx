@@ -50,7 +50,7 @@ const PetCard = ({ name, age, size, nature, photo, extraInfo }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={ModalStyle.style}>
+        <Box sx={ModalStyle.style} className="boxModal">
           <div style={ModalStyle.header}>
             <Typography
               id="modal-modal-title"
@@ -60,10 +60,10 @@ const PetCard = ({ name, age, size, nature, photo, extraInfo }) => {
                 fontFamily: "Roboto-Bold",
               }}
             >
-              Información de Mascota
+              Información de {name}
             </Typography>
           </div>
-          <div style={ModalStyle.body}>
+          <div style={ModalStyle.body} className="boxModalBody">
             <form>
               <TextField
                 className="input"
@@ -192,6 +192,7 @@ const PetCard = ({ name, age, size, nature, photo, extraInfo }) => {
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
+                  columnGap: "10px",
                 }}
               >
                 <Button style={ModalStyle.boton} onClick={handleCloseEdit}>
@@ -227,17 +228,19 @@ const PetCard = ({ name, age, size, nature, photo, extraInfo }) => {
                     borderRadius: "20px",
                     textAlign: "center",
                   }}
+                  className="boxModalOpcion"
                 >
                   <p
                     id="child-modal-description"
                     style={{ marginBottom: "10px" }}
                   >
-                    ¿Seguro que desea eliminar la informacion de la mascota?
+                    ¿Seguro que desea eliminar la informacion de {name}?
                   </p>
                   <div
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
+                      columnGap: "10px",
                     }}
                   >
                     <Button style={ModalStyle.boton} onClick={handleCloseChild}>

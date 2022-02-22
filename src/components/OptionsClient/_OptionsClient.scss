@@ -3,6 +3,10 @@
   font-weight: bold;
   cursor: pointer;
 }
+.inconveniente {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
 .input-file {
   display: flex;
   flex-wrap: wrap;
@@ -17,4 +21,36 @@
   color: #a5a5a5;
   line-height: 50px;
   margin-left: 15px;
+}
+.boxModal {
+  .stars {
+    font-size: 60px;
+  }
+  .revisar {
+    margin: 3rem;
+  }
+}
+.logoOC {
+  margin-top: 15px;
+}
+
+@media (max-width: 500px) {
+  .boxModal {
+    .stars {
+      font-size: 40px;
+    }
+    .cuentanos {
+      font-size: 14px;
+    }
+    .revisar {
+      font-size: 1.5rem;
+      margin: 1rem;
+    }
+  }
+  .parrafos {
+    font-size: 12px;
+  }
+  .logoOC {
+    width: 200px;
+  }
 }

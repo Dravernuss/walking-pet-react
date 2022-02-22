@@ -76,7 +76,7 @@ const WalkerProfile = () => {
             <Chip label="Barranco" />
           </div>
           <div>
-            {false ? (
+            {true ? (
               <div className="actions">
                 <Button className="boton" href="/askForDate">
                   <img
@@ -111,7 +111,7 @@ const WalkerProfile = () => {
                   aria-labelledby="modal-modal-title"
                   aria-describedby="modal-modal-description"
                 >
-                  <Box sx={ModalStyle.style}>
+                  <Box sx={ModalStyle.style} className="boxModal">
                     <div style={ModalStyle.header}>
                       <Typography
                         id="modal-modal-title"
@@ -121,10 +121,10 @@ const WalkerProfile = () => {
                           fontFamily: "Roboto-Bold",
                         }}
                       >
-                        Información Paseador
+                        Editar Perfil
                       </Typography>
                     </div>
-                    <div style={ModalStyle.body}>
+                    <div style={ModalStyle.body} className="boxModalBody">
                       <form>
                         <TextField
                           className="input"
@@ -228,6 +228,7 @@ const WalkerProfile = () => {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
+                            columnGap: "10px",
                           }}
                         >
                           <Button

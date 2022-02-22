@@ -110,7 +110,7 @@ const ClientProfile = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
               >
-                <Box sx={ModalStyle.style}>
+                <Box sx={ModalStyle.style} className="boxModal">
                   <div style={ModalStyle.header}>
                     <Typography
                       id="modal-modal-title"
@@ -120,7 +120,7 @@ const ClientProfile = () => {
                         fontFamily: "Roboto-Bold",
                       }}
                     >
-                      Información Cliente
+                      Editar Perfil
                     </Typography>
                   </div>
                   <div style={ModalStyle.body}>
@@ -200,6 +200,7 @@ const ClientProfile = () => {
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
+                          columnGap: "10px",
                         }}
                       >
                         <Button style={ModalStyle.boton} onClick={handleClose}>
@@ -227,7 +228,7 @@ const ClientProfile = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={ModalStyle.style}>
+        <Box sx={ModalStyle.style} className="boxModal">
           <div style={ModalStyle.header}>
             <Typography
               id="modal-modal-title"
@@ -240,7 +241,7 @@ const ClientProfile = () => {
               Añadir Mascota
             </Typography>
           </div>
-          <div style={ModalStyle.body}>
+          <div style={ModalStyle.body} className="boxModalBody">
             <form>
               <TextField
                 className="input"
@@ -378,6 +379,7 @@ const ClientProfile = () => {
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
+                  columnGap: "10px",
                 }}
               >
                 <Button style={ModalStyle.boton} onClick={handleCloseAdd}>

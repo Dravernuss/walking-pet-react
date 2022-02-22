@@ -63,7 +63,11 @@ const OptionsClient = ({ calificado, estado }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={ModalStyle.style} style={{ width: "600px" }}>
+        <Box
+          sx={ModalStyle.style}
+          style={{ width: "600px" }}
+          className="boxModal"
+        >
           <div style={ModalStyle.header}>
             <Typography
               id="modal-modal-title"
@@ -76,7 +80,7 @@ const OptionsClient = ({ calificado, estado }) => {
               Califica a Helen Arias
             </Typography>
           </div>
-          <div style={ModalStyle.body}>
+          <div style={ModalStyle.body} className="boxModalBody">
             <Typography fontFamily="Roboto-Bold">
               Tu opinión es muy importante para nosotros:
             </Typography>
@@ -88,7 +92,7 @@ const OptionsClient = ({ calificado, estado }) => {
               }}
             >
               <Rating
-                style={{ fontSize: "60px" }}
+                className="stars"
                 name="simple-controlled"
                 precision={0.5}
                 value={value}
@@ -100,7 +104,6 @@ const OptionsClient = ({ calificado, estado }) => {
             </div>
             <TextField
               className="input"
-              margin="normal"
               label="Deja un comentario..."
               size="small"
               type="text"
@@ -114,10 +117,9 @@ const OptionsClient = ({ calificado, estado }) => {
                 margin: "1rem 0",
                 fontFamily: "Roboto-Regular",
               }}
+              className="parrafos"
             >
-              <p style={{ fontWeight: "bold", marginRight: "0.5rem" }}>
-                ¿Algún inconveniente?
-              </p>
+              <p className="inconveniente">¿Algún inconveniente?</p>
               <p className="reportHere" onClick={handleOpenReporte}>
                 Repórtalo aquí
               </p>
@@ -127,6 +129,7 @@ const OptionsClient = ({ calificado, estado }) => {
               style={{
                 display: "flex",
                 justifyContent: "space-around",
+                columnGap: "10px",
               }}
             >
               <Button style={ModalStyle.boton} onClick={handleCloseCalificar}>
@@ -148,7 +151,7 @@ const OptionsClient = ({ calificado, estado }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={ModalStyle.style}>
+        <Box sx={ModalStyle.style} className="boxModal">
           <div style={ModalStyle.header}>
             <Typography
               id="modal-modal-title"
@@ -161,12 +164,12 @@ const OptionsClient = ({ calificado, estado }) => {
               Calificación Recibida
             </Typography>
           </div>
-          <div style={ModalStyle.body}>
+          <div style={ModalStyle.body} className="boxModalBody">
             <Typography
               variant="h3"
               fontSize="40px"
               textAlign="center"
-              style={{ margin: "3rem" }}
+              className="revisar"
             >
               ¡Gracias por calificar a Helen Arias!
             </Typography>
@@ -189,6 +192,7 @@ const OptionsClient = ({ calificado, estado }) => {
               }}
             >
               <img
+                className="logoOC"
                 style={{ marginTop: "15px" }}
                 src={imagenes.img1}
                 alt="..."
@@ -203,7 +207,7 @@ const OptionsClient = ({ calificado, estado }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={ModalStyle.style} style={{ width: "600px" }}>
+        <Box sx={ModalStyle.style} className="boxModal">
           <div style={ModalStyle.header}>
             <Typography
               id="modal-modal-title"
@@ -216,8 +220,8 @@ const OptionsClient = ({ calificado, estado }) => {
               Reporte sobre Helen Arias
             </Typography>
           </div>
-          <div style={ModalStyle.body}>
-            <Typography fontFamily="Roboto-Bold">
+          <div style={ModalStyle.body} className="boxModalBody">
+            <Typography fontFamily="Roboto-Bold" className="cuentanos">
               Cuéntanos acera del incoveniente:
             </Typography>
             <div
@@ -228,7 +232,7 @@ const OptionsClient = ({ calificado, estado }) => {
               }}
             >
               <Rating
-                style={{ fontSize: "60px" }}
+                className="stars"
                 name="simple-controlled"
                 precision={0.5}
                 value={value}
@@ -236,11 +240,11 @@ const OptionsClient = ({ calificado, estado }) => {
                   setValue(newValue);
                 }}
                 size="large"
+                className="stars"
               />
             </div>
             <TextField
               className="input"
-              margin="normal"
               size="small"
               type="text"
               multiline
@@ -285,6 +289,7 @@ const OptionsClient = ({ calificado, estado }) => {
               style={{
                 display: "flex",
                 justifyContent: "space-around",
+                columnGap: "10px",
               }}
             >
               <Button style={ModalStyle.boton} onClick={handleReturnCalificar}>
@@ -303,7 +308,7 @@ const OptionsClient = ({ calificado, estado }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={ModalStyle.style}>
+        <Box sx={ModalStyle.style} className="boxModal">
           <div style={ModalStyle.header}>
             <Typography
               id="modal-modal-title"
@@ -316,13 +321,13 @@ const OptionsClient = ({ calificado, estado }) => {
               Reporte Recibido
             </Typography>
           </div>
-          <div style={ModalStyle.body}>
+          <div style={ModalStyle.body} className="boxModalBody">
             <Typography
               variant="h3"
               fontSize="25px"
               fontWeight="bold"
               textAlign="center"
-              style={{ margin: "3rem" }}
+              className="revisar"
             >
               Un administrador revisará tu reporte y se comunicará contigo lo
               antes posible.
@@ -345,11 +350,7 @@ const OptionsClient = ({ calificado, estado }) => {
                 borderTop: "1px solid grey",
               }}
             >
-              <img
-                style={{ marginTop: "15px" }}
-                src={imagenes.img1}
-                alt="..."
-              ></img>
+              <img className="logoOC" src={imagenes.img1} alt="..."></img>
             </div>
           </div>
         </Box>
@@ -364,7 +365,7 @@ const OptionsClient = ({ calificado, estado }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={ModalStyle.style}>
+        <Box sx={ModalStyle.style} className="boxModal">
           <div style={ModalStyle.header}>
             <Typography
               id="modal-modal-title"
@@ -377,36 +378,34 @@ const OptionsClient = ({ calificado, estado }) => {
               Detalles del Paseo
             </Typography>
           </div>
-          <div style={ModalStyle.body}>
-            <Typography m={2}>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                NOMBRE DEL CLIENTE: MANUEL BAELLA
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                DISTRITO: MIRAFLORES
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                DIRECCIÓN:Av. Tomas Valle 3145 Miraflores
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                FECHA: 16-12-2021
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                HORARIO: 16:00-17:00 p.m
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                TIEMPO: 1 HORA
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                COSTO: S/16
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                Mascota(s):
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                * Balto
-              </p>
-            </Typography>
+          <div style={ModalStyle.body} className="boxModalBody">
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              NOMBRE DEL CLIENTE: MANUEL BAELLA
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              DISTRITO: MIRAFLORES
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              DIRECCIÓN:Av. Tomas Valle 3145 Miraflores
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              FECHA: 16-12-2021
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              HORARIO: 16:00-17:00 p.m
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              TIEMPO: 1 HORA
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              COSTO: S/16
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              Mascota(s):
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              * Balto
+            </p>
             <div
               style={{
                 display: "flex",
@@ -443,6 +442,7 @@ const OptionsClient = ({ calificado, estado }) => {
                       borderRadius: "20px",
                       textAlign: "center",
                     }}
+                    className="boxModalOpcion"
                   >
                     <p
                       id="child-modal-description"
@@ -454,6 +454,7 @@ const OptionsClient = ({ calificado, estado }) => {
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
+                        columnGap: "10px",
                       }}
                     >
                       <Button

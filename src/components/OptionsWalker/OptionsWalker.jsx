@@ -5,6 +5,7 @@ import ModalStyle from "../../components/ModalStyle/ModalStyle.jsx";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import "./_OptionsWalker.scss";
 
 const OptionsWalker = ({ aceptado, estado }) => {
   const [openDetails, setOpenDetails] = useState(false);
@@ -49,6 +50,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                   borderRadius: "20px",
                   textAlign: "center",
                 }}
+                className="boxModalOpcion"
               >
                 <p
                   id="child-modal-description"
@@ -60,6 +62,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
+                    columnGap: "10px",
                   }}
                 >
                   <Button style={ModalStyle.boton} onClick={handleCloseAccept}>
@@ -100,6 +103,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                   borderRadius: "20px",
                   textAlign: "center",
                 }}
+                className="boxModalOpcion"
               >
                 <p
                   id="child-modal-description"
@@ -111,6 +115,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
+                    columnGap: "10px",
                   }}
                 >
                   <Button style={ModalStyle.boton} onClick={handleCloseCancel}>
@@ -134,7 +139,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={ModalStyle.style}>
+        <Box sx={ModalStyle.style} className="boxModal">
           <div style={ModalStyle.header}>
             <Typography
               id="modal-modal-title"
@@ -147,36 +152,35 @@ const OptionsWalker = ({ aceptado, estado }) => {
               Detalles del Paseo
             </Typography>
           </div>
-          <div style={ModalStyle.body}>
-            <Typography m={2}>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                NOMBRE DEL CLIENTE: MANUEL BAELLA
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                DISTRITO: MIRAFLORES
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                DIRECCIÓN:Av. Tomas Valle 3145 Miraflores
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                FECHA: 16-12-2021
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                HORARIO: 16:00-17:00 p.m
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                TIEMPO: 1 HORA
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                COSTO: S/16
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                Mascota(s):
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                * Balto
-              </p>
-            </Typography>
+          <div style={ModalStyle.body} className="boxModalBody">
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              NOMBRE DEL CLIENTE: MANUEL BAELLA
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              DISTRITO: MIRAFLORES
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              DIRECCIÓN:Av. Tomas Valle 3145 Miraflores
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              FECHA: 16-12-2021
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              HORARIO: 16:00-17:00 p.m
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              TIEMPO: 1 HORA
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              COSTO: S/16
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              Mascota(s):
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              * Balto
+            </p>
+
             <div
               style={{
                 display: "flex",
@@ -213,6 +217,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                       borderRadius: "20px",
                       textAlign: "center",
                     }}
+                    className="boxModalOpcion"
                   >
                     <p
                       id="child-modal-description"
@@ -224,6 +229,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
+                        columnGap: "10px",
                       }}
                     >
                       <Button

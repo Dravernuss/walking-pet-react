@@ -189,4 +189,13 @@ html {
     flex-direction: column;
     justify-content: center;
   }
+
+  .boxModalBody {
+    max-height: 80%;
+    overflow-y: scroll;
+  }
+  .boxModal {
+    width: 80% !important;
+    height: 80%;
+  }
 }
