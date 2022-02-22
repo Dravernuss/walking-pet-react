@@ -82,14 +82,17 @@ const ClientProfile = () => {
       <NavBar />
       <div className="client-Container">
         <div className="cardC">
-          <Avatar sx={{ width: "240px", height: "240px" }} />
+          <Avatar
+            sx={{ width: "240px", height: "240px" }}
+            className="avatarC"
+          />
           <h2 className="card-title">Manuel Baella</h2>
         </div>
-        <div className="info-container">
+        <div className="info-containerC">
           <h2 className="info">Dirección:</h2>
-          <p className="info-presentacion">Av. Tomas Valle 3145 Miraflores</p>
+          <p className="info-presentacionC">Av. Tomas Valle 3145 Miraflores</p>
           <h2 className="info">Teléfono:</h2>
-          <p className="info-presentacion">949567245</p>
+          <p className="info-presentacionC">949567245</p>
 
           <div>
             <div className="actions">

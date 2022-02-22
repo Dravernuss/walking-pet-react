@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import imagenes from "../../images/imagenes.jsx";
 import "./_NavBar.scss";
+import { Divider } from "@mui/material";
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -38,6 +39,8 @@ const NavBar = () => {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
+          transformOrigin={{ horizontal: "right", vertical: "top" }}
+          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           MenuListProps={{
             "aria-labelledby": "basic-button",
           }}
@@ -54,6 +57,7 @@ const NavBar = () => {
               </p>
             </Button>
           </MenuItem>
+          <Divider />
           <MenuItem onClick={handleClose}>
             <Button href="/">
               <p style={{ color: "black", fontFamily: "Roboto-Regular" }}>

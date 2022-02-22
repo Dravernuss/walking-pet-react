@@ -9,6 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import "./_Reports.scss";
 import OptionsReport from "../../components/OptionsAdmin/OptionsReport";
+import { Paper } from "@mui/material";
 
 const Reports = () => {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -52,56 +53,62 @@ const Reports = () => {
         <h1 style={{ marginBottom: "2rem", fontWeight: "400" }}>
           Reportes y Quejas
         </h1>
-        <TableContainer>
-          <Table
-            style={{ border: "1px solid #DADADA" }}
-            sx={{ minWidth: 700, maxWidth: 1800 }}
-            aria-label="customized table"
-          >
-            <TableHead>
-              <TableRow>
-                <StyledTableCell style={{ width: "16.5%" }} align="left">
-                  Paseador
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "16.5%" }} align="left">
-                  Cliente
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "16.5%" }} align="left">
-                  Fecha
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "16.5%" }} align="left">
-                  Hora
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "16.5%" }} align="left">
-                  Estado
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "17.5%" }} align="left">
-                  Opciones
-                </StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {reports.map((report) => (
-                <StyledTableRow key={report.fecha}>
-                  <StyledTableCell align="left" component="th" scope="row">
-                    {report.paseador}
+        <Paper sx={{ width: "100%", overflow: "hidden" }}>
+          <TableContainer sx={{ maxHeight: 390 }}>
+            <Table
+              stickyHeader
+              style={{ border: "1px solid #DADADA" }}
+              aria-label="sticky table"
+            >
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell style={{ width: "16.5%" }} align="left">
+                    Paseador
                   </StyledTableCell>
-                  <StyledTableCell align="left" component="th" scope="row">
-                    {report.cliente}
+                  <StyledTableCell style={{ width: "16.5%" }} align="left">
+                    Cliente
                   </StyledTableCell>
-                  <StyledTableCell align="left">{report.fecha}</StyledTableCell>
-                  <StyledTableCell align="left">{report.hora}</StyledTableCell>
-                  <StyledTableCell align="left">
-                    {report.estado}
+                  <StyledTableCell style={{ width: "16.5%" }} align="left">
+                    Fecha
                   </StyledTableCell>
-                  <StyledTableCell align="left">
-                    <OptionsReport />
+                  <StyledTableCell style={{ width: "16.5%" }} align="left">
+                    Hora
                   </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                  <StyledTableCell style={{ width: "16.5%" }} align="left">
+                    Estado
+                  </StyledTableCell>
+                  <StyledTableCell style={{ width: "17.5%" }} align="left">
+                    Opciones
+                  </StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {reports.map((report) => (
+                  <StyledTableRow key={report.fecha}>
+                    <StyledTableCell align="left" component="th" scope="row">
+                      {report.paseador}
+                    </StyledTableCell>
+                    <StyledTableCell align="left" component="th" scope="row">
+                      {report.cliente}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {report.fecha}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {report.hora}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {report.estado}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      <OptionsReport />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
       </div>
     </div>
   );

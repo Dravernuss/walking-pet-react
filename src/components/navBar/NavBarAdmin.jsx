@@ -22,7 +22,7 @@ const NavBarAdmin = () => {
         <img src={imagenes.img1} alt=" " width="200"></img>
       </Button>
       <div className="userInfo">
-        <p>Administrador</p>
+        <p>Admin</p>
         <Button
           id="basic-button"
           aria-controls={open ? "basic-menu" : undefined}

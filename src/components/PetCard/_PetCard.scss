@@ -3,7 +3,7 @@
   background-color: white;
   border-radius: 50px;
 }
-.Button {
+.ButtonLapiz {
   position: relative;
   left: 730px;
 }
@@ -70,4 +70,38 @@
   color: #a5a5a5;
   line-height: 50px;
   margin-left: 15px;
+}
+
+@media (max-width: 800px) {
+  .petcard {
+    flex-direction: column;
+    max-width: 300px;
+  }
+  .ButtonLapiz {
+    position: inherit;
+    left: 260px;
+  }
+
+  .image {
+    width: 180px;
+  }
+  .petInfo {
+    border-bottom: 1px solid rgb(190, 190, 190);
+    border-right: none;
+    h2 {
+      font-size: 20px;
+    }
+    p {
+      font-size: 15px;
+    }
+  }
+  .extraInfo {
+    h2 {
+      text-align: center;
+      font-size: 20px;
+    }
+    p {
+      font-size: 15px;
+    }
+  }
 }

@@ -35,7 +35,7 @@ const PetCard = ({ name, age, size, nature, photo, extraInfo }) => {
   });
   return (
     <div>
-      <Button className="Button" onClick={handleOpenEdit}>
+      <Button className="ButtonLapiz" onClick={handleOpenEdit}>
         <img
           className="addButton"
           height="40px"

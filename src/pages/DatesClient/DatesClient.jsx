@@ -10,11 +10,12 @@ import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import OptionsClient from "../../components/OptionsClient/OptionsClient";
 import "./_DatesClient.scss";
+import { Paper } from "@mui/material";
 
 const DatesClient = () => {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: "rgba(249, 186, 62, 0.2)",
+      backgroundColor: "rgba(249, 186, 62)",
       color: "black",
       fontSize: 20,
     },
@@ -81,51 +82,55 @@ const DatesClient = () => {
         <h1 style={{ marginBottom: "2rem", fontWeight: "400" }}>
           Mis Reservas
         </h1>
-        <TableContainer>
-          <Table
-            style={{ border: "1px solid #DADADA" }}
-            sx={{ minWidth: 700, maxWidth: 1800 }}
-            aria-label="customized table"
-          >
-            <TableHead>
-              <TableRow>
-                <StyledTableCell style={{ width: "20%" }} align="left">
-                  Paseador
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "20%" }} align="left">
-                  Fecha
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "20%" }} align="left">
-                  Hora
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "20%" }} align="left">
-                  Estado
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "20%" }} align="left">
-                  Opciones
-                </StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {dates.map((date) => (
-                <StyledTableRow key={date.fecha}>
-                  <StyledTableCell align="left" component="th" scope="row">
-                    {date.paseador}
+        <Paper sx={{ width: "100%", overflow: "hidden" }}>
+          <TableContainer sx={{ maxHeight: 390 }}>
+            <Table
+              stickyHeader
+              style={{ border: "1px solid #DADADA" }}
+              aria-label="sticky table"
+            >
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell style={{ width: "20%" }} align="left">
+                    Paseador
                   </StyledTableCell>
-                  <StyledTableCell align="left">{date.fecha}</StyledTableCell>
-                  <StyledTableCell align="left">{date.hora}</StyledTableCell>
-                  <StyledTableCell align="left">{date.estado}</StyledTableCell>
-                  <StyledTableCell align="left">
-                    <OptionsClient
-                      calificado={date.calificado}
-                      estado={date.estado}
-                    />
+                  <StyledTableCell style={{ width: "20%" }} align="left">
+                    Fecha
                   </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                  <StyledTableCell style={{ width: "20%" }} align="left">
+                    Hora
+                  </StyledTableCell>
+                  <StyledTableCell style={{ width: "20%" }} align="left">
+                    Estado
+                  </StyledTableCell>
+                  <StyledTableCell style={{ width: "20%" }} align="left">
+                    Opciones
+                  </StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {dates.map((date) => (
+                  <StyledTableRow key={date.fecha}>
+                    <StyledTableCell align="left" component="th" scope="row">
+                      {date.paseador}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">{date.fecha}</StyledTableCell>
+                    <StyledTableCell align="left">{date.hora}</StyledTableCell>
+                    <StyledTableCell align="left">
+                      {date.estado}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      <OptionsClient
+                        calificado={date.calificado}
+                        estado={date.estado}
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
       </div>
       <Button className="botonB" href="/clientprofile">
         Regresar a mi Perfil

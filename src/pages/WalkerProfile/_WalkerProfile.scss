@@ -173,3 +173,20 @@ html {
     min-width: 350px;
   }
 }
+
+@media (max-width: 500px) {
+  .info-container {
+    min-width: 300px;
+  }
+  .cardP {
+    width: 300px;
+    .card-textP {
+      width: 300px;
+    }
+  }
+  .actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

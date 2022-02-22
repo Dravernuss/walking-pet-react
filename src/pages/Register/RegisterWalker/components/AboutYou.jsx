@@ -10,7 +10,6 @@ import imagenes from "../../../../images/imagenes";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./_AboutYou.scss";
-// import CircularProgress from "@material-ui/core/CircularProgress";
 
 export const AboutYou = ({ changeView }) => {
   return (
