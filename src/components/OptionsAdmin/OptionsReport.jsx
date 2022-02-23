@@ -101,6 +101,7 @@ const OptionsReport = () => {
                   flexDirection: "row",
                   displayWrap: "wrap",
                 }}
+                className="divMensajes"
               >
                 <div style={{ width: "50%", padding: "2rem" }}>
                   <Typography

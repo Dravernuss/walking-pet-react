@@ -101,9 +101,13 @@
   .modalRegisterStyle {
     min-width: 350px;
     padding: 0 0 20px 0;
-    margin: 0 0 0 10px;
+    margin: 0 0 0 0px;
   }
   .izquierda {
     font-size: 12px;
+    width: 90%;
+  }
+  .buttonOR {
+    font-size: 13px !important;
   }
 }

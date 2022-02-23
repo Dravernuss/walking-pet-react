@@ -157,6 +157,7 @@ const OptionsRegisterWalker = ({ estado }) => {
                       <Button
                         style={ModalStyle.boton}
                         onClick={handleCloseDetails}
+                        className="buttonOR"
                       >
                         Volver
                       </Button>
@@ -168,6 +169,7 @@ const OptionsRegisterWalker = ({ estado }) => {
                             : ModalStyle.botonDisabled
                         }
                         onClick={handleOpenAccept}
+                        className="buttonOR"
                       >
                         Aceptar
                       </Button>
@@ -223,6 +225,7 @@ const OptionsRegisterWalker = ({ estado }) => {
                         }
                         onClick={handleOpenCancel}
                         disabled={estado !== "Sin Revisar"}
+                        className="buttonOR"
                       >
                         Rechazar
                       </Button>

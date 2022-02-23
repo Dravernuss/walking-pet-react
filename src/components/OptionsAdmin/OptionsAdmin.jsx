@@ -34,35 +34,33 @@ const OptionsAdmin = () => {
             </Typography>
           </div>
           <div style={ModalStyle.body} className="boxModalBody">
-            <Typography m={2}>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                NOMBRE DEL CLIENTE: MANUEL BAELLA
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                NOMBRE DEL PASEADOR: HELEN ARIAS
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                DIRECCIÓN:Av. Tomas Valle 3145 Miraflores
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                FECHA: 16-12-2021
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                HORARIO: 16:00-17:00 p.m
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                TIEMPO: 1 HORA
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                COSTO: S/16
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                Mascota(s):
-              </p>
-              <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                * Balto
-              </p>
-            </Typography>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              NOMBRE DEL CLIENTE: MANUEL BAELLA
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              NOMBRE DEL PASEADOR: HELEN ARIAS
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              DIRECCIÓN:Av. Tomas Valle 3145 Miraflores
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              FECHA: 16-12-2021
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              HORARIO: 16:00-17:00 p.m
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              TIEMPO: 1 HORA
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              COSTO: S/16
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              Mascota(s):
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              * Balto
+            </p>
             <div
               style={{
                 display: "flex",
