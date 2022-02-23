@@ -148,6 +148,7 @@ const OptionsReport = () => {
                           borderRadius: "20px",
                           textAlign: "center",
                         }}
+                        className="boxModalOpcion"
                       >
                         <p
                           id="child-modal-description"
@@ -159,6 +160,7 @@ const OptionsReport = () => {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
+                            columnGap: "10px",
                           }}
                         >
                           <Button
@@ -224,6 +226,7 @@ const OptionsReport = () => {
                           borderRadius: "20px",
                           textAlign: "center",
                         }}
+                        className="boxModalOpcion"
                       >
                         <p
                           id="child-modal-description"
@@ -235,6 +238,7 @@ const OptionsReport = () => {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
+                            columnGap: "10px",
                           }}
                         >
                           <Button

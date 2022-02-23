@@ -189,6 +189,7 @@ const OptionsRegisterWalker = ({ estado }) => {
                             borderRadius: "20px",
                             textAlign: "center",
                           }}
+                          className="boxModalOpcion"
                         >
                           <p
                             id="child-modal-description"
@@ -200,6 +201,7 @@ const OptionsRegisterWalker = ({ estado }) => {
                             style={{
                               display: "flex",
                               justifyContent: "space-between",
+                              columnGap: "10px",
                             }}
                           >
                             <Button
@@ -245,6 +247,7 @@ const OptionsRegisterWalker = ({ estado }) => {
                             borderRadius: "20px",
                             textAlign: "center",
                           }}
+                          className="boxModalOpcion"
                         >
                           <p
                             id="child-modal-description"
@@ -256,6 +259,7 @@ const OptionsRegisterWalker = ({ estado }) => {
                             style={{
                               display: "flex",
                               justifyContent: "space-between",
+                              columnGap: "10px",
                             }}
                           >
                             <Button

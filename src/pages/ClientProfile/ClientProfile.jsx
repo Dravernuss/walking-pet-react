@@ -123,7 +123,7 @@ const ClientProfile = () => {
                       Editar Perfil
                     </Typography>
                   </div>
-                  <div style={ModalStyle.body}>
+                  <div style={ModalStyle.body} className="boxModalBody">
                     <FormControl fullWidth style={{ marginTop: "10px" }}>
                       <InputLabel
                         size="small"

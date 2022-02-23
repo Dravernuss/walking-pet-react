@@ -76,7 +76,7 @@ const WalkerProfile = () => {
             <Chip label="Barranco" />
           </div>
           <div>
-            {true ? (
+            {false ? (
               <div className="actions">
                 <Button className="boton" href="/askForDate">
                   <img
