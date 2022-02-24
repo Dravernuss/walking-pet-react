@@ -67,9 +67,6 @@ const Login = () => {
         </FormControl>
         <div className="layoutForm__footer">
           <div className="layoutForm__footer-options">
-            <p className="layoutForm__footer-link">
-              <Link to="/">Olvidé mi contraseña</Link>
-            </p>
             <div>
               ¿Aún no tienes cuenta? <Link to="/register"> Regístrate</Link>
             </div>

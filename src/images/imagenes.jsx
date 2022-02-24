@@ -15,6 +15,16 @@ import helenDNI from "./helenDNI.png";
 import helenSquare from "./helenSquare.png";
 import dogTired from "./dogTired.png";
 import logoPerrito from "./logoPerrito.png";
+import logoBlanco from "./logoblanco.png";
+import pataCirculo from "./pataCirculo.png";
+import instagram from "./instagram.png";
+import facebook from "./facebook.png";
+import wsp from "./wsp.png";
+import c1 from "./c1.png";
+import c2 from "./c2.png";
+import c3 from "./c3.png";
+import c4 from "./c4.png";
+import c5 from "./c5.png";
 
 const Imagenes = {
   img1: logo,
@@ -34,6 +44,16 @@ const Imagenes = {
   img15: helenSquare,
   img16: dogTired,
   img17: logoPerrito,
+  img18: logoBlanco,
+  img19: pataCirculo,
+  img20: instagram,
+  img21: facebook,
+  img22: wsp,
+  img23: c1,
+  img24: c2,
+  img25: c3,
+  img26: c4,
+  img27: c5,
 };
 
 export default Imagenes;

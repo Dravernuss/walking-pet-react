@@ -15,13 +15,17 @@ import AdminLogin from "./pagesAdmin/AdminLogin/AdminLogin";
 import ReservedTours from "./pagesAdmin/ReservedTours/ReservedTours";
 import WalkerRegistration from "./pagesAdmin/WalkerRegistration/WalkerRegistration";
 import Reports from "./pagesAdmin/Reports/Reports";
+import LandingPage from "./pages/LandingPage/LandingPage";
 
 const App = () => {
   return (
     <BrowserRouter>
       <div>
         <Routes>
+          {/* Ver cual HOME se usara*/}
           <Route path="/" element={<Home />} />
+          <Route path="/landingpage" element={<LandingPage />} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/principalpage" element={<PrincipalPage />} />
           <Route path="/clientprofile" element={<ClientProfile />} />
