@@ -23,9 +23,7 @@ const App = () => {
       <div>
         <Routes>
           {/* Ver cual HOME se usara*/}
-          <Route path="/" element={<Home />} />
-          <Route path="/landingpage" element={<LandingPage />} />
-
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/principalpage" element={<PrincipalPage />} />
           <Route path="/clientprofile" element={<ClientProfile />} />

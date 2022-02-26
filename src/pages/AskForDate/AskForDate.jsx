@@ -68,17 +68,19 @@ export const AskForDate = () => {
           <div class="askForDate__container-data-select">
             <Box sx={{ minWidth: 120, textAlign: "center" }}>
               <FormControl
-                variant="standard"
+                // variant="standard"
                 style={{ width: "30%", margin: "20px 0" }}
               >
-                <InputLabel id="demo-simple-select-label">Distrito</InputLabel>
+                {/* <InputLabel id="demo-simple-select-label">Distrito</InputLabel> */}
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
                   value={age}
-                  label="Age"
                   onChange={handleChange}
                 >
+                  <MenuItem value="">
+                    <em>Seleccione un distrito</em>
+                  </MenuItem>
                   {distritos.map((distrito, i) => (
                     <MenuItem key={i} value={distrito}>
                       {distrito}

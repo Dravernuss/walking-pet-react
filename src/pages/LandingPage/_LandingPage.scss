@@ -74,6 +74,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  font-family: "Rambla-Regular";
   align-items: center;
   background: rgba(249, 186, 62, 0.5);
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -98,5 +99,100 @@
     font-size: 20px;
     line-height: 42px;
     margin-right: 15px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .section {
+    &__Two {
+      padding: 0px 0px 0px 2rem;
+      .pataCirculo {
+        width: 40%;
+      }
+      .whatIs {
+        width: 50%;
+        padding: 0 2rem 0 1rem;
+        h1 {
+          font-size: 2.5rem;
+          line-height: 3rem;
+        }
+        p {
+          font-size: 1.5rem;
+          line-height: 2rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .section {
+    &__One {
+      .logoBlanco {
+        width: 400px;
+      }
+      .buttonGroup {
+        column-gap: 200px;
+        .botonHome {
+          font-size: 1rem;
+          padding: 0px 1rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .section {
+    &__Two {
+      padding: 0px 0px 0px 0rem;
+      justify-content: center;
+      flex-direction: column;
+      row-gap: 2rem;
+      .pataCirculo {
+        width: 250px;
+      }
+      .whatIs {
+        width: 90%;
+        padding: 0;
+        h1 {
+          font-size: 2rem;
+        }
+        p {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+
+  .footerHome {
+    .footerImages {
+      p {
+        font-size: 1rem;
+      }
+
+      .redesSociales {
+        width: 24px;
+      }
+    }
+    .footerEnd {
+      font-size: 1rem;
+    }
+  }
+
+  .section {
+    &__One {
+      .logoBlanco {
+        width: 300px;
+      }
+      .buttonGroup {
+        column-gap: 70px;
+        margin-bottom: 1.5rem;
+        .botonHome {
+          font-size: 1rem;
+          padding: 0px 1rem;
+        }
+      }
+    }
   }
 }

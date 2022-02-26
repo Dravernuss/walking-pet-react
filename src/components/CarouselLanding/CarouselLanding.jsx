@@ -29,7 +29,7 @@ const tutorialSteps = [
     imgPath: imagenes.img25,
   },
   {
-    label: "Listo! Tu mascota vivirá una gran experiencia.",
+    label: "Listo! Tu mascota vivirá una gran experiencia",
     imgPath: imagenes.img26,
   },
   {
@@ -57,16 +57,8 @@ function CarouselLanding() {
   };
 
   return (
-    <Grid
-      container
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        fontFamily: "Roboto",
-      }}
-    >
-      <Grid lg={6} md={12} item>
+    <div className="container-c">
+      <div className="item-c">
         <Paper
           style={{ padding: "0px 30px", backgroundColor: "rgba(0, 0, 0, 0.0)" }}
           square
@@ -77,25 +69,24 @@ function CarouselLanding() {
             {tutorialSteps[activeStep].label}
           </Typography>
         </Paper>
-      </Grid>
-      <Grid
-        lg={6}
-        md={12}
-        item
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+      </div>
+      <div className="item-c">
+        {/* <Button
+          className="button-c"
+          style={{
+            backgroundColor: "rgba(255,255,255)",
+            border: "1px solid grey",
+          }}
+          size="small"
+          onClick={handleBack}
+          disabled={activeStep === 0}
+        >
           {theme.direction === "rtl" ? (
             <KeyboardArrowRight />
           ) : (
             <KeyboardArrowLeft />
           )}
-        </Button>
+        </Button> */}
         <div className="root">
           <AutoPlaySwipeableViews
             interval={5000}
@@ -105,7 +96,7 @@ function CarouselLanding() {
             enableMouseEvents
           >
             {tutorialSteps.map((step, index) => (
-              <div key={step.label}>
+              <div key={step.label} className="imgContainer">
                 {Math.abs(activeStep - index) <= 2 ? (
                   <img
                     className="imgCarrousel"
@@ -128,7 +119,8 @@ function CarouselLanding() {
             activeStep={activeStep}
           />
         </div>
-        <Button
+        {/* <Button
+          className="button-c"
           size="small"
           onClick={handleNext}
           disabled={activeStep === maxSteps - 1}
@@ -138,9 +130,9 @@ function CarouselLanding() {
           ) : (
             <KeyboardArrowRight />
           )}
-        </Button>
-      </Grid>
-    </Grid>
+        </Button> */}
+      </div>
+    </div>
   );
 }
 
