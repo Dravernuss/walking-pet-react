@@ -16,6 +16,17 @@ import FormControl from "@mui/material/FormControl";
 import { styled } from "@mui/material/styles";
 import PetCard from "../../components/PetCard/PetCard.jsx";
 
+import {
+  updateUserAsync,
+  getOneUserAsync,
+  selectUserToEdit,
+  selectUser,
+  userToEdit,
+} from "../../slices/userSlice.js";
+
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
+
 const distritos = [
   "San Miguel",
   "San Isidro",
@@ -42,22 +53,43 @@ const razas = [
   "Shar Pei",
   "Otro",
 ];
+
 const ClientProfile = () => {
   const [open, setOpen] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
-  const handleOpen = () => setOpen(true);
+
   const handleClose = () => setOpen(false);
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => setOpenAdd(false);
-  const [distrito, setDistrito] = useState("");
   const [sexo, setSexo] = useState("");
   const [raza, setRaza] = useState("");
   const [tamano, setTamano] = useState("");
   const [caracter, setCaracter] = useState("");
 
-  const handleChange = (event) => {
-    setDistrito(event.target.value);
+  // Parte del REDUX TOOLKIT -------------------------
+
+  const dispatch = useDispatch();
+  // const user = useSelector(selectUserToEdit);
+  const districtRef = useRef();
+  const addressRef = useRef();
+  const phoneRef = useRef();
+
+  const user = useSelector((state) => state.user); //lo trael de local storage // error
+  // const user = useSelector(selectUserToEdit);
+  const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
+  useEffect(() => {
+    // dispatch(getOneUserAsync(userID));
+    console.log("USER", user);
+    console.log("holaa bb");
+  }, []);
+  console.log("userid", userID);
+
+  console.log(user);
+  const handleOpen = () => {
+    dispatch(userToEdit(user));
+    setOpen(true);
   };
+  // -----------------------------------------------------
 
   const handleChangeSexo = (event) => {
     setSexo(event.target.value);
@@ -77,6 +109,36 @@ const ClientProfile = () => {
   const Input = styled("input")({
     display: "none",
   });
+
+  //--REDUX----------------------------------------------------
+
+  const handleEditProfile = async (e) => {
+    e.preventDefault();
+    const { elements } = e.target;
+    const dataUser = {
+      district: elements[0].value,
+      address: elements[2].value,
+      phone: elements[4].value,
+    };
+
+    console.log("user", user);
+    await dispatch(updateUserAsync({ id: user._id, ...dataUser }));
+    dispatch(getOneUserAsync(userID));
+    handleClose();
+  };
+
+  // useEffect(() => {
+  //   if (user) {
+  //     const { district, address, phone } = user;
+  //     console.log("bola1", district, address, phone);
+
+  //     // Initial value to edit form
+  //     // districtRef.current.value = district;
+  //     // addressRef.current.value = address;
+  //     // phoneRef.current.value = phone;
+  //   }
+  // }, [user]);
+
   return (
     <div className="ClientProfile">
       <NavBar />
@@ -85,14 +147,17 @@ const ClientProfile = () => {
           <Avatar
             sx={{ width: "240px", height: "240px" }}
             className="avatarC"
+            src={user.userInfo.photo_url}
           />
-          <h2 className="card-title">Manuel Baella</h2>
+          <h2 className="card-title">
+            {user.userInfo.firstname} {user.userInfo.lastname}
+          </h2>
         </div>
         <div className="info-containerC">
           <h2 className="info">Dirección:</h2>
-          <p className="info-presentacionC">Av. Tomas Valle 3145 Miraflores</p>
+          <p className="info-presentacionC">{user.userInfo.address}</p>
           <h2 className="info">Teléfono:</h2>
-          <p className="info-presentacionC">949567245</p>
+          <p className="info-presentacionC">{user.userInfo.phone}</p>
 
           <div>
             <div className="actions">
@@ -123,7 +188,11 @@ const ClientProfile = () => {
                       Editar Perfil
                     </Typography>
                   </div>
-                  <div style={ModalStyle.body} className="boxModalBody">
+                  <form
+                    onSubmit={handleEditProfile}
+                    style={ModalStyle.body}
+                    className="boxModalBody"
+                  >
                     <FormControl fullWidth style={{ marginTop: "10px" }}>
                       <InputLabel
                         size="small"
@@ -134,11 +203,10 @@ const ClientProfile = () => {
                       <Select
                         labelId="demo-simple-select-autowidth-label"
                         id="demo-simple-select-autowidth"
-                        value={distrito}
-                        onChange={handleChange}
                         label="Distrito"
                         size="small"
                         margin="normal"
+                        inputRef={districtRef}
                       >
                         {distritos.map((distritoSel) => (
                           <MenuItem key={distritoSel} value={distritoSel}>
@@ -153,6 +221,8 @@ const ClientProfile = () => {
                         label="Dirección"
                         size="small"
                         type="text"
+                        inputRef={addressRef}
+                        required
                       />
                       <TextField
                         className="input"
@@ -160,6 +230,8 @@ const ClientProfile = () => {
                         label="Teléfono de Contacto"
                         size="small"
                         type="text"
+                        inputRef={phoneRef}
+                        required
                       />
                       <p
                         style={{
@@ -206,12 +278,16 @@ const ClientProfile = () => {
                         <Button style={ModalStyle.boton} onClick={handleClose}>
                           Cerrar
                         </Button>
-                        <Button style={ModalStyle.boton} onClick={handleClose}>
+                        <Button
+                          type="submit"
+                          style={ModalStyle.boton}
+                          // onClick={handleClose}
+                        >
                           Finalizar
                         </Button>
                       </div>
                     </FormControl>
-                  </div>
+                  </form>
                 </Box>
               </Modal>
             </div>

@@ -11,7 +11,36 @@ import FormLabel from "@mui/material/FormLabel";
 import imagenes from "../../images/imagenes.jsx";
 import { Box, Button, TextField } from "@mui/material";
 
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUserAsync, selectUserLoggued } from "../../slices/userSlice";
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
+  const stateLogged = JSON.parse(localStorage.getItem("infoUser"))?.token;
+  console.log(stateLogged);
+  const dispatch = useDispatch();
+  const loggued = useSelector(selectUserLoggued);
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { elements } = e.target;
+    const user = {
+      email: elements[0].value,
+      password: elements[2].value,
+    };
+    if (role === "user") {
+      dispatch(loginUserAsync(user));
+    }
+    // else dispatch(loginWalkerAsync(user));
+  };
+  useEffect(() => {
+    console.log("useEffect2", loggued);
+    stateLogged && navigate("/principalpage");
+  }, [stateLogged]);
+
+  const [role, setRole] = useState("user");
+
   return (
     <LayoutInicial>
       <LayoutForm title="Iniciar sesión">
@@ -29,41 +58,47 @@ const Login = () => {
           >
             <FormControlLabel
               className="radio_button"
-              value="paseador"
+              value="walker"
               control={<Radio />}
               label="Soy paseador"
+              checked={role === "walker"}
+              onClick={() => setRole("walker")}
             />
             <FormControlLabel
               className="radio_button"
-              value="cliente"
+              value="user"
               control={<Radio />}
               label="Soy cliente"
+              checked={role === "user"}
+              onClick={() => setRole("user")}
             />
           </RadioGroup>
-          <Box
-            component="div"
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "100%" },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <TextField required id="email" label="Correo electrónico" />
-            <TextField
-              type="password"
-              required
-              id="password"
-              label="Contraseña"
-            />
-          </Box>
-          <Button
-            variant="contained"
-            className="button_login"
-            style={{}}
-            href="/principalpage"
-          >
-            Ingresar
-          </Button>
+          <form onSubmit={handleSubmit}>
+            <Box
+              component="div"
+              sx={{
+                "& .MuiTextField-root": { m: 1, width: "100%" },
+              }}
+              noValidate
+              autoComplete="off"
+            >
+              <TextField
+                required
+                id="email"
+                type="email"
+                label="Correo electrónico"
+              />
+              <TextField
+                type="password"
+                required
+                id="password"
+                label="Contraseña"
+              />
+            </Box>
+            <Button type="submit" variant="contained" className="button_login">
+              Ingresar
+            </Button>
+          </form>
         </FormControl>
         <div className="layoutForm__footer">
           <div className="layoutForm__footer-options">

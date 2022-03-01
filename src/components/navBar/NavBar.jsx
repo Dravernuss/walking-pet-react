@@ -6,15 +6,25 @@ import Avatar from "@mui/material/Avatar";
 import imagenes from "../../images/imagenes.jsx";
 import "./_NavBar.scss";
 import { Divider } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const user = JSON.parse(localStorage.getItem("infoUser"));
+
+  const endSession = () => {
+    localStorage.removeItem("infoUser");
+    navigate("/");
   };
 
   return (
@@ -23,7 +33,9 @@ const NavBar = () => {
         <img src={imagenes.img1} alt=" " width="200"></img>
       </Button>
       <div className="userInfo">
-        <p>Manuel Baella</p>
+        <p>
+          {user.firstname} {user.lastname}
+        </p>
         <Button
           id="basic-button"
           aria-controls={open ? "basic-menu" : undefined}
@@ -31,7 +43,7 @@ const NavBar = () => {
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
         >
-          <Avatar />
+          <Avatar src={user.photo_url} />
           <img src={imagenes.img2} alt=" "></img>
         </Button>
         <Menu
@@ -46,7 +58,11 @@ const NavBar = () => {
           }}
         >
           <MenuItem onClick={handleClose}>
-            <Button href="/clientprofile">
+            <Button
+              onClick={() => {
+                navigate("/clientprofile");
+              }}
+            >
               <p
                 style={{
                   color: "black",
@@ -59,7 +75,7 @@ const NavBar = () => {
           </MenuItem>
           <Divider />
           <MenuItem onClick={handleClose}>
-            <Button href="/">
+            <Button onClick={endSession}>
               <p style={{ color: "black", fontFamily: "Roboto-Regular" }}>
                 Cerrar Sesión
               </p>

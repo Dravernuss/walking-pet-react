@@ -11,6 +11,10 @@
   }
 }
 .formContainer {
+  form {
+    display: flex;
+    flex-direction: column;
+  }
   .button_login {
     background-color: #ffff;
     color: #000;
