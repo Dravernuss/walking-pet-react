@@ -18,9 +18,14 @@ import PetCard from "../../components/PetCard/PetCard.jsx";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { updateUserAsync, userToEdit } from "../../slices/userSlice.js";
-import { myPets, getPetsByUserAsync } from "../../slices/petSlice.js";
+import {
+  myPets,
+  getPetsByUserAsync,
+  createPetAsync,
+} from "../../slices/petSlice.js";
 
 const distritos = [
   "San Miguel",
@@ -54,7 +59,14 @@ const ClientProfile = () => {
   const [openAdd, setOpenAdd] = useState(false);
   const handleClose = () => setOpen(false);
   const handleOpenAdd = () => setOpenAdd(true);
-  const handleCloseAdd = () => setOpenAdd(false);
+  const handleCloseAdd = () => {
+    setSexo("");
+    setRaza("");
+    setTamano("");
+    setCaracter("");
+    setOpenAdd(false);
+  };
+
   const [sexo, setSexo] = useState("");
   const [raza, setRaza] = useState("");
   const [tamano, setTamano] = useState("");
@@ -80,6 +92,8 @@ const ClientProfile = () => {
   });
 
   // Parte del REDUX TOOLKIT ------------USER-------------
+
+  const navigate = useNavigate();
 
   const districtRef = useRef();
   const addressRef = useRef();
@@ -126,8 +140,27 @@ const ClientProfile = () => {
   useEffect(() => {
     dispatch(getPetsByUserAsync(userID));
   }, []);
+
   const pets = useSelector(myPets);
-  console.log("PETS", pets);
+  const handleCreatePet = async (e) => {
+    e.preventDefault();
+
+    const { elements } = e.target;
+
+    const pet = {
+      name: elements[0].value,
+      age: elements[2].value,
+      gender: elements[4].value,
+      breed: elements[6].value,
+      size: elements[8].value,
+      nature: elements[10].value,
+      additional_information: elements[12].value,
+    };
+
+    await dispatch(createPetAsync({ pet, id: userID }));
+    await dispatch(getPetsByUserAsync(userID));
+    handleCloseAdd();
+  };
   //------------------------------------------------------------------
 
   return (
@@ -158,7 +191,10 @@ const ClientProfile = () => {
 
           <div>
             <div className="actions">
-              <Button className="boton" href="/datesclient">
+              <Button
+                className="boton"
+                onClick={() => navigate("/datesclient")}
+              >
                 <img className="dogButton" src={imagenes.img9} alt="..."></img>
                 Ver mis Citas
               </Button>
@@ -276,11 +312,7 @@ const ClientProfile = () => {
                         <Button style={ModalStyle.boton} onClick={handleClose}>
                           Cerrar
                         </Button>
-                        <Button
-                          type="submit"
-                          style={ModalStyle.boton}
-                          // onClick={handleClose}
-                        >
+                        <Button type="submit" style={ModalStyle.boton}>
                           Finalizar
                         </Button>
                       </div>
@@ -316,13 +348,14 @@ const ClientProfile = () => {
             </Typography>
           </div>
           <div style={ModalStyle.body} className="boxModalBody">
-            <form>
+            <form onSubmit={handleCreatePet}>
               <TextField
                 className="input"
                 margin="normal"
                 label="Nombre de la Mascota"
                 size="small"
                 type="text"
+                required
               />
               <TextField
                 className="input"
@@ -331,6 +364,7 @@ const ClientProfile = () => {
                 size="small"
                 type="number"
                 inputProps={{ min: 1, max: 20 }}
+                required
               />
               <FormControl fullWidth style={{ marginTop: "20px" }}>
                 <InputLabel size="small" id="sexo">
@@ -344,9 +378,10 @@ const ClientProfile = () => {
                   label="Sexo"
                   size="small"
                   margin="normal"
+                  required
                 >
-                  <MenuItem value="macho">Hembra</MenuItem>
-                  <MenuItem value="macho">Macho</MenuItem>
+                  <MenuItem value="Hembra">Hembra</MenuItem>
+                  <MenuItem value="Macho">Macho</MenuItem>
                 </Select>
               </FormControl>
               <FormControl fullWidth style={{ marginTop: "20px" }}>
@@ -361,6 +396,7 @@ const ClientProfile = () => {
                   label="Raza"
                   size="small"
                   margin="normal"
+                  required
                 >
                   {razas.map((razaSel) => (
                     <MenuItem key={razaSel} value={razaSel}>
@@ -381,10 +417,11 @@ const ClientProfile = () => {
                   label="Tamaño"
                   size="small"
                   margin="normal"
+                  required
                 >
-                  <MenuItem value="macho">Grande</MenuItem>
-                  <MenuItem value="macho">Mediano</MenuItem>
-                  <MenuItem value="macho">Pequeño</MenuItem>
+                  <MenuItem value="Grande">Grande</MenuItem>
+                  <MenuItem value="Mediano">Mediano</MenuItem>
+                  <MenuItem value="Pequeño">Pequeño</MenuItem>
                 </Select>
               </FormControl>
               <FormControl fullWidth style={{ marginTop: "20px" }}>
@@ -399,10 +436,11 @@ const ClientProfile = () => {
                   label="Carácter"
                   size="small"
                   margin="normal"
+                  required
                 >
-                  <MenuItem value="macho">Tímido</MenuItem>
-                  <MenuItem value="macho">Amigable</MenuItem>
-                  <MenuItem value="macho">Agresivo</MenuItem>
+                  <MenuItem value="Tímido">Tímido</MenuItem>
+                  <MenuItem value="Amigable">Amigable</MenuItem>
+                  <MenuItem value="Agresivo">Agresivo</MenuItem>
                 </Select>
               </FormControl>
               <TextField
@@ -459,7 +497,7 @@ const ClientProfile = () => {
                 <Button style={ModalStyle.boton} onClick={handleCloseAdd}>
                   Cerrar
                 </Button>
-                <Button style={ModalStyle.boton} onClick={handleCloseAdd}>
+                <Button style={ModalStyle.boton} type="submit">
                   Añadir
                 </Button>
               </div>
@@ -468,9 +506,12 @@ const ClientProfile = () => {
         </Box>
       </Modal>
       <div className="pets">
-        {pets?.map((pet) => {
+        {pets?.map((pet, i) => {
           return (
             <PetCard
+              key={i}
+              userID={pet.user_id}
+              id={pet._id}
               name={pet.name}
               age={pet.age}
               size={pet.size}

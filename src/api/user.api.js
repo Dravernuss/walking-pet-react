@@ -22,12 +22,10 @@ export const login = (user) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("DATA", data);
         // resolve({ token: data.token });
         resolve(data);
       })
       .catch((err) => {
-        console.log("ERROR", err);
         reject({ error: err });
       });
   });

@@ -7,8 +7,6 @@ import imagenes from "../../images/imagenes.jsx";
 import "./_NavBar.scss";
 import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -29,7 +27,7 @@ const NavBar = () => {
 
   return (
     <div className="navbar">
-      <Button variant="text" href="/principalpage">
+      <Button variant="text" onClick={() => navigate("/principalpage")}>
         <img src={imagenes.img1} alt=" " width="200"></img>
       </Button>
       <div className="userInfo">
@@ -57,28 +55,39 @@ const NavBar = () => {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            style={{ width: "100%", padding: "0" }}
+            onClick={handleClose}
+          >
             <Button
               onClick={() => {
                 navigate("/clientprofile");
               }}
+              style={{
+                color: "black",
+                fontFamily: "Roboto-Regular",
+                width: "100%",
+                padding: "10px 15px",
+              }}
             >
-              <p
-                style={{
-                  color: "black",
-                  fontFamily: "Roboto-Regular",
-                }}
-              >
-                Ver Perfil
-              </p>
+              Ver Perfil
             </Button>
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleClose}>
-            <Button onClick={endSession}>
-              <p style={{ color: "black", fontFamily: "Roboto-Regular" }}>
-                Cerrar Sesión
-              </p>
+          <MenuItem
+            style={{ width: "100%", padding: "0" }}
+            onClick={handleClose}
+          >
+            <Button
+              onClick={endSession}
+              style={{
+                color: "black",
+                fontFamily: "Roboto-Regular",
+                width: "100%",
+                padding: "10px 15px",
+              }}
+            >
+              Cerrar Sesión
             </Button>
           </MenuItem>
         </Menu>
