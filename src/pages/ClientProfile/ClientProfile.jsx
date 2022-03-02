@@ -16,16 +16,11 @@ import FormControl from "@mui/material/FormControl";
 import { styled } from "@mui/material/styles";
 import PetCard from "../../components/PetCard/PetCard.jsx";
 
-import {
-  updateUserAsync,
-  getOneUserAsync,
-  selectUserToEdit,
-  selectUser,
-  userToEdit,
-} from "../../slices/userSlice.js";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
+
+import { updateUserAsync, userToEdit } from "../../slices/userSlice.js";
+import { myPets, getPetsByUserAsync } from "../../slices/petSlice.js";
 
 const distritos = [
   "San Miguel",
@@ -57,7 +52,6 @@ const razas = [
 const ClientProfile = () => {
   const [open, setOpen] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
-
   const handleClose = () => setOpen(false);
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => setOpenAdd(false);
@@ -65,32 +59,7 @@ const ClientProfile = () => {
   const [raza, setRaza] = useState("");
   const [tamano, setTamano] = useState("");
   const [caracter, setCaracter] = useState("");
-
-  // Parte del REDUX TOOLKIT -------------------------
-
   const dispatch = useDispatch();
-  // const user = useSelector(selectUserToEdit);
-  const districtRef = useRef();
-  const addressRef = useRef();
-  const phoneRef = useRef();
-
-  const user = useSelector((state) => state.user); //lo trael de local storage // error
-  // const user = useSelector(selectUserToEdit);
-  const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
-  // useEffect(() => {
-  //   // dispatch(getOneUserAsync(userID));
-  //   console.log("USER", user);
-  //   console.log("holaa bb");
-  // }, []);
-  // console.log("userid", userID);
-
-  console.log("USERRR", user);
-  const handleOpen = () => {
-    dispatch(userToEdit(user));
-    setOpen(true);
-  };
-  // -----------------------------------------------------
-
   const handleChangeSexo = (event) => {
     setSexo(event.target.value);
   };
@@ -110,8 +79,17 @@ const ClientProfile = () => {
     display: "none",
   });
 
-  //--REDUX----------------------------------------------------
+  // Parte del REDUX TOOLKIT ------------USER-------------
 
+  const districtRef = useRef();
+  const addressRef = useRef();
+  const phoneRef = useRef();
+  const user = useSelector((state) => state.user);
+  const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
+  const handleOpen = () => {
+    dispatch(userToEdit(user.userInfo)); // user -> user.userInfo
+    setOpen(true);
+  };
   const handleEditProfile = async (e) => {
     e.preventDefault();
     const { elements } = e.target;
@@ -121,23 +99,36 @@ const ClientProfile = () => {
       phone: elements[4].value,
     };
     dispatch(userToEdit(dataUser));
-    // console.log("user", user);
     await dispatch(updateUserAsync({ id: userID, ...dataUser }));
-    dispatch(getOneUserAsync(userID));
+    // dispatch(getOneUserAsync(userID));
     handleClose();
   };
 
   // useEffect(() => {
-  //   if (user) {
-  //     const { district, address, phone } = user;
+  //   if (user && open === true) {
+  //     console.log("USERRR", user);
+  //     console.log("USERRRinfo", user.userInfo);
+  //     const { district, address, phone } = user.userInfo;
   //     console.log("bola1", district, address, phone);
+  //     console.log("ref", districtRef);
 
   //     // Initial value to edit form
-  //     // districtRef.current.value = district;
-  //     // addressRef.current.value = address;
-  //     // phoneRef.current.value = phone;
+  //     districtRef.current.value = district;
+  //     addressRef.current.value = address;
+  //     phoneRef.current.value = phone;
   //   }
   // }, [user]);
+
+  //-------------------------------------------------------------
+  ///////////////////////////////////////////////////////////////
+  // Parte del REDUX TOOLKIT ------------PETS------------------
+
+  useEffect(() => {
+    dispatch(getPetsByUserAsync(userID));
+  }, []);
+  const pets = useSelector(myPets);
+  console.log("PETS", pets);
+  //------------------------------------------------------------------
 
   return (
     <div className="ClientProfile">
@@ -155,7 +146,13 @@ const ClientProfile = () => {
         </div>
         <div className="info-containerC">
           <h2 className="info">Dirección:</h2>
-          <p className="info-presentacionC">{user.userInfo.address}</p>
+          <p className="info-presentacionC">
+            {user.userInfo.address}{" "}
+            <strong>
+              {}
+              {user.userInfo.district}
+            </strong>
+          </p>
           <h2 className="info">Teléfono:</h2>
           <p className="info-presentacionC">{user.userInfo.phone}</p>
 
@@ -207,6 +204,7 @@ const ClientProfile = () => {
                         size="small"
                         margin="normal"
                         inputRef={districtRef}
+                        required
                       >
                         {distritos.map((distritoSel) => (
                           <MenuItem key={distritoSel} value={distritoSel}>
@@ -470,22 +468,18 @@ const ClientProfile = () => {
         </Box>
       </Modal>
       <div className="pets">
-        <PetCard
-          name="Pirata"
-          age="1"
-          size="Pequeño"
-          nature="Agresivo"
-          photo={imagenes.img11}
-          extraInfo="Es muy juguetón, le gusta acercarse a otros perros. Es alérgico a las flores, no le gustan los gatos, requiere bozal ."
-        />
-        <PetCard
-          name="Balto"
-          age="5"
-          size="Grande"
-          nature="Manso"
-          photo={imagenes.img12}
-          extraInfo="Es travieso, se distrae muy rapido. Es manso, le gusta oler los arbustos."
-        />
+        {pets?.map((pet) => {
+          return (
+            <PetCard
+              name={pet.name}
+              age={pet.age}
+              size={pet.size}
+              nature={pet.nature}
+              photo_url={pet.photo_url}
+              extraInfo={pet.additional_information}
+            />
+          );
+        })}
       </div>
     </div>
   );

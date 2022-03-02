@@ -31,9 +31,6 @@ export const userSlice = createSlice({
   reducers: {
     userToEdit: (state, { payload: newUserData }) => {
       state.userInfo = { ...state.userInfo, ...newUserData };
-      console.table(state);
-      console.log("user", user);
-      console.log("nanan");
     },
   },
   extraReducers: (builder) => {
@@ -47,7 +44,7 @@ export const userSlice = createSlice({
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         console.log(action);
-        state.userInfo = action.payload;
+        state.userInfo = action.payload; // state.userInfo
         state.loggued = true;
         localStorage.setItem("infoUser", JSON.stringify(action.payload));
       });

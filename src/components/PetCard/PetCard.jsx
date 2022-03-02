@@ -9,11 +9,13 @@ import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import Avatar from "@mui/material/Avatar";
 import FormControl from "@mui/material/FormControl";
+import PetsIcon from "@mui/icons-material/Pets";
 import { styled } from "@mui/material/styles";
 import "./_PetCard.scss";
 
-const PetCard = ({ name, age, size, nature, photo, extraInfo }) => {
+const PetCard = ({ name, age, size, nature, photo_url, extraInfo }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openChild, setOpenChild] = useState(false);
   const handleOpenChild = () => setOpenChild(true);
@@ -258,7 +260,10 @@ const PetCard = ({ name, age, size, nature, photo, extraInfo }) => {
       </Modal>
       <div className="petcard">
         <div className="petInfo">
-          <img className="image" src={photo} alt="..."></img>
+          {/* <img className="image" src={photo} alt="..."></img> */}
+          <Avatar className="image" alt="Remy Sharp" src={photo_url}>
+            <PetsIcon className="image__icon" />
+          </Avatar>
           <h2>{name}</h2>
           <p>Edad : {age} año</p>
           <p>Tamaño : {size}</p>

@@ -18,7 +18,6 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const stateLogged = JSON.parse(localStorage.getItem("infoUser"))?.token;
-  console.log(stateLogged);
   const dispatch = useDispatch();
   const loggued = useSelector(selectUserLoggued);
   const navigate = useNavigate();
