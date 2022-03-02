@@ -21,6 +21,7 @@ export const getOneUserAsync = createAsyncThunk(
 
 export const updateUserAsync = createAsyncThunk("user/update", async (user) => {
   const response = await updateUser(user);
+  console.log("USERrrr", user);
   return response;
 });
 
@@ -28,11 +29,11 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    userToEdit: (state, action) => {
-      state.userToEdit = action.payload;
-      console.log("state payload", state.payload);
-      console.log("nanana");
-      // state.showModalToEdit = true;
+    userToEdit: (state, { payload: newUserData }) => {
+      state.userInfo = { ...state.userInfo, ...newUserData };
+      console.table(state);
+      console.log("user", user);
+      console.log("nanan");
     },
   },
   extraReducers: (builder) => {

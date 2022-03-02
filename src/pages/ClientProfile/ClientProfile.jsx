@@ -77,14 +77,14 @@ const ClientProfile = () => {
   const user = useSelector((state) => state.user); //lo trael de local storage // error
   // const user = useSelector(selectUserToEdit);
   const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
-  useEffect(() => {
-    // dispatch(getOneUserAsync(userID));
-    console.log("USER", user);
-    console.log("holaa bb");
-  }, []);
-  console.log("userid", userID);
+  // useEffect(() => {
+  //   // dispatch(getOneUserAsync(userID));
+  //   console.log("USER", user);
+  //   console.log("holaa bb");
+  // }, []);
+  // console.log("userid", userID);
 
-  console.log(user);
+  console.log("USERRR", user);
   const handleOpen = () => {
     dispatch(userToEdit(user));
     setOpen(true);
@@ -120,9 +120,9 @@ const ClientProfile = () => {
       address: elements[2].value,
       phone: elements[4].value,
     };
-
-    console.log("user", user);
-    await dispatch(updateUserAsync({ id: user._id, ...dataUser }));
+    dispatch(userToEdit(dataUser));
+    // console.log("user", user);
+    await dispatch(updateUserAsync({ id: userID, ...dataUser }));
     dispatch(getOneUserAsync(userID));
     handleClose();
   };
