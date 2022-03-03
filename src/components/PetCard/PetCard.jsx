@@ -15,7 +15,19 @@ import PetsIcon from "@mui/icons-material/Pets";
 import { styled } from "@mui/material/styles";
 import "./_PetCard.scss";
 
-const PetCard = ({ name, age, size, nature, photo_url, extraInfo }) => {
+import { useDispatch } from "react-redux";
+import { deletePetAsync, getPetsByUserAsync } from "../../slices/petSlice.js";
+
+const PetCard = ({
+  name,
+  age,
+  size,
+  nature,
+  photo_url,
+  extraInfo,
+  id,
+  userID,
+}) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openChild, setOpenChild] = useState(false);
   const handleOpenChild = () => setOpenChild(true);
@@ -35,6 +47,19 @@ const PetCard = ({ name, age, size, nature, photo_url, extraInfo }) => {
   const Input = styled("input")({
     display: "none",
   });
+
+  //------REDUX---------------PET---------------------------
+  const dispatch = useDispatch();
+
+  const handleDelete = async () => {
+    await dispatch(deletePetAsync(id));
+    await dispatch(getPetsByUserAsync(userID));
+    handleCloseEdit();
+    handleCloseChild();
+  };
+
+  //-----------------------------------------------
+
   return (
     <div>
       <Button className="ButtonLapiz" onClick={handleOpenEdit}>
@@ -248,7 +273,7 @@ const PetCard = ({ name, age, size, nature, photo_url, extraInfo }) => {
                     <Button style={ModalStyle.boton} onClick={handleCloseChild}>
                       Cancelar
                     </Button>
-                    <Button style={ModalStyle.boton} onClick={handleCloseChild}>
+                    <Button style={ModalStyle.boton} onClick={handleDelete}>
                       Aceptar
                     </Button>
                   </div>
@@ -262,7 +287,7 @@ const PetCard = ({ name, age, size, nature, photo_url, extraInfo }) => {
         <div className="petInfo">
           {/* <img className="image" src={photo} alt="..."></img> */}
           <Avatar className="image" alt="Remy Sharp" src={photo_url}>
-            <PetsIcon className="image__icon" />
+            <PetsIcon className="imageIcon" />
           </Avatar>
           <h2>{name}</h2>
           <p>Edad : {age} año</p>

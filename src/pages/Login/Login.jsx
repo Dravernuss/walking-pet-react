@@ -34,7 +34,6 @@ const Login = () => {
     // else dispatch(loginWalkerAsync(user));
   };
   useEffect(() => {
-    console.log("useEffect2", loggued);
     stateLogged && navigate("/principalpage");
   }, [stateLogged]);
 
