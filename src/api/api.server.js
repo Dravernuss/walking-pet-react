@@ -1,2 +1,2 @@
-const API_SERVER = "http://localhost:5000";
+const API_SERVER = "https://walking-pet-api.herokuapp.com";
 export default API_SERVER;
