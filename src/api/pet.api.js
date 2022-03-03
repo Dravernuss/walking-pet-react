@@ -10,13 +10,13 @@ const ENDPOINTS = {
 };
 
 export const getPetsByUser = (id) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_PETS_BY_USER}/${id}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -29,7 +29,7 @@ export const getPetsByUser = (id) => {
 };
 
 export const createPet = (pet, userId) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.CREATE}/${userId}`;
   console.log("pet-api", pet);
   return new Promise((resolve, reject) => {
@@ -38,7 +38,7 @@ export const createPet = (pet, userId) => {
       body: JSON.stringify(pet),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -52,14 +52,14 @@ export const createPet = (pet, userId) => {
 };
 
 export const deletePet = (id) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.DELETE}/${id}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
       method: "DELETE",
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -72,7 +72,7 @@ export const deletePet = (id) => {
 };
 
 export const updatePet = ({ id, ...pet }) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.UPDATE}/${id}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
@@ -80,7 +80,7 @@ export const updatePet = ({ id, ...pet }) => {
       body: JSON.stringify(pet),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())

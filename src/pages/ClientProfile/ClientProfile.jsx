@@ -308,203 +308,207 @@ const ClientProfile = () => {
           </div>
         </div>
       </div>
-      <Button className="addPet" onClick={handleOpenAdd}>
-        <img className="add" src={imagenes.img13} alt="..."></img>
-        Añadir Mascota
-      </Button>
-      <Modal
-        open={openAdd}
-        onClose={handleCloseAdd}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={ModalStyle.style} className="boxModal">
-          <div style={ModalStyle.header}>
-            <Typography
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              style={{
-                fontFamily: "Roboto-Bold",
-              }}
-            >
-              Añadir Mascota
-            </Typography>
-          </div>
-          <div style={ModalStyle.body} className="boxModalBody">
-            <form onSubmit={handleCreatePet}>
-              <TextField
-                className="input"
-                margin="normal"
-                label="Nombre de la Mascota"
-                size="small"
-                type="text"
-                required
-              />
-              <TextField
-                className="input"
-                margin="normal"
-                label="Edad"
-                size="small"
-                type="number"
-                inputProps={{ min: 1, max: 20 }}
-                required
-              />
-              <FormControl fullWidth style={{ marginTop: "20px" }}>
-                <InputLabel size="small" id="sexo">
-                  Sexo
-                </InputLabel>
-                <Select
-                  labelId="sexo"
-                  id="sexo"
-                  value={sexo}
-                  onChange={handleChangeSexo}
-                  label="Sexo"
-                  size="small"
-                  margin="normal"
-                  required
-                >
-                  <MenuItem value="Hembra">Hembra</MenuItem>
-                  <MenuItem value="Macho">Macho</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl fullWidth style={{ marginTop: "20px" }}>
-                <InputLabel size="small" id="raza">
-                  Raza
-                </InputLabel>
-                <Select
-                  labelId="raza"
-                  id="raza"
-                  value={raza}
-                  onChange={handleChangeRaza}
-                  label="Raza"
-                  size="small"
-                  margin="normal"
-                  required
-                >
-                  {razas.map((razaSel) => (
-                    <MenuItem key={razaSel} value={razaSel}>
-                      {razaSel}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl fullWidth style={{ marginTop: "20px" }}>
-                <InputLabel size="small" id="tamano">
-                  Tamaño de la Mascota
-                </InputLabel>
-                <Select
-                  labelId="tamano"
-                  id="tamano"
-                  value={tamano}
-                  onChange={handleChangeTamano}
-                  label="Tamaño"
-                  size="small"
-                  margin="normal"
-                  required
-                >
-                  <MenuItem value="Grande">Grande</MenuItem>
-                  <MenuItem value="Mediano">Mediano</MenuItem>
-                  <MenuItem value="Pequeño">Pequeño</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl fullWidth style={{ marginTop: "20px" }}>
-                <InputLabel size="small" id="caracter">
-                  Carácter
-                </InputLabel>
-                <Select
-                  labelId="caracter"
-                  id="caracter"
-                  value={caracter}
-                  onChange={handleChangeCaracter}
-                  label="Carácter"
-                  size="small"
-                  margin="normal"
-                  required
-                >
-                  <MenuItem value="Tímido">Tímido</MenuItem>
-                  <MenuItem value="Amigable">Amigable</MenuItem>
-                  <MenuItem value="Agresivo">Agresivo</MenuItem>
-                </Select>
-              </FormControl>
-              <TextField
-                className="input"
-                margin="normal"
-                label="Información Adicional"
-                size="small"
-                type="text"
-                multiline
-                rows={4}
-              />
-              <p
+      <div className="petsContainer">
+        <Button className="addPet" onClick={handleOpenAdd}>
+          <img className="add" src={imagenes.img13} alt="..."></img>
+          Añadir Mascota
+        </Button>
+        <Modal
+          open={openAdd}
+          onClose={handleCloseAdd}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={ModalStyle.style} className="boxModal">
+            <div style={ModalStyle.header}>
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
                 style={{
-                  color: "#A5A5A5",
-                  marginBottom: "5px",
-                  fontFamily: "Roboto-Regular",
+                  fontFamily: "Roboto-Bold",
                 }}
               >
-                Subir una foto de su mascota
-              </p>
-              <div className="input-file">
-                <span className="input-file-text">Choose file...</span>
-                <label htmlFor="contained-button-file">
-                  <Input
-                    accept="image/*"
-                    id="contained-button-file"
-                    type="file"
-                  />
-
-                  <Button
-                    variant="contained"
-                    style={{
-                      backgroundColor: "#FFFF",
-                      color: "#000",
-                      width: "10srem",
-                      marginRight: "10px",
-                      borderRadius: "10px",
-                      fontSize: "14px",
-                      fontFamily: "Roboto-bold",
-                    }}
-                    component="span"
+                Añadir Mascota
+              </Typography>
+            </div>
+            <div style={ModalStyle.body} className="boxModalBody">
+              <form onSubmit={handleCreatePet}>
+                <TextField
+                  className="input"
+                  margin="normal"
+                  label="Nombre de la Mascota"
+                  size="small"
+                  type="text"
+                  required
+                />
+                <TextField
+                  className="input"
+                  margin="normal"
+                  label="Edad"
+                  size="small"
+                  type="number"
+                  inputProps={{ min: 1, max: 20 }}
+                  required
+                />
+                <FormControl fullWidth style={{ marginTop: "20px" }}>
+                  <InputLabel size="small" id="sexo">
+                    Sexo
+                  </InputLabel>
+                  <Select
+                    labelId="sexo"
+                    id="sexo"
+                    value={sexo}
+                    onChange={handleChangeSexo}
+                    label="Sexo"
+                    size="small"
+                    margin="normal"
+                    required
                   >
-                    Choose File
+                    <MenuItem value="Hembra">Hembra</MenuItem>
+                    <MenuItem value="Macho">Macho</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth style={{ marginTop: "20px" }}>
+                  <InputLabel size="small" id="raza">
+                    Raza
+                  </InputLabel>
+                  <Select
+                    labelId="raza"
+                    id="raza"
+                    value={raza}
+                    onChange={handleChangeRaza}
+                    label="Raza"
+                    size="small"
+                    margin="normal"
+                    required
+                  >
+                    {razas.map((razaSel) => (
+                      <MenuItem key={razaSel} value={razaSel}>
+                        {razaSel}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth style={{ marginTop: "20px" }}>
+                  <InputLabel size="small" id="tamano">
+                    Tamaño de la Mascota
+                  </InputLabel>
+                  <Select
+                    labelId="tamano"
+                    id="tamano"
+                    value={tamano}
+                    onChange={handleChangeTamano}
+                    label="Tamaño"
+                    size="small"
+                    margin="normal"
+                    required
+                  >
+                    <MenuItem value="Grande">Grande</MenuItem>
+                    <MenuItem value="Mediano">Mediano</MenuItem>
+                    <MenuItem value="Pequeño">Pequeño</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth style={{ marginTop: "20px" }}>
+                  <InputLabel size="small" id="caracter">
+                    Carácter
+                  </InputLabel>
+                  <Select
+                    labelId="caracter"
+                    id="caracter"
+                    value={caracter}
+                    onChange={handleChangeCaracter}
+                    label="Carácter"
+                    size="small"
+                    margin="normal"
+                    required
+                  >
+                    <MenuItem value="Tímido">Tímido</MenuItem>
+                    <MenuItem value="Amigable">Amigable</MenuItem>
+                    <MenuItem value="Agresivo">Agresivo</MenuItem>
+                  </Select>
+                </FormControl>
+                <TextField
+                  className="input"
+                  margin="normal"
+                  label="Información Adicional"
+                  size="small"
+                  type="text"
+                  multiline
+                  rows={4}
+                />
+                <p
+                  style={{
+                    color: "#A5A5A5",
+                    marginBottom: "5px",
+                    fontFamily: "Roboto-Regular",
+                  }}
+                >
+                  Subir una foto de su mascota
+                </p>
+                <div className="input-file">
+                  <span className="input-file-text">Choose file...</span>
+                  <label htmlFor="contained-button-file">
+                    <Input
+                      accept="image/*"
+                      id="contained-button-file"
+                      type="file"
+                    />
+
+                    <Button
+                      variant="contained"
+                      style={{
+                        backgroundColor: "#FFFF",
+                        color: "#000",
+                        width: "10srem",
+                        marginRight: "10px",
+                        borderRadius: "10px",
+                        fontSize: "14px",
+                        fontFamily: "Roboto-bold",
+                      }}
+                      component="span"
+                    >
+                      Choose File
+                    </Button>
+                  </label>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    columnGap: "10px",
+                  }}
+                >
+                  <Button style={ModalStyle.boton} onClick={handleCloseAdd}>
+                    Cerrar
                   </Button>
-                </label>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  columnGap: "10px",
-                }}
-              >
-                <Button style={ModalStyle.boton} onClick={handleCloseAdd}>
-                  Cerrar
-                </Button>
-                <Button style={ModalStyle.boton} type="submit">
-                  Añadir
-                </Button>
-              </div>
-            </form>
-          </div>
-        </Box>
-      </Modal>
-      <div className="pets">
-        {pets?.map((pet, i) => {
-          return (
-            <PetCard
-              key={i}
-              user_id={pet.user_id}
-              _id={pet._id}
-              name={pet.name}
-              age={pet.age}
-              size={pet.size}
-              nature={pet.nature}
-              photo_url={pet.photo_url}
-              additional_information={pet.additional_information}
-            />
-          );
-        })}
+                  <Button style={ModalStyle.boton} type="submit">
+                    Añadir
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </Box>
+        </Modal>
+        <div className="pets">
+          {pets?.map((pet, i) => {
+            return (
+              <PetCard
+                key={i}
+                user_id={pet.user_id}
+                _id={pet._id}
+                name={pet.name}
+                age={pet.age}
+                gender={pet.gender}
+                breed={pet.breed}
+                size={pet.size}
+                nature={pet.nature}
+                photo_url={pet.photo_url}
+                additional_information={pet.additional_information}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );

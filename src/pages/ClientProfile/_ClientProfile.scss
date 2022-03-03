@@ -3,6 +3,10 @@ html {
 }
 
 .ClientProfile {
+  .petsContainer {
+    background-image: url("../../images/bannerTercer.png");
+    padding-bottom: 20px;
+  }
   .addPet {
     background: #ffffff;
     border: 0.01px solid #888888;
@@ -27,7 +31,8 @@ html {
   justify-content: center;
   padding-top: 2%;
   padding-bottom: 2%;
-  border-bottom: 1px solid #000000;
+  background-color: rgba(144, 215, 202, 0.15);
+  border-bottom: 1px solid #acacac;
 }
 
 .cardC {
@@ -91,7 +96,7 @@ html {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   flex-wrap: wrap;
   font-family: "Roboto-Regular";
   column-gap: 30px;

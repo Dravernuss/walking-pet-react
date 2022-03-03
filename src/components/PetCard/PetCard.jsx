@@ -28,6 +28,8 @@ const PetCard = ({
   age,
   size,
   nature,
+  gender,
+  breed,
   photo_url,
   additional_information,
   _id,
@@ -38,6 +40,8 @@ const PetCard = ({
     age,
     size,
     nature,
+    gender,
+    breed,
     photo_url,
     additional_information,
     _id,
@@ -95,14 +99,12 @@ const PetCard = ({
 
   return (
     <div>
-      <Button className="ButtonLapiz" onClick={handleOpenEdit}>
-        <img
-          className="addButton"
-          height="40px"
-          width="40px"
-          src={imagenes.img10}
-          alt="..."
-        ></img>
+      <Button
+        className="ButtonLapiz"
+        style={{ borderRadius: "50%" }}
+        onClick={handleOpenEdit}
+      >
+        <img className="addButton" src={imagenes.img10} alt="..."></img>
       </Button>
       <Modal
         open={openEdit}
@@ -324,14 +326,28 @@ const PetCard = ({
           <Avatar className="image" alt="Remy Sharp" src={photo_url}>
             <PetsIcon className="imageIcon" />
           </Avatar>
-          <h2>{name}</h2>
-          <p>Edad : {age} año</p>
-          <p>Tamaño : {size}</p>
-          <p>Caracter : {nature}</p>
+          <div className="petInfo__text">
+            <h2>{name}</h2>
+            <div className="petInfo__text__subtext">
+              <div>
+                <p>
+                  Edad : {age} {age > 1 ? "años" : "año"}
+                </p>
+                <p>Sexo: {gender}</p>
+                <p>Raza: {breed}</p>
+              </div>
+              <div>
+                <p>Tamaño : {size}</p>
+                <p>Caracter : {nature}</p>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="extraInfo">
           <h2>Informacion Adicional:</h2>
-          <p>{additional_information}</p>
+          <div className="extraInfo__text">
+            <p>{additional_information}</p>
+          </div>
         </div>
       </div>
     </div>

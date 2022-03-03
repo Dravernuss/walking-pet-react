@@ -32,13 +32,13 @@ export const login = (user) => {
 };
 
 export const getOneUser = (id) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_ONE_USER}/${id}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -51,7 +51,7 @@ export const getOneUser = (id) => {
 };
 
 export const updateUser = ({ id, ...user }) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.UPDATE}/${id}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
@@ -59,7 +59,7 @@ export const updateUser = ({ id, ...user }) => {
       body: JSON.stringify(user),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
