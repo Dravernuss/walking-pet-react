@@ -7,23 +7,32 @@ import imagenes from "../../images/imagenes.jsx";
 import "./_NavBar.scss";
 import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getOneUserAsync } from "../../slices/userSlice.js";
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const user = JSON.parse(localStorage.getItem("infoUser"));
+  const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
 
   const endSession = () => {
     localStorage.removeItem("infoUser");
     navigate("/");
   };
+
+  useEffect(() => {
+    if (!user) dispatch(getOneUserAsync(userID));
+  }, []);
 
   return (
     <div className="navbar">
@@ -32,7 +41,7 @@ const NavBar = () => {
       </Button>
       <div className="userInfo">
         <p>
-          {user.firstname} {user.lastname}
+          {user?.firstname} {user?.lastname}
         </p>
         <Button
           id="basic-button"
@@ -41,7 +50,7 @@ const NavBar = () => {
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
         >
-          <Avatar src={user.photo_url} />
+          <Avatar src={user?.photo_url} />
           <img src={imagenes.img2} alt=" "></img>
         </Button>
         <Menu

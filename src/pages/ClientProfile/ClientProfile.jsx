@@ -105,14 +105,11 @@ const ClientProfile = () => {
   const user = useSelector((state) => state.user.user);
   const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
   const handleOpen = () => {
-    dispatch(userToEdit(user)); // user -> user.userInfo
+    dispatch(userToEdit(user));
     setOpen(true);
   };
   const handleEditProfile = async (e) => {
     e.preventDefault();
-    // console.log("funciona!!", districtRef);
-    // console.log("hhhhh", addressRef.current.value);
-    // console.log("jjjJ", phoneRef.current.value);
     const { elements } = e.target;
     const dataUser = {
       district: elements[0].value,
@@ -125,27 +122,11 @@ const ClientProfile = () => {
     handleClose();
   };
 
-  useEffect(() => {
-    console.log("+*****", user, open);
-    if (user && open) {
-      console.log("USERRR", user);
-      const { district, address, phone } = user;
-      console.log("bola1", district, address, phone);
-      console.log("ref", districtRef);
-      console.log(phoneRef);
-      // Initial value to edit form
-      // districtRef.current.value = district;
-      // addressRef.current.value = address;
-      // phoneRef.current.value = phone;
-    }
-  }, [user, open]);
-
   //-------------------------------------------------------------
   ///////////////////////////////////////////////////////////////
   // Parte del REDUX TOOLKIT ------------PETS------------------
 
   useEffect(() => {
-    dispatch(getOneUserAsync(userID));
     dispatch(getPetsByUserAsync(userID));
   }, []);
 
