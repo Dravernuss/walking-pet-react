@@ -19,7 +19,11 @@ import PetCard from "../../components/PetCard/PetCard.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 
-import { updateUserAsync, userToEdit } from "../../slices/userSlice.js";
+import {
+  updateUserAsync,
+  userToEdit,
+  getOneUserAsync,
+} from "../../slices/userSlice.js";
 import { myPets, getPetsByUserAsync } from "../../slices/petSlice.js";
 
 const distritos = [
@@ -84,14 +88,17 @@ const ClientProfile = () => {
   const districtRef = useRef();
   const addressRef = useRef();
   const phoneRef = useRef();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
   const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
   const handleOpen = () => {
-    dispatch(userToEdit(user.userInfo)); // user -> user.userInfo
+    dispatch(userToEdit(user)); // user -> user.userInfo
     setOpen(true);
   };
   const handleEditProfile = async (e) => {
     e.preventDefault();
+    // console.log("funciona!!", districtRef);
+    // console.log("hhhhh", addressRef.current.value);
+    // console.log("jjjJ", phoneRef.current.value);
     const { elements } = e.target;
     const dataUser = {
       district: elements[0].value,
@@ -100,30 +107,31 @@ const ClientProfile = () => {
     };
     dispatch(userToEdit(dataUser));
     await dispatch(updateUserAsync({ id: userID, ...dataUser }));
-    // dispatch(getOneUserAsync(userID));
+    dispatch(getOneUserAsync(userID));
     handleClose();
   };
 
-  // useEffect(() => {
-  //   if (user && open === true) {
-  //     console.log("USERRR", user);
-  //     console.log("USERRRinfo", user.userInfo);
-  //     const { district, address, phone } = user.userInfo;
-  //     console.log("bola1", district, address, phone);
-  //     console.log("ref", districtRef);
-
-  //     // Initial value to edit form
-  //     districtRef.current.value = district;
-  //     addressRef.current.value = address;
-  //     phoneRef.current.value = phone;
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    console.log("+*****", user, open);
+    if (user && open) {
+      console.log("USERRR", user);
+      const { district, address, phone } = user;
+      console.log("bola1", district, address, phone);
+      console.log("ref", districtRef);
+      console.log(phoneRef);
+      // Initial value to edit form
+      // districtRef.current.value = district;
+      // addressRef.current.value = address;
+      // phoneRef.current.value = phone;
+    }
+  }, [user, open]);
 
   //-------------------------------------------------------------
   ///////////////////////////////////////////////////////////////
   // Parte del REDUX TOOLKIT ------------PETS------------------
 
   useEffect(() => {
+    dispatch(getOneUserAsync(userID));
     dispatch(getPetsByUserAsync(userID));
   }, []);
   const pets = useSelector(myPets);
@@ -138,23 +146,23 @@ const ClientProfile = () => {
           <Avatar
             sx={{ width: "240px", height: "240px" }}
             className="avatarC"
-            src={user.userInfo.photo_url}
+            src={user?.photo_url}
           />
           <h2 className="card-title">
-            {user.userInfo.firstname} {user.userInfo.lastname}
+            {user?.firstname} {user?.lastname}
           </h2>
         </div>
         <div className="info-containerC">
           <h2 className="info">Dirección:</h2>
           <p className="info-presentacionC">
-            {user.userInfo.address}{" "}
+            {user?.address}{" "}
             <strong>
               {}
-              {user.userInfo.district}
+              {user?.district}
             </strong>
           </p>
           <h2 className="info">Teléfono:</h2>
-          <p className="info-presentacionC">{user.userInfo.phone}</p>
+          <p className="info-presentacionC">{user?.phone}</p>
 
           <div>
             <div className="actions">
@@ -203,7 +211,8 @@ const ClientProfile = () => {
                         label="Distrito"
                         size="small"
                         margin="normal"
-                        inputRef={districtRef}
+                        // inputRef={districtRef}
+                        defaultValue={user?.district}
                         required
                       >
                         {distritos.map((distritoSel) => (
@@ -219,7 +228,8 @@ const ClientProfile = () => {
                         label="Dirección"
                         size="small"
                         type="text"
-                        inputRef={addressRef}
+                        // inputRef={addressRef}
+                        defaultValue={user?.address}
                         required
                       />
                       <TextField
@@ -228,7 +238,8 @@ const ClientProfile = () => {
                         label="Teléfono de Contacto"
                         size="small"
                         type="text"
-                        inputRef={phoneRef}
+                        // inputRef={phoneRef}
+                        defaultValue={user?.phone}
                         required
                       />
                       <p
