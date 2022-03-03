@@ -4,9 +4,8 @@ const ENDPOINTS = {
   GET_PETS_BY_USER: "/api/pets",
   CREATE: "/api/pets/create",
   DELETE: "/api/pets/delete",
-
+  UPDATE: "/api/pets/update",
   //   GET_ONE_USER: "/api/users",
-  //   UPDATE: "/api/users/update",
   //   LOGIN: "/api/users/login",
 };
 
@@ -61,6 +60,28 @@ export const deletePet = (id) => {
       // headers: {
       //   Authorization: `Bearer ${token}`,
       // },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve(true);
+      })
+      .catch((err) => {
+        reject({ error: err });
+      });
+  });
+};
+
+export const updatePet = ({ id, ...pet }) => {
+  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const path = `${API_SERVER}${ENDPOINTS.UPDATE}/${id}`;
+  return new Promise((resolve, reject) => {
+    fetch(path, {
+      method: "PUT",
+      body: JSON.stringify(pet),
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {

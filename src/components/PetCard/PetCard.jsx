@@ -16,7 +16,12 @@ import { styled } from "@mui/material/styles";
 import "./_PetCard.scss";
 
 import { useDispatch } from "react-redux";
-import { deletePetAsync, getPetsByUserAsync } from "../../slices/petSlice.js";
+import {
+  deletePetAsync,
+  getPetsByUserAsync,
+  updatePetAsync,
+  petToEdit,
+} from "../../slices/petSlice.js";
 
 const PetCard = ({
   name,
@@ -24,19 +29,27 @@ const PetCard = ({
   size,
   nature,
   photo_url,
-  extraInfo,
-  id,
-  userID,
+  additional_information,
+  _id,
+  user_id,
 }) => {
+  const pet = {
+    name,
+    age,
+    size,
+    nature,
+    photo_url,
+    additional_information,
+    _id,
+    user_id,
+  };
   const [openEdit, setOpenEdit] = useState(false);
   const [openChild, setOpenChild] = useState(false);
   const handleOpenChild = () => setOpenChild(true);
   const handleCloseChild = () => setOpenChild(false);
-  const handleOpenEdit = () => setOpenEdit(true);
   const handleCloseEdit = () => setOpenEdit(false);
   const [tamano, setTamano] = useState("");
   const [caracter, setCaracter] = useState("");
-
   const handleChangeTamano = (event) => {
     setTamano(event.target.value);
   };
@@ -51,9 +64,29 @@ const PetCard = ({
   //------REDUX---------------PET---------------------------
   const dispatch = useDispatch();
 
+  const handleOpenEdit = () => {
+    // dispatch(petToEdit(pet));
+    setOpenEdit(true);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const { elements } = event.target;
+    const dataPet = {
+      age: elements[0].value,
+      size: elements[2].value,
+      nature: elements[4].value,
+      additional_information: elements[6].value,
+    };
+    // dispatch(petToEdit(dataPet));
+    await dispatch(updatePetAsync({ id: _id, ...dataPet }));
+    await dispatch(getPetsByUserAsync(user_id));
+    setOpenEdit(false);
+  };
+
   const handleDelete = async () => {
-    await dispatch(deletePetAsync(id));
-    await dispatch(getPetsByUserAsync(userID));
+    await dispatch(deletePetAsync(_id));
+    await dispatch(getPetsByUserAsync(user_id));
     handleCloseEdit();
     handleCloseChild();
   };
@@ -91,13 +124,14 @@ const PetCard = ({
             </Typography>
           </div>
           <div style={ModalStyle.body} className="boxModalBody">
-            <form>
+            <form onSubmit={handleSubmit}>
               <TextField
                 className="input"
                 margin="normal"
                 label="Edad"
                 size="small"
                 type="number"
+                defaultValue={pet?.age}
                 inputProps={{ min: 1, max: 20 }}
               />
               <FormControl fullWidth style={{ marginTop: "20px" }}>
@@ -107,15 +141,15 @@ const PetCard = ({
                 <Select
                   labelId="tamano"
                   id="tamano"
-                  value={tamano}
                   onChange={handleChangeTamano}
                   label="Tamaño"
                   size="small"
                   margin="normal"
+                  defaultValue={pet?.size}
                 >
-                  <MenuItem value="macho">Grande</MenuItem>
-                  <MenuItem value="macho">Mediano</MenuItem>
-                  <MenuItem value="macho">Pequeño</MenuItem>
+                  <MenuItem value="Grande">Grande</MenuItem>
+                  <MenuItem value="Mediano">Mediano</MenuItem>
+                  <MenuItem value="Pequeño">Pequeño</MenuItem>
                 </Select>
               </FormControl>
               <FormControl fullWidth style={{ marginTop: "20px" }}>
@@ -125,15 +159,15 @@ const PetCard = ({
                 <Select
                   labelId="caracter"
                   id="caracter"
-                  value={caracter}
                   onChange={handleChangeCaracter}
                   label="Carácter"
                   size="small"
                   margin="normal"
+                  defaultValue={pet?.nature}
                 >
-                  <MenuItem value="macho">Tímido</MenuItem>
-                  <MenuItem value="macho">Amigable</MenuItem>
-                  <MenuItem value="macho">Agresivo</MenuItem>
+                  <MenuItem value="Tímido">Tímido</MenuItem>
+                  <MenuItem value="Amigable">Amigable</MenuItem>
+                  <MenuItem value="Agresivo">Agresivo</MenuItem>
                 </Select>
               </FormControl>
               <TextField
@@ -144,6 +178,7 @@ const PetCard = ({
                 type="text"
                 multiline
                 rows={4}
+                defaultValue={pet?.additional_information}
               />
               <p
                 style={{
@@ -225,7 +260,7 @@ const PetCard = ({
                 <Button style={ModalStyle.boton} onClick={handleCloseEdit}>
                   Cerrar
                 </Button>
-                <Button style={ModalStyle.boton} onClick={handleCloseEdit}>
+                <Button style={ModalStyle.boton} type="submit">
                   Finalizar
                 </Button>
               </div>
@@ -296,7 +331,7 @@ const PetCard = ({
         </div>
         <div className="extraInfo">
           <h2>Informacion Adicional:</h2>
-          <p>{extraInfo}</p>
+          <p>{additional_information}</p>
         </div>
       </div>
     </div>

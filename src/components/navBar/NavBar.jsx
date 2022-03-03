@@ -26,8 +26,8 @@ const NavBar = () => {
   const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
 
   const endSession = () => {
+    window.location = "/";
     localStorage.removeItem("infoUser");
-    navigate("/");
   };
 
   useEffect(() => {

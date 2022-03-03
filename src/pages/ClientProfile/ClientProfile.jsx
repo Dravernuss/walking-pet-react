@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ModalStyle from "../../components/ModalStyle/ModalStyle.jsx";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,7 +17,6 @@ import { styled } from "@mui/material/styles";
 import PetCard from "../../components/PetCard/PetCard.jsx";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -98,10 +97,6 @@ const ClientProfile = () => {
   // Parte del REDUX TOOLKIT ------------USER-------------
 
   const navigate = useNavigate();
-
-  const districtRef = useRef();
-  const addressRef = useRef();
-  const phoneRef = useRef();
   const user = useSelector((state) => state.user.user);
   const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
   const handleOpen = () => {
@@ -118,7 +113,7 @@ const ClientProfile = () => {
     };
     dispatch(userToEdit(dataUser));
     await dispatch(updateUserAsync({ id: userID, ...dataUser }));
-    dispatch(getOneUserAsync(userID));
+    // dispatch(getOneUserAsync(userID));
     handleClose();
   };
 
@@ -127,7 +122,7 @@ const ClientProfile = () => {
   // Parte del REDUX TOOLKIT ------------PETS------------------
 
   useEffect(() => {
-    dispatch(getPetsByUserAsync(userID));
+    if (!pets) dispatch(getPetsByUserAsync(userID));
   }, []);
 
   const pets = useSelector(myPets);
@@ -228,7 +223,6 @@ const ClientProfile = () => {
                         label="Distrito"
                         size="small"
                         margin="normal"
-                        // inputRef={districtRef}
                         defaultValue={user?.district}
                         required
                       >
@@ -245,7 +239,6 @@ const ClientProfile = () => {
                         label="Dirección"
                         size="small"
                         type="text"
-                        // inputRef={addressRef}
                         defaultValue={user?.address}
                         required
                       />
@@ -255,7 +248,6 @@ const ClientProfile = () => {
                         label="Teléfono de Contacto"
                         size="small"
                         type="text"
-                        // inputRef={phoneRef}
                         defaultValue={user?.phone}
                         required
                       />
@@ -502,14 +494,14 @@ const ClientProfile = () => {
           return (
             <PetCard
               key={i}
-              userID={pet.user_id}
-              id={pet._id}
+              user_id={pet.user_id}
+              _id={pet._id}
               name={pet.name}
               age={pet.age}
               size={pet.size}
               nature={pet.nature}
               photo_url={pet.photo_url}
-              extraInfo={pet.additional_information}
+              additional_information={pet.additional_information}
             />
           );
         })}

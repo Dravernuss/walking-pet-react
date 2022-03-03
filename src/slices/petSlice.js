@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { pet } from "../api/index";
 
-const { getPetsByUser, createPet, deletePet } = pet;
+const { getPetsByUser, createPet, deletePet, updatePet } = pet;
 
 const initialState = {};
 
@@ -26,10 +26,19 @@ export const deletePetAsync = createAsyncThunk("pet/delete", async (id) => {
   return response;
 });
 
+export const updatePetAsync = createAsyncThunk("pet/update", async (pet) => {
+  const response = await updatePet(pet);
+  return response;
+});
+
 export const petSlice = createSlice({
   name: "pet",
   initialState,
-  reducers: {},
+  reducers: {
+    petToEdit: (state, { payload: newPetData }) => {
+      state.petToEdit = { ...state.petToEdit, ...newPetData };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getPetsByUserAsync.pending, (state) => {
@@ -47,6 +56,8 @@ export const petSlice = createSlice({
       });
   },
 });
+
+export const { petToEdit } = petSlice.actions;
 
 export const myPets = (state) => state.pet.pets;
 

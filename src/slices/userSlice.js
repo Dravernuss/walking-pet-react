@@ -21,7 +21,6 @@ export const getOneUserAsync = createAsyncThunk(
 
 export const updateUserAsync = createAsyncThunk("user/update", async (user) => {
   const response = await updateUser(user);
-  console.log("USERrrr", user);
   return response;
 });
 
@@ -30,7 +29,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     userToEdit: (state, { payload: newUserData }) => {
-      state.userInfo = { ...state.userInfo, ...newUserData };
+      state.user = { ...state.user, ...newUserData };
     },
   },
   extraReducers: (builder) => {
@@ -54,7 +53,7 @@ export const userSlice = createSlice({
 export const { userToEdit } = userSlice.actions;
 
 export const selectUserLoggued = (state) => state.user.loggued;
-export const selectUser = (state) => state.user.userInfo;
-export const selectUserToEdit = (state) => state.user.userToEdit;
+// export const selectUser = (state) => state.user.userInfo;
+// export const selectUserToEdit = (state) => state.user.userToEdit;
 
 export default userSlice.reducer;
