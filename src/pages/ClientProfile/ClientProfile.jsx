@@ -491,23 +491,34 @@ const ClientProfile = () => {
           </Box>
         </Modal>
         <div className="pets">
-          {pets?.map((pet, i) => {
-            return (
-              <PetCard
-                key={i}
-                user_id={pet.user_id}
-                _id={pet._id}
-                name={pet.name}
-                age={pet.age}
-                gender={pet.gender}
-                breed={pet.breed}
-                size={pet.size}
-                nature={pet.nature}
-                photo_url={pet.photo_url}
-                additional_information={pet.additional_information}
+          {pets?.length !== 0 ? (
+            pets?.map((pet, i) => {
+              return (
+                <PetCard
+                  key={i}
+                  user_id={pet.user_id}
+                  _id={pet._id}
+                  name={pet.name}
+                  age={pet.age}
+                  gender={pet.gender}
+                  breed={pet.breed}
+                  size={pet.size}
+                  nature={pet.nature}
+                  photo_url={pet.photo_url}
+                  additional_information={pet.additional_information}
+                />
+              );
+            })
+          ) : (
+            <div className="noPet">
+              <h2 className="noPetTitle">Aun no tienes mascotas inscritas</h2>
+              <img
+                className="noPetImg"
+                src={imagenes.img28}
+                alt="perro pregunta"
               />
-            );
-          })}
+            </div>
+          )}
         </div>
       </div>
     </div>

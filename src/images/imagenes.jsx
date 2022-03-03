@@ -25,6 +25,7 @@ import c2 from "./c2.png";
 import c3 from "./c3.png";
 import c4 from "./c4.png";
 import c5 from "./c5.png";
+import dogQuestion from "./dog-question.png";
 
 const Imagenes = {
   img1: logo,
@@ -54,6 +55,7 @@ const Imagenes = {
   img25: c3,
   img26: c4,
   img27: c5,
+  img28: dogQuestion,
 };
 
 export default Imagenes;
