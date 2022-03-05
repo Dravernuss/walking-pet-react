@@ -25,8 +25,11 @@ const Login = () => {
   const stateLogged = JSON.parse(localStorage.getItem("infoUser"))?.token;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const loggued = useSelector(selectUserLoggued); //Descubri que hace y porque es necesario
   const alertOn = useSelector(alertUser) ?? false;
-  const handleSubmit = (e) => {
+  console.log(stateLogged);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { elements } = e.target;
     const user = {
@@ -35,11 +38,8 @@ const Login = () => {
     };
     if (role === "user") {
       dispatch(loginUserAsync(user));
-
-      if (alertOn === true) {
-      }
     }
-    // else dispatch(loginWalkerAsync(user));
+    console.log("aver", stateLogged);
   };
   useEffect(() => {
     stateLogged && navigate("/principalpage");

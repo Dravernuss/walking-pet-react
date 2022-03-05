@@ -1,12 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { user } from "../api/index";
 
-const { login, updateUser, getOneUser } = user;
+const { login, updateUser, getOneUser, createUser } = user;
 
 const initialState = {};
 
 export const loginUserAsync = createAsyncThunk("login", async (user) => {
   const response = await login(user);
+  return response;
+});
+
+export const createUserAsync = createAsyncThunk("user/create", async (user) => {
+  const response = await createUser(user);
   return response;
 });
 
@@ -50,6 +55,9 @@ export const userSlice = createSlice({
         state.userInfo = action.payload; // state.userInfo
         state.loggued = true;
         localStorage.setItem("infoUser", JSON.stringify(action.payload));
+      })
+      .addCase(createUserAsync.fulfilled, (state, action) => {
+        state.created = true;
       });
   },
 });

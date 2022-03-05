@@ -25,9 +25,9 @@ const NavBar = () => {
   };
   const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
 
-  const endSession = () => {
+  const endSession = async () => {
+    await localStorage.removeItem("infoUser");
     window.location = "/";
-    localStorage.removeItem("infoUser");
   };
 
   useEffect(() => {
