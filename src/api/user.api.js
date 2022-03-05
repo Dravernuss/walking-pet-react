@@ -26,7 +26,7 @@ export const login = (user) => {
         resolve(data);
       })
       .catch((err) => {
-        reject({ error: err });
+        reject({ error: err, alert: true });
       });
   });
 };

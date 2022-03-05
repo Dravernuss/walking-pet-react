@@ -14,7 +14,6 @@ export const getOneUserAsync = createAsyncThunk(
   "user/getOneUser",
   async (id) => {
     const response = await getOneUser(id);
-    console.log("getOneUserAsync", response.data);
     return response.data;
   }
 );
@@ -41,8 +40,13 @@ export const userSlice = createSlice({
         state.loading = false;
         state.user = action.payload;
       })
+      .addCase(loginUserAsync.pending, (state, action) => {
+        state.alert = false;
+      })
+      .addCase(loginUserAsync.rejected, (state, action) => {
+        state.alert = true;
+      })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
-        console.log(action);
         state.userInfo = action.payload; // state.userInfo
         state.loggued = true;
         localStorage.setItem("infoUser", JSON.stringify(action.payload));
@@ -53,6 +57,7 @@ export const userSlice = createSlice({
 export const { userToEdit } = userSlice.actions;
 
 export const selectUserLoggued = (state) => state.user.loggued;
+export const alertUser = (state) => state.user.alert;
 // export const selectUser = (state) => state.user.userInfo;
 // export const selectUserToEdit = (state) => state.user.userToEdit;
 

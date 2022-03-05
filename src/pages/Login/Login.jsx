@@ -9,18 +9,23 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import imagenes from "../../images/imagenes.jsx";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Snackbar, TextField } from "@mui/material";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUserAsync, selectUserLoggued } from "../../slices/userSlice";
+import {
+  loginUserAsync,
+  selectUserLoggued,
+  alertUser,
+} from "../../slices/userSlice";
 import { useNavigate } from "react-router-dom";
+import Notifications from "../../components/notifications/Notifications";
 
 const Login = () => {
   const stateLogged = JSON.parse(localStorage.getItem("infoUser"))?.token;
   const dispatch = useDispatch();
-  const loggued = useSelector(selectUserLoggued);
   const navigate = useNavigate();
+  const alertOn = useSelector(alertUser) ?? false;
   const handleSubmit = (e) => {
     e.preventDefault();
     const { elements } = e.target;
@@ -30,6 +35,9 @@ const Login = () => {
     };
     if (role === "user") {
       dispatch(loginUserAsync(user));
+
+      if (alertOn === true) {
+      }
     }
     // else dispatch(loginWalkerAsync(user));
   };
@@ -109,6 +117,7 @@ const Login = () => {
           </div>
         </div>
       </LayoutForm>
+      <Notifications alertOn={alertOn} />
     </LayoutInicial>
   );
 };
