@@ -8,6 +8,7 @@ import "./_NavBar.scss";
 import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getOneUserAsync } from "../../slices/userSlice.js";
 

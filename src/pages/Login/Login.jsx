@@ -9,17 +9,22 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import imagenes from "../../images/imagenes.jsx";
-import { Box, Button, Snackbar, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 
+import Notifications from "../../components/notifications/Notifications";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   loginUserAsync,
   selectUserLoggued,
   alertUser,
 } from "../../slices/userSlice";
-import { useNavigate } from "react-router-dom";
-import Notifications from "../../components/notifications/Notifications";
+import {
+  loginWalkerAsync,
+  selectWalkerLoggued,
+  alertWalker,
+} from "../../slices/walkerSlice";
 
 const Login = () => {
   const stateLogged = JSON.parse(localStorage.getItem("infoUser"))?.token;
@@ -41,6 +46,7 @@ const Login = () => {
     }
     console.log("aver", stateLogged);
   };
+
   useEffect(() => {
     stateLogged && navigate("/principalpage");
   }, [stateLogged]);
