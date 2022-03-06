@@ -9,7 +9,7 @@ const ENDPOINTS = {
   LOGIN: "/api/walkers/login",
 };
 
-export const login = (walker) => {
+export const loginWalker = (walker) => {
   const path = `${API_SERVER}${ENDPOINTS.LOGIN}`;
   return new Promise((resolve, reject) => {
     console.log("LOGIN", path);
@@ -22,7 +22,7 @@ export const login = (walker) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        resolve({ token: data.token, _id: data._id });
+        resolve({ token: data.token, _id: data._id, role: data.role });
         // resolve(data);
       })
       .catch((err) => {

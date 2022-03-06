@@ -1,15 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { walker } from "../api/index";
 
-const { login, updateWalker, getOneWalker, createWalker, getAllWalkers } =
+const { loginWalker, updateWalker, getOneWalker, createWalker, getAllWalkers } =
   walker;
 
 const initialState = {};
 
-export const loginWalkerAsync = createAsyncThunk("login", async (walker) => {
-  const response = await login(walker);
-  return response;
-});
+export const loginWalkerAsync = createAsyncThunk(
+  "loginWalker",
+  async (walker) => {
+    const response = await loginWalker(walker);
+    return response;
+  }
+);
 
 export const getAllWalkersAsync = createAsyncThunk(
   "walker/getAllWalkers",
@@ -61,15 +64,15 @@ export const walkerSlice = createSlice({
         state.walker = action.payload;
       })
       .addCase(loginWalkerAsync.pending, (state, action) => {
-        state.alert = false;
+        state.alertWalker = false;
       })
       .addCase(loginWalkerAsync.rejected, (state, action) => {
-        state.alert = true;
+        state.alertWalker = true;
       })
       .addCase(loginWalkerAsync.fulfilled, (state, action) => {
         state.walkerInfo = action.payload; // state.userInfo
-        state.loggued = true;
-        localStorage.setItem("infoWalker", JSON.stringify(action.payload));
+        state.logguedWalker = true;
+        localStorage.setItem("infoUser", JSON.stringify(action.payload));
       })
       .addCase(createWalkerAsync.fulfilled, (state, action) => {
         state.created = true;
@@ -79,7 +82,8 @@ export const walkerSlice = createSlice({
 
 export const { walkerToEdit } = walkerSlice.actions;
 
-export const selectWalkerLoggued = (state) => state.walker.loggued;
-export const alertWalker = (state) => state.walker.alert;
+export const selectWalkerLoggued = (state) => state.walker.logguedWalker;
+export const alertWalker = (state) => state.walker.alertWalker;
+export const toWalker = (state) => state.walker.walker;
 
 export default walkerSlice.reducer;

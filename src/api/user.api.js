@@ -9,7 +9,7 @@ const ENDPOINTS = {
   LOGIN: "/api/users/login",
 };
 
-export const login = (user) => {
+export const loginUser = (user) => {
   const path = `${API_SERVER}${ENDPOINTS.LOGIN}`;
   return new Promise((resolve, reject) => {
     console.log("LOGIN", path);
@@ -22,7 +22,7 @@ export const login = (user) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        resolve({ token: data.token, _id: data._id });
+        resolve({ token: data.token, _id: data._id, role: data.role });
         // resolve(data);
       })
       .catch((err) => {

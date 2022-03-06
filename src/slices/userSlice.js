@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { user } from "../api/index";
 
-const { login, updateUser, getOneUser, createUser } = user;
+const { loginUser, updateUser, getOneUser, createUser } = user;
 
 const initialState = {};
 
-export const loginUserAsync = createAsyncThunk("login", async (user) => {
-  const response = await login(user);
+export const loginUserAsync = createAsyncThunk("loginUser", async (user) => {
+  const response = await loginUser(user);
   return response;
 });
 
@@ -46,14 +46,14 @@ export const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(loginUserAsync.pending, (state, action) => {
-        state.alert = false;
+        state.alertUser = false;
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
-        state.alert = true;
+        state.alertUser = true;
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.userInfo = action.payload; // state.userInfo
-        state.loggued = true;
+        state.logguedUser = true;
         localStorage.setItem("infoUser", JSON.stringify(action.payload));
       })
       .addCase(createUserAsync.fulfilled, (state, action) => {
@@ -64,8 +64,9 @@ export const userSlice = createSlice({
 
 export const { userToEdit } = userSlice.actions;
 
-export const selectUserLoggued = (state) => state.user.loggued;
-export const alertUser = (state) => state.user.alert;
+export const selectUserLoggued = (state) => state.user.logguedUser;
+export const alertUser = (state) => state.user.alertUser;
+export const toUser = (state) => state.user.user;
 // export const selectUser = (state) => state.user.userInfo;
 // export const selectUserToEdit = (state) => state.user.userToEdit;
 

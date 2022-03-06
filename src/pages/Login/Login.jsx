@@ -27,31 +27,40 @@ import {
 } from "../../slices/walkerSlice";
 
 const Login = () => {
-  const stateLogged = JSON.parse(localStorage.getItem("infoUser"))?.token;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const loggued = useSelector(selectUserLoggued); //Descubri que hace y porque es necesario
-  const alertOn = useSelector(alertUser) ?? false;
-  console.log(stateLogged);
+  const [role, setRole] = useState("user");
+
+  //------LOGIN USER-------------------------------------------
+  const stateLoggedUser = JSON.parse(localStorage.getItem("infoUser"))?.token;
+  const logguedUser = useSelector(selectUserLoggued); //Descubri que hace y porque es necesario
+  const alertOnUser = useSelector(alertUser) ?? false;
+  console.log(stateLoggedUser);
+
+  //------LOGIN WALKER-----------------------------------------
+  const logguedWalker = useSelector(selectWalkerLoggued); // x2
+  const alertOnWalker = useSelector(alertWalker) ?? false;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { elements } = e.target;
+
     const user = {
       email: elements[0].value,
       password: elements[2].value,
     };
+
     if (role === "user") {
       dispatch(loginUserAsync(user));
+    } else if (role === "walker") {
+      dispatch(loginWalkerAsync(user));
     }
-    console.log("aver", stateLogged);
+    console.log("averUser", stateLoggedUser);
   };
 
   useEffect(() => {
-    stateLogged && navigate("/principalpage");
-  }, [stateLogged]);
-
-  const [role, setRole] = useState("user");
+    stateLoggedUser && navigate("/principalpage");
+  }, [stateLoggedUser]);
 
   return (
     <LayoutInicial>
@@ -123,7 +132,7 @@ const Login = () => {
           </div>
         </div>
       </LayoutForm>
-      <Notifications alertOn={alertOn} />
+      <Notifications alertOnUser={alertOnUser} alertOnWalker={alertOnWalker} />
     </LayoutInicial>
   );
 };
