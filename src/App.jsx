@@ -23,7 +23,7 @@ const App = () => {
     <BrowserRouter>
       <div>
         <Routes>
-          {/* Ver cual HOME se usara*/}
+          {/* Ver cual HOME se usara, Rutas de usuarios*/}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/principalpage" element={<PrincipalPage />} />
@@ -37,26 +37,38 @@ const App = () => {
 
           {/* Rutas Administrador */}
           <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/askForDate" element={
-            <PrivateRoute routeLogin="/admin">
-              <AskForDate />
-            </PrivateRoute>
-          } />
-          <Route path="/reservedtours" element={
-            <PrivateRoute routeLogin="/admin">
-              <ReservedTours />
-            </PrivateRoute>
-          } />
-          <Route path="/walkerregistration" element={
-            <PrivateRoute routeLogin="/admin">
-              <WalkerRegistration />
-            </PrivateRoute>
-          } />
-          <Route path="/reports" element={
-            <PrivateRoute routeLogin="/admin">
-              <Reports />
-            </PrivateRoute>
-          } />
+          <Route
+            path="/askForDate"
+            element={
+              <PrivateRoute routeLogin="/admin">
+                <AskForDate />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/reservedtours"
+            element={
+              <PrivateRoute routeLogin="/admin">
+                <ReservedTours />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/walkerregistration"
+            element={
+              <PrivateRoute routeLogin="/admin">
+                <WalkerRegistration />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <PrivateRoute routeLogin="/admin">
+                <Reports />
+              </PrivateRoute>
+            }
+          />
           <Route path="*" element={<p>404</p>} />
         </Routes>
       </div>
