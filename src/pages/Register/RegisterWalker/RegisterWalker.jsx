@@ -4,14 +4,18 @@ import LayoutInicial from "../../../components/LayoutInicial/LayoutInicial";
 import { AboutYou } from "./components/AboutYou";
 import { VerifyIdentity } from "./components/VerifyIdentity";
 import { ThanksForJoin } from "./components/ThanksForJoin";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export const RegisterWalker = () => {
   const [title, setTitle] = useState("");
   const [step, setStep] = useState(1);
   const [view, setView] = useState("");
+
   const handleChangeView = (viewToShow) => {
     setStep(viewToShow);
   };
+
   useEffect(() => {
     switch (step) {
       case 1:
@@ -33,6 +37,11 @@ export const RegisterWalker = () => {
         break;
     }
   }, [step]);
+  // useEffect(() => {
+  //   if (!walkerToCreate) {
+  //     navigate("/register");
+  //   }
+  // }, []);
 
   return (
     <div>

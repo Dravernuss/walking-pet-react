@@ -3,7 +3,12 @@ import Home from "./pages/Home/Home";
 import PrincipalPage from "./pages/PrincipalPage/PrincipalPage";
 import Login from "./pages/Login/Login";
 import "./_App.scss";
-import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
+import {
+  PrivateRoute,
+  PrivateRouteUser,
+  PrivateRouteWalker,
+  PrivateRouteClient,
+} from "./components/PrivateRoute/PrivateRoute";
 import { Register } from "./pages/Register/Register";
 import { RegisterWalker } from "./pages/Register/RegisterWalker/RegisterWalker";
 import { RegisterSuccess } from "./pages/Register/RegisterSuccess/RegisterSuccess";
@@ -26,30 +31,68 @@ const App = () => {
           {/* Ver cual HOME se usara, Rutas de usuarios*/}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/principalpage" element={<PrincipalPage />} />
-          <Route path="/clientprofile" element={<ClientProfile />} />
-          <Route path="/walkerprofile" element={<WalkerProfile />} />
-          <Route path="/datesclient" element={<DatesClient />} />
-          <Route path="/dateswalker" element={<DatesWalker />} />
+
+          <Route
+            path="/principalpage"
+            element={
+              <PrivateRouteUser routeLogin="/login">
+                <PrincipalPage />
+              </PrivateRouteUser>
+            }
+          />
+
+          <Route
+            path="/clientprofile"
+            element={
+              <PrivateRouteClient routeLogin="/login">
+                <ClientProfile />
+              </PrivateRouteClient>
+            }
+          />
+
+          <Route
+            path="/walkerprofile"
+            element={
+              <PrivateRouteUser routeLogin="/login">
+                <WalkerProfile />
+              </PrivateRouteUser>
+            }
+          />
+
+          <Route
+            path="/datesclient"
+            element={
+              <PrivateRouteClient routeLogin="/login">
+                <DatesClient />
+              </PrivateRouteClient>
+            }
+          />
+
+          <Route
+            path="/dateswalker"
+            element={
+              <PrivateRouteWalker routeLogin="/login">
+                <DatesWalker />
+              </PrivateRouteWalker>
+            }
+          />
+
           <Route path="/register" element={<Register />} />
           <Route path="/registerWalker" element={<RegisterWalker />} />
           <Route path="/registerSuccess" element={<RegisterSuccess />} />
-          <Route path="/askForDate" element={<AskForDate />} />
+
+          <Route
+            path="/askForDate"
+            element={
+              <PrivateRouteClient routeLogin="/login">
+                <AskForDate />
+              </PrivateRouteClient>
+            }
+          />
 
           {/* Rutas Administrador */}
           <Route path="/admin" element={<AdminLogin />} />
           <Route
-<<<<<<< HEAD
-=======
-            path="/askForDate"
-            element={
-              <PrivateRoute routeLogin="/admin">
-                <AskForDate />
-              </PrivateRoute>
-            }
-          />
-          <Route
->>>>>>> 6fe61de22a922a3561594f513e36062855c25365
             path="/reservedtours"
             element={
               <PrivateRoute routeLogin="/admin">
@@ -73,6 +116,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
+
           <Route path="*" element={<p>404</p>} />
         </Routes>
       </div>

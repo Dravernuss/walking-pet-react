@@ -18,11 +18,11 @@ import "./_Register.scss";
 
 import { createUserAsync } from "../../slices/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { walkerToCreate1 } from "../../slices/walkerSlice";
 import { create } from "@mui/material/styles/createTransitions";
 
 export const Register = () => {
   const [type, setType] = useState("cliente");
-
   const [distrito, setDistrito] = useState("");
   const token = JSON.parse(localStorage.getItem("infoUser"))?.token;
   const {
@@ -45,17 +45,10 @@ export const Register = () => {
   const handleSubmitTwo = async (data) => {
     console.log("daga", data);
     if (type === "paseador") {
-      console.log("useeffect paseador");
+      await dispatch(walkerToCreate1(data));
       navigate("/registerWalker");
     } else if (type === "cliente") {
-      // const userToRegister = {
-      //   firstname: data.firstname,
-      //   lastname: data.lastname,
-      //   email: data.email,
-      //   password: data.password,
-      // };
       await dispatch(createUserAsync(data));
-      console.log("useeffect cliente");
       navigate("/registerSuccess");
     }
   };
