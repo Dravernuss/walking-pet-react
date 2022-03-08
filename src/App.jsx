@@ -3,6 +3,7 @@ import Home from "./pages/Home/Home";
 import PrincipalPage from "./pages/PrincipalPage/PrincipalPage";
 import Login from "./pages/Login/Login";
 import "./_App.scss";
+import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import { Register } from "./pages/Register/Register";
 import { RegisterWalker } from "./pages/Register/RegisterWalker/RegisterWalker";
 import { RegisterSuccess } from "./pages/Register/RegisterSuccess/RegisterSuccess";
@@ -36,10 +37,26 @@ const App = () => {
 
           {/* Rutas Administrador */}
           <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/askForDate" element={<AskForDate />} />
-          <Route path="/reservedtours" element={<ReservedTours />} />
-          <Route path="/walkerregistration" element={<WalkerRegistration />} />
-          <Route path="/reports" element={<Reports />} />
+          <Route path="/askForDate" element={
+            <PrivateRoute routeLogin="/admin">
+              <AskForDate />
+            </PrivateRoute>
+          } />
+          <Route path="/reservedtours" element={
+            <PrivateRoute routeLogin="/admin">
+              <ReservedTours />
+            </PrivateRoute>
+          } />
+          <Route path="/walkerregistration" element={
+            <PrivateRoute routeLogin="/admin">
+              <WalkerRegistration />
+            </PrivateRoute>
+          } />
+          <Route path="/reports" element={
+            <PrivateRoute routeLogin="/admin">
+              <Reports />
+            </PrivateRoute>
+          } />
           <Route path="*" element={<p>404</p>} />
         </Routes>
       </div>
