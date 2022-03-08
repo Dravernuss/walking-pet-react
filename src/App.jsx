@@ -23,7 +23,7 @@ const App = () => {
     <BrowserRouter>
       <div>
         <Routes>
-          {/* Ver cual HOME se usara*/}
+          {/* Ver cual HOME se usara, Rutas de usuarios*/}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/principalpage" element={<PrincipalPage />} />
@@ -39,6 +39,17 @@ const App = () => {
           {/* Rutas Administrador */}
           <Route path="/admin" element={<AdminLogin />} />
           <Route
+<<<<<<< HEAD
+=======
+            path="/askForDate"
+            element={
+              <PrivateRoute routeLogin="/admin">
+                <AskForDate />
+              </PrivateRoute>
+            }
+          />
+          <Route
+>>>>>>> 6fe61de22a922a3561594f513e36062855c25365
             path="/reservedtours"
             element={
               <PrivateRoute routeLogin="/admin">
