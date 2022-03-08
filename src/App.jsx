@@ -34,29 +34,34 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/registerWalker" element={<RegisterWalker />} />
           <Route path="/registerSuccess" element={<RegisterSuccess />} />
+          <Route path="/askForDate" element={<AskForDate />} />
 
           {/* Rutas Administrador */}
           <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/askForDate" element={
-            <PrivateRoute routeLogin="/admin">
-              <AskForDate />
-            </PrivateRoute>
-          } />
-          <Route path="/reservedtours" element={
-            <PrivateRoute routeLogin="/admin">
-              <ReservedTours />
-            </PrivateRoute>
-          } />
-          <Route path="/walkerregistration" element={
-            <PrivateRoute routeLogin="/admin">
-              <WalkerRegistration />
-            </PrivateRoute>
-          } />
-          <Route path="/reports" element={
-            <PrivateRoute routeLogin="/admin">
-              <Reports />
-            </PrivateRoute>
-          } />
+          <Route
+            path="/reservedtours"
+            element={
+              <PrivateRoute routeLogin="/admin">
+                <ReservedTours />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/walkerregistration"
+            element={
+              <PrivateRoute routeLogin="/admin">
+                <WalkerRegistration />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <PrivateRoute routeLogin="/admin">
+                <Reports />
+              </PrivateRoute>
+            }
+          />
           <Route path="*" element={<p>404</p>} />
         </Routes>
       </div>
