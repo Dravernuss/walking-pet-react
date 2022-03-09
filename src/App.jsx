@@ -35,9 +35,9 @@ const App = () => {
           <Route
             path="/principalpage"
             element={
-              <PrivateRouteUser routeLogin="/login">
+              <PrivateRouteClient routeLogin="/">
                 <PrincipalPage />
-              </PrivateRouteUser>
+              </PrivateRouteClient>
             }
           />
 
@@ -53,9 +53,17 @@ const App = () => {
           <Route
             path="/walkerprofile"
             element={
-              <PrivateRouteUser routeLogin="/login">
+              <PrivateRouteWalker routeLogin="/principalpage">
                 <WalkerProfile />
-              </PrivateRouteUser>
+              </PrivateRouteWalker>
+            }
+          />
+          <Route
+            path="/walker/:id"
+            element={
+              <PrivateRouteClient routeLogin="/login">
+                <WalkerProfile />
+              </PrivateRouteClient>
             }
           />
 

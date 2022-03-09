@@ -30,6 +30,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [role, setRole] = useState("user");
+  const ROLE = JSON.parse(localStorage.getItem("infoUser"))?.role;
 
   //------LOGIN USER-------------------------------------------
   const stateLoggedUser = JSON.parse(localStorage.getItem("infoUser"))?.token;
@@ -59,7 +60,10 @@ const Login = () => {
   };
 
   useEffect(() => {
-    stateLoggedUser && navigate("/principalpage");
+    if (stateLoggedUser) {
+      if (ROLE === "user") navigate("/principalpage");
+      else if (ROLE === "walker") navigate("/walkerprofile");
+    }
   }, [stateLoggedUser]);
 
   return (

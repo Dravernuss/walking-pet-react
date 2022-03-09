@@ -40,8 +40,6 @@ const NavBar = () => {
   //-------WALKER--------------------------------------
   const walker = useSelector(toWalker);
   // const walkerID = JSON.parse(localStorage.getItem("infoWalker"))._id;
-  console.log("user", user);
-  console.log("walker", walker);
   useEffect(() => {
     if (ROLE === "user" && !user) dispatch(getOneUserAsync(ID));
     if (ROLE === "walker" && !walker) dispatch(getOneWalkerAsync(ID));
@@ -54,8 +52,9 @@ const NavBar = () => {
       </Button>
       <div className="userInfo">
         <p>
-          {user?.firstname} {user?.lastname}
-          {walker?.firstname} {walker?.lastname}
+          {ROLE === "user"
+            ? user?.firstname + " " + user?.lastname
+            : walker?.firstname + " " + walker?.lastname}
         </p>
         <Button
           id="basic-button"
