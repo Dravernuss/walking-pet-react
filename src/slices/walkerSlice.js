@@ -59,9 +59,9 @@ export const walkerSlice = createSlice({
     walkerToCreate2: (state, { payload: newWalkerCreated2 }) => {
       state.walkerCreated = { newWalkerCreated2 };
     },
-    walkerToCreate3: (state, { payload: newWalkerCreatedEnd }) => {
-      state.walkerCreated = { newWalkerCreatedEnd };
-    },
+    // walkerToCreate3: (state, { payload: newWalkerCreatedEnd }) => {
+    //   state.walkerCreated = { newWalkerCreatedEnd };
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -89,21 +89,17 @@ export const walkerSlice = createSlice({
   },
 });
 
-export const {
-  walkerToEdit,
-  walkerToCreate1,
-  walkerToCreate2,
-  walkerToCreate3,
-} = walkerSlice.actions;
+export const { walkerToEdit, walkerToCreate1, walkerToCreate2 } =
+  walkerSlice.actions;
 
 export const selectWalkerLoggued = (state) => state.walker.logguedWalker;
 export const alertWalker = (state) => state.walker.alertWalker;
 export const toWalker = (state) => state.walker.walker;
 export const walkerCreated = (state) =>
-  state.walker.walkerCreated.newWalkerCreated;
+  state.walker?.walkerCreated?.newWalkerCreated;
 export const walkerCreated2 = (state) =>
   state.walker.walkerCreated.newWalkerCreated2;
-export const walkerCreatedEnd = (state) =>
-  state.walker.walkerCreated.newWalkerCreatedEnd;
+// export const walkerCreatedEnd = (state) =>
+//   state.walker.walkerCreated.newWalkerCreatedEnd;
 
 export default walkerSlice.reducer;

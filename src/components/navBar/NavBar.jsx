@@ -43,8 +43,8 @@ const NavBar = () => {
   console.log("user", user);
   console.log("walker", walker);
   useEffect(() => {
-    if (ROLE === "user") dispatch(getOneUserAsync(ID));
-    if (ROLE === "walker") dispatch(getOneWalkerAsync(ID));
+    if (ROLE === "user" && !user) dispatch(getOneUserAsync(ID));
+    if (ROLE === "walker" && !walker) dispatch(getOneWalkerAsync(ID));
   }, []);
 
   return (

@@ -10,7 +10,7 @@ import imagenes from "../../../../images/imagenes";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
-  walkerToCreate3,
+  // walkerToCreate3,
   walkerCreated2,
   createWalkerAsync,
 } from "../../../../slices/walkerSlice";

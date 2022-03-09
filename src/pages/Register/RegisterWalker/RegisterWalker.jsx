@@ -6,16 +6,20 @@ import { VerifyIdentity } from "./components/VerifyIdentity";
 import { ThanksForJoin } from "./components/ThanksForJoin";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import * as _ from "lodash";
 
 export const RegisterWalker = () => {
   const [title, setTitle] = useState("");
   const [step, setStep] = useState(1);
   const [view, setView] = useState("");
 
+  const navigate = useNavigate();
   const handleChangeView = (viewToShow) => {
     setStep(viewToShow);
   };
-
+  const variable = useSelector((state) => state.walker);
+  const equal = _.isEqual(variable, {});
+  console.log(equal);
   useEffect(() => {
     switch (step) {
       case 1:
@@ -37,11 +41,12 @@ export const RegisterWalker = () => {
         break;
     }
   }, [step]);
-  // useEffect(() => {
-  //   if (!walkerToCreate) {
-  //     navigate("/register");
-  //   }
-  // }, []);
+
+  useEffect(() => {
+    if (equal) {
+      navigate("/register");
+    }
+  }, []);
 
   return (
     <div>

@@ -12,15 +12,11 @@ import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import ModalStyle from "../../components/ModalStyle/ModalStyle.jsx";
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
-const Input = styled("input")({
-  display: "none",
-});
+import { useSelector, useDispatch } from "react-redux";
 
 const distritos = [
   "San Miguel",
@@ -32,10 +28,19 @@ const distritos = [
   "La Molina",
 ];
 
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
+const Input = styled("input")({
+  display: "none",
+});
+
 const WalkerProfile = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  //--------------REDUX---------------------------------------
+
+  //----------------------------------------------------------
   return (
     <div className="walkerProfile">
       <NavBar />
