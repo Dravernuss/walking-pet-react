@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import ModalStyle from "../../components/ModalStyle/ModalStyle.jsx";
 import Box from "@mui/material/Box";
@@ -10,8 +10,10 @@ import imagenes from "../../images/imagenes.jsx";
 import { styled } from "@mui/material/styles";
 import "./_OptionsClient.scss";
 import "../../pages/DatesClient/_DatesClient.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { dateSelected, getDateByIdAsync } from "../../slices/dateSlice.js";
 
-const OptionsClient = ({ calificado, estado }) => {
+const OptionsClient = ({ calificado, estado, id, index }) => {
   const [value, setValue] = useState(0);
   const [openDetails, setOpenDetails] = useState(false);
   const [openChild, setOpenChild] = useState(false);
@@ -48,6 +50,17 @@ const OptionsClient = ({ calificado, estado }) => {
   const Input = styled("input")({
     display: "none",
   });
+
+  //---------------REDUX------------------------
+  const dispatch = useDispatch();
+  const dateInfo = useSelector(dateSelected);
+
+  useEffect(() => {
+    dispatch(getDateByIdAsync(id));
+  }, []);
+
+  //--------------------------------------------
+
   return (
     <>
       <Button
@@ -240,7 +253,6 @@ const OptionsClient = ({ calificado, estado }) => {
                   setValue(newValue);
                 }}
                 size="large"
-                className="stars"
               />
             </div>
             <TextField
@@ -380,7 +392,8 @@ const OptionsClient = ({ calificado, estado }) => {
           </div>
           <div style={ModalStyle.body} className="boxModalBody">
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              NOMBRE DEL CLIENTE: MANUEL BAELLA
+              {/* NOMBRE DEL CLIENTE: MANUEL BAELLA */}
+              {}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
               DISTRITO: MIRAFLORES

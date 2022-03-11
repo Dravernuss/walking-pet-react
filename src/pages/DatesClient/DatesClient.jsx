@@ -11,6 +11,10 @@ import Button from "@mui/material/Button";
 import OptionsClient from "../../components/OptionsClient/OptionsClient";
 import "./_DatesClient.scss";
 import { Paper } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { getDatesByUserAsync, datesUser } from "../../slices/dateSlice";
 
 const DatesClient = () => {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -30,7 +34,20 @@ const DatesClient = () => {
     },
   }));
 
-  const dates = [
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
+  //----REDUX-----------------------------------------------------
+  const dates = useSelector(datesUser);
+  console.log(dates);
+  React.useEffect(() => {
+    dispatch(getDatesByUserAsync(userID));
+  }, []);
+
+  console.log();
+
+  //----------------------------------------------------------
+  const dates1 = [
     {
       paseador: "Helen Arias",
       fecha: "08/12/2021",
@@ -109,29 +126,31 @@ const DatesClient = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {dates.map((date) => (
-                  <StyledTableRow key={date.fecha}>
+                {dates?.map((date, i) => (
+                  <StyledTableRow key={i}>
                     <StyledTableCell
                       className="cell"
                       align="left"
                       component="th"
                       scope="row"
                     >
-                      {date.paseador}
+                      {date.walker_name}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {date.fecha}
+                      {date.date_day}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {date.hora}
+                      {date.date_hour}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {date.estado}
+                      {date.date_state}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
                       <OptionsClient
-                        calificado={date.calificado}
-                        estado={date.estado}
+                        id={date._id}
+                        index={i}
+                        calificado={date.calificated}
+                        estado={date.date_state}
                       />
                     </StyledTableCell>
                   </StyledTableRow>

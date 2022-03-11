@@ -2,23 +2,21 @@ import API_SERVER from "./api.server.js";
 
 const ENDPOINTS = {
   GET_ALL_DATES: "/api/dates",
-  GET_PETS_BY_USER: "/api/dates/user",
-  GET_PETS_BY_WALKER: "/api/dates/walker",
+  GET_DATE_BY_ID: "/api/dates",
+  GET_DATES_BY_USER: "/api/dates/user",
+  GET_DATES_BY_WALKER: "/api/dates/walker",
   CREATE: "/api/dates/create",
-  //   DELETE: "/api/pets/delete",
-  //   UPDATE: "/api/pets/update",
-  //   GET_ONE_USER: "/api/users",
-  //   LOGIN: "/api/users/login",
+  UPDATE: "/api/dates/update",
 };
 
-export const getPetsByUser = (id) => {
-  const token = JSON.parse(localStorage.getItem("infoUser")).token;
-  const path = `${API_SERVER}${ENDPOINTS.GET_PETS_BY_USER}/${id}`;
+export const getAllDates = () => {
+  // const token = JSON.parse(localStorage.getItem("infoWalker")).token;
+  const path = `${API_SERVER}${ENDPOINTS.GET_ALL_DATES}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -30,17 +28,72 @@ export const getPetsByUser = (id) => {
   });
 };
 
-export const createPet = (pet, userId) => {
-  const token = JSON.parse(localStorage.getItem("infoUser")).token;
+export const getDateById = (id) => {
+  //   const token = JSON.parse(localStorage.getItem("infoWalker")).token;
+  const path = `${API_SERVER}${ENDPOINTS.GET_DATE_BY_ID}/${id}`;
+  return new Promise((resolve, reject) => {
+    fetch(path, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve({ data });
+      })
+      .catch((err) => {
+        reject({ error: err });
+      });
+  });
+};
+
+export const getDatesByUser = (idUser) => {
+  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const path = `${API_SERVER}${ENDPOINTS.GET_DATES_BY_USER}/${idUser}`;
+  return new Promise((resolve, reject) => {
+    fetch(path, {
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve({ data });
+      })
+      .catch((err) => {
+        reject({ error: err });
+      });
+  });
+};
+export const getDatesByWalker = (idWalker) => {
+  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const path = `${API_SERVER}${ENDPOINTS.GET_DATES_BY_WALKER}/${idWalker}`;
+  return new Promise((resolve, reject) => {
+    fetch(path, {
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve({ data });
+      })
+      .catch((err) => {
+        reject({ error: err });
+      });
+  });
+};
+
+export const createDate = (date, userId) => {
+  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.CREATE}/${userId}`;
-  console.log("pet-api", pet);
   return new Promise((resolve, reject) => {
     fetch(path, {
       method: "POST",
-      body: JSON.stringify(pet),
+      body: JSON.stringify(date),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -53,36 +106,16 @@ export const createPet = (pet, userId) => {
   });
 };
 
-export const deletePet = (id) => {
-  const token = JSON.parse(localStorage.getItem("infoUser")).token;
-  const path = `${API_SERVER}${ENDPOINTS.DELETE}/${id}`;
-  return new Promise((resolve, reject) => {
-    fetch(path, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        resolve(true);
-      })
-      .catch((err) => {
-        reject({ error: err });
-      });
-  });
-};
-
-export const updatePet = ({ id, ...pet }) => {
-  const token = JSON.parse(localStorage.getItem("infoUser")).token;
-  const path = `${API_SERVER}${ENDPOINTS.UPDATE}/${id}`;
+export const updateDate = ({ idDate, ...date }) => {
+  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const path = `${API_SERVER}${ENDPOINTS.UPDATE}/${idDate}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
       method: "PUT",
-      body: JSON.stringify(pet),
+      body: JSON.stringify(date),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
