@@ -15,135 +15,40 @@ import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
+import { distritos } from "../../utils/constants";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllWalkersAsync } from "../../slices/walkerSlice";
 
 const drawerWidth = 200;
 
-const Distritos = [
-  "Todos los Distritos",
-  "Miraflores",
-  "Breña",
-  "San Isidro",
-  "Barranco",
-  "La Molina",
-  "Callao",
-  "Cercado de Lima",
-  "San Martin de Porres",
-  "San Miguel",
-];
-
-const Paseadores = [
-  {
-    photo: imagenes.img3,
-    price: 16,
-    name: "Helen Arias",
-    ratingValue: 4.9,
-    text: "Los perros tambien son el mejor amigo de las mujeres.",
-    calification: "15 calificaciones | 19 paseos realizados",
-    distrito: ["Miraflores", "Breña", "San Martin de Porres"],
-  },
-  {
-    photo: imagenes.img4,
-    price: 15,
-    name: "Alex Marino",
-    ratingValue: 4.8,
-    text: "Entrenador de perros profesional.",
-    calification: "7 calificaciones | 13 paseos realizados",
-    distrito: ["Breña", "San Isidro", "San Miguel"],
-  },
-  {
-    photo: imagenes.img5,
-    price: 18,
-    name: "Javier Sandoval",
-    ratingValue: 5.0,
-    text: "El más confiable para tu amigo canino!",
-    calification: "21 calificaciones | 24 paseos realizados",
-    distrito: ["San Isidro", "Barranco"],
-  },
-  {
-    photo: imagenes.img6,
-    price: 20,
-    name: "Susan Avila",
-    ratingValue: 5.0,
-    text: "Tu perruno y yo nos vamos a llevar muy bien!",
-    calification: "15 calificaciones | 19 paseos realizados",
-    distrito: ["Barranco", "La Molina", "Miraflores"],
-  },
-  {
-    photo: imagenes.img7,
-    price: 18,
-    name: "Nestor Magariño",
-    ratingValue: 4.9,
-    text: "El mejor cuidador de perros!",
-    calification: "7 calificaciones | 13 paseos realizados",
-    distrito: ["La Molina", "Callao"],
-  },
-  {
-    photo: imagenes.img8,
-    price: 15,
-    name: "Luna Agreda",
-    ratingValue: 4.5,
-    text: "Solo un alma buena simpatiza con el alma de un perro.",
-    calification: "21 calificaciones | 24 paseos realizados",
-    distrito: ["Callao", "Cercado de Lima", "Miraflores"],
-  },
-];
-
 const PrincipalPage = (props) => {
-  const [distritoSelected, setDistritoSelected] = useState(() => {
-    return "Todos los Distritos";
-  });
+  const dispatch = useDispatch();
+  const walkers = useSelector((state) => state.walker.walkers);
+  useEffect(async () => {
+    const walkers_await = await dispatch(getAllWalkersAsync());
+    setPaseadoresD(walkers_await.payload);
+  }, []);
 
-  const [paseadoresD, setPaseadoresD] = useState(() => {
-    return Paseadores.map((key) => {
-      return (
-        <WalkerCard
-          photo={key.photo}
-          price={key.price}
-          name={key.name}
-          ratingValue={key.ratingValue}
-          text={key.text}
-          calification={key.calification}
-        />
-      );
-    });
-  });
+  const [distritoSelected, setDistritoSelected] = useState(
+    "Todos los distritos"
+  );
 
-  function changePaseadores(distrito) {
+  const [paseadoresD, setPaseadoresD] = useState(walkers);
+
+  function changePaseadores(selectedDistrict) {
     let paseadoresPintar = [];
 
-    Paseadores.map((key) => {
-      for (let i = 0; i < key.distrito.length; i++) {
-        if (key.distrito[i] === distrito) paseadoresPintar.push(key);
+    walkers?.map((key) => {
+      for (let i = 0; i < key.avalaible_districts.length; i++) {
+        if (key.avalaible_districts[i] === selectedDistrict)
+          paseadoresPintar.push(key);
       }
       return paseadoresPintar;
     });
 
     return setPaseadoresD(
-      distrito !== "Todos los Distritos"
-        ? paseadoresPintar.map((key) => {
-            return (
-              <WalkerCard
-                photo={key.photo}
-                price={key.price}
-                name={key.name}
-                ratingValue={key.ratingValue}
-                text={key.text}
-                calification={key.calification}
-              />
-            );
-          })
-        : Paseadores.map((key) => {
-            return (
-              <WalkerCard
-                photo={key.photo}
-                price={key.price}
-                name={key.name}
-                ratingValue={key.ratingValue}
-                text={key.text}
-                calification={key.calification}
-              />
-            );
-          })
+      selectedDistrict !== "Todos los distritos" ? paseadoresPintar : walkers
     );
   }
 
@@ -170,7 +75,19 @@ const PrincipalPage = (props) => {
       </h4>
       <Box sx={{ overflow: "auto" }} className="buttonBox">
         <List>
-          {Distritos.map((district) => {
+          <ListItem
+            button
+            onClick={() => {
+              setDistritoSelected("Todos los distritos");
+              changePaseadores("Todos los distritos");
+            }}
+            className="btn"
+            key="Todos los distritos"
+            style={{ backgroundColor: "rgba(144, 215, 202, 0.15)" }}
+          >
+            <ListItemText primary={"Todos los distritos"} />
+          </ListItem>
+          {distritos.map((district) => {
             return (
               <ListItem
                 button
@@ -274,7 +191,24 @@ const PrincipalPage = (props) => {
             </p>
           </div>
 
-          <div className="card_container">{paseadoresD}</div>
+          <div className="card_container">
+            {paseadoresD?.map((key, i) => {
+              return (
+                <WalkerCard
+                  key={i}
+                  photo_url={key.photo_url}
+                  price={key.price}
+                  firstname={key.firstname}
+                  lastname={key.lastname}
+                  rating={key.rating}
+                  greeting={key.greeting}
+                  total_rating={key.total_rating}
+                  total_walking={key.total_walking}
+                  _id={key._id}
+                />
+              );
+            })}
+          </div>
         </Box>
       </Box>
     </>

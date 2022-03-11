@@ -98,6 +98,64 @@ const NavBar = () => {
             </Button>
           </MenuItem>
           <Divider />
+          {ROLE === "user" ? (
+            <>
+              <MenuItem
+                style={{ width: "100%", padding: "0" }}
+                onClick={handleClose}
+              >
+                <Button
+                  onClick={() => navigate("/principalpage")}
+                  style={{
+                    color: "black",
+                    fontFamily: "Roboto-Regular",
+                    width: "100%",
+                    padding: "10px 15px",
+                  }}
+                >
+                  Buscar Paseador
+                </Button>
+              </MenuItem>
+              <Divider />
+              <MenuItem
+                style={{ width: "100%", padding: "0" }}
+                onClick={handleClose}
+              >
+                <Button
+                  onClick={() => navigate("/datesclient")}
+                  style={{
+                    color: "black",
+                    fontFamily: "Roboto-Regular",
+                    width: "100%",
+                    padding: "10px 15px",
+                  }}
+                >
+                  Ver Mis Citas
+                </Button>
+              </MenuItem>
+              <Divider />
+            </>
+          ) : (
+            <>
+              <MenuItem
+                style={{ width: "100%", padding: "0" }}
+                onClick={handleClose}
+              >
+                <Button
+                  onClick={() => navigate("/dateswalker")}
+                  style={{
+                    color: "black",
+                    fontFamily: "Roboto-Regular",
+                    width: "100%",
+                    padding: "10px 15px",
+                  }}
+                >
+                  Ver Mis Citas
+                </Button>
+              </MenuItem>
+              <Divider />
+            </>
+          )}
           <MenuItem
             style={{ width: "100%", padding: "0" }}
             onClick={handleClose}

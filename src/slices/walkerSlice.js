@@ -59,9 +59,6 @@ export const walkerSlice = createSlice({
     walkerToCreate2: (state, { payload: newWalkerCreated2 }) => {
       state.walkerCreated = { newWalkerCreated2 };
     },
-    // walkerToCreate3: (state, { payload: newWalkerCreatedEnd }) => {
-    //   state.walkerCreated = { newWalkerCreatedEnd };
-    // },
   },
   extraReducers: (builder) => {
     builder
@@ -85,6 +82,13 @@ export const walkerSlice = createSlice({
       })
       .addCase(createWalkerAsync.fulfilled, (state, action) => {
         state.created = true;
+      })
+      .addCase(getAllWalkersAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllWalkersAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.walkers = action.payload;
       });
   },
 });
@@ -99,7 +103,5 @@ export const walkerCreated = (state) =>
   state.walker?.walkerCreated?.newWalkerCreated;
 export const walkerCreated2 = (state) =>
   state.walker.walkerCreated.newWalkerCreated2;
-// export const walkerCreatedEnd = (state) =>
-//   state.walker.walkerCreated.newWalkerCreatedEnd;
 
 export default walkerSlice.reducer;

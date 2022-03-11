@@ -17,21 +17,16 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { useEffect, useState } from "react";
 import { alpha, styled } from "@mui/material/styles";
-import { green } from "@mui/material/colors";
 import ModalStyle from "../../components/ModalStyle/ModalStyle.jsx";
-
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getOneWalkerAsync } from "../../slices/walkerSlice.js";
-
-const distritos = [
-  "San Miguel",
-  "San Isidro",
-  "Miraflores",
-  "Breña",
-  "Barranco",
-  "San Borja",
-  "La Molina",
-];
+import {
+  walkerToEdit,
+  getOneWalkerAsync,
+  updateWalkerAsync,
+} from "../../slices/walkerSlice.js";
+import { useParams } from "react-router-dom";
+import { distritos } from "../../utils/constants";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -52,23 +47,48 @@ const GreenSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 const WalkerProfile = () => {
+  const thisWalker = useSelector((state) => state.walker.walker);
+  const thisUser = useSelector((state) => state.user?.user);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const [ready, setReady] = useState(thisWalker?.ready);
+  const [selectDistricts, setSelectDistricts] = useState([]);
+  const handleOpen = () => {
+    setSelectDistricts(thisWalker?.avalaible_districts);
+    setReady(thisWalker?.ready);
+    setOpen(true);
+  };
   const handleClose = () => setOpen(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { elements } = e.target;
+    const dataWalker = {
+      price: elements[0].value,
+      avalaible_districts: selectDistricts,
+      greeting: elements[6].value,
+      presentation: elements[9].value,
+      // photo_url:
+      //   "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
+      ready: ready,
+    };
+    dispatch(walkerToEdit(dataWalker));
+    await dispatch(updateWalkerAsync({ id: ID, ...dataWalker }));
+    handleClose();
+  };
+
   //--------------REDUX---------------------------------------
   const ROLE = JSON.parse(localStorage.getItem("infoUser"))?.role;
+  const ID = JSON.parse(localStorage.getItem("infoUser"))?._id;
   const dispatch = useDispatch();
-  const _ID = "6227c043d3eeba7e892543f6";
+  const { id } = useParams();
   useEffect(() => {
     if (ROLE === "user") {
-      dispatch(getOneWalkerAsync(_ID));
+      dispatch(getOneWalkerAsync(id));
     }
   }, []);
-
-  const thisWalker = useSelector((state) => state.walker.walker);
   // console.log("this", thisWalker);
   //----------------------------------------------------------
-
+  const navigate = useNavigate();
   return (
     <div className="walkerProfile">
       <NavBar />
@@ -83,7 +103,7 @@ const WalkerProfile = () => {
           </h2>
           <Rating
             name="read-only"
-            value={`${thisWalker?.rating}`}
+            value={parseFloat(`${thisWalker?.rating}`)}
             precision={0.5}
             size="large"
             readOnly
@@ -92,7 +112,16 @@ const WalkerProfile = () => {
           <p className="card-textP">
             {thisWalker?.greeting}
             <br></br>
-            <span>15 calificaciones | 19 paseos realizados</span>
+            <span>
+              {thisWalker?.total_rating}{" "}
+              {thisWalker?.total_rating === 1
+                ? "calificación"
+                : "calificaciones"}{" "}
+              | {thisWalker?.total_walking}{" "}
+              {thisWalker?.total_walking === 1
+                ? "paseo realizado"
+                : "paseos realizados"}
+            </span>
           </p>
         </div>
         <div className="info-container">
@@ -102,7 +131,7 @@ const WalkerProfile = () => {
           <div className="chip-container">
             {thisWalker ? (
               thisWalker.avalaible_districts.map((district) => {
-                return <Chip label={district} />;
+                return <Chip key={district} label={district} />;
               })
             ) : (
               <></>
@@ -111,7 +140,17 @@ const WalkerProfile = () => {
           <div>
             {ROLE === "user" ? (
               <div className="actions">
-                <Button className="boton" href="/askForDate">
+                <Button
+                  className="boton"
+                  disabled={
+                    !thisWalker?.avalaible_districts.includes(
+                      thisUser?.district
+                    )
+                  }
+                  onClick={() =>
+                    navigate(`/walker/${thisWalker?._id}/askfordate`)
+                  }
+                >
                   <img
                     className="dogButton"
                     src={imagenes.img9}
@@ -119,6 +158,17 @@ const WalkerProfile = () => {
                   ></img>
                   Pedir una cita
                 </Button>
+                {thisWalker?.avalaible_districts.includes(
+                  thisUser?.district
+                ) ? (
+                  <></>
+                ) : (
+                  <p
+                    style={{ fontFamily: "Rambla-Regular", marginTop: "10px" }}
+                  >
+                    Este paseador no está disponible en tu distrito.
+                  </p>
+                )}
               </div>
             ) : (
               <>
@@ -160,8 +210,10 @@ const WalkerProfile = () => {
                         </Typography>
                       </div>
                       <div style={ModalStyle.body} className="boxModalBody">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                           <TextField
+                            required
+                            defaultValue={thisWalker?.price}
                             className="input"
                             label="Tarifa por hora"
                             size="small"
@@ -171,7 +223,7 @@ const WalkerProfile = () => {
                           />
                           <Autocomplete
                             multiple
-                            id="checkboxes-tags-demo"
+                            id="controlled-demo"
                             disableCloseOnSelect
                             options={distritos}
                             renderOption={(props, option, { selected }) => (
@@ -185,14 +237,11 @@ const WalkerProfile = () => {
                                 {option}
                               </li>
                             )}
+                            onChange={(props, option) => {
+                              setSelectDistricts(option);
+                            }}
                             getOptionLabel={(option) => option}
-                            defaultValue={[
-                              distritos[2],
-                              distritos[4],
-                              distritos[6],
-                              distritos[1],
-                              distritos[5],
-                            ]}
+                            value={selectDistricts}
                             renderInput={(params) => (
                               <TextField
                                 {...params}
@@ -204,6 +253,8 @@ const WalkerProfile = () => {
                             )}
                           />
                           <TextField
+                            required
+                            defaultValue={thisWalker?.greeting}
                             className="input"
                             margin="normal"
                             label="Saludo"
@@ -213,6 +264,8 @@ const WalkerProfile = () => {
                             rows={3}
                           />
                           <TextField
+                            required
+                            defaultValue={thisWalker?.presentation}
                             className="input"
                             margin="normal"
                             label="Mensaje de Presentación"
@@ -230,7 +283,7 @@ const WalkerProfile = () => {
                           >
                             Subir una foto para su perfil
                           </p>
-                          <div className="input-file">
+                          <div className="input-file-wp">
                             <span className="input-file-text">
                               Choose file...
                             </span>
@@ -258,7 +311,28 @@ const WalkerProfile = () => {
                               </Button>
                             </label>
                           </div>
-
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              fontFamily: "Rambla-Regular",
+                            }}
+                          >
+                            <FormControlLabel
+                              control={
+                                <GreenSwitch
+                                  onChange={() => setReady(!ready)}
+                                  checked={ready}
+                                />
+                              }
+                              label=""
+                            />
+                            <strong>
+                              {ready
+                                ? "Estoy Disponible"
+                                : "No Estoy Disponible"}
+                            </strong>
+                          </div>
                           <div
                             style={{
                               display: "flex",
@@ -272,10 +346,7 @@ const WalkerProfile = () => {
                             >
                               Cerrar
                             </Button>
-                            <Button
-                              style={ModalStyle.boton}
-                              onClick={handleClose}
-                            >
+                            <Button style={ModalStyle.boton} type="submit">
                               Finalizar
                             </Button>
                           </div>
@@ -284,20 +355,47 @@ const WalkerProfile = () => {
                     </Box>
                   </Modal>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginTop: "1rem",
-                    fontFamily: "Rambla-Regular",
-                  }}
-                >
-                  <FormControlLabel
-                    control={<GreenSwitch defaultChecked />}
-                    label=""
-                  />
-                  <strong>DISPONIBLE?</strong>
-                </div>
+                {thisWalker?.ready === true ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginTop: "1rem",
+                      fontFamily: "Rambla-Regular",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "1rem",
+                        height: "1rem",
+                        borderRadius: "50%",
+                        background: "#99CC42",
+                        marginRight: "0.5rem",
+                      }}
+                    />
+                    <strong> DISPONIBLE</strong>
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginTop: "1rem",
+                      fontFamily: "Rambla-Regular",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "1rem",
+                        height: "1rem",
+                        borderRadius: "50%",
+                        background: "gray",
+                        marginRight: "0.5rem",
+                      }}
+                    />
+                    <strong> NO DISPONIBLE</strong>
+                  </div>
+                )}
               </>
             )}
           </div>

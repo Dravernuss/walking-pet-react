@@ -90,7 +90,7 @@ const App = () => {
           <Route path="/registerSuccess" element={<RegisterSuccess />} />
 
           <Route
-            path="/askForDate"
+            path="/walker/:id/askForDate"
             element={
               <PrivateRouteClient routeLogin="/login">
                 <AskForDate />

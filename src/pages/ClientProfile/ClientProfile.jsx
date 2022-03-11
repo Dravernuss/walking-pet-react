@@ -15,7 +15,7 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { styled } from "@mui/material/styles";
 import PetCard from "../../components/PetCard/PetCard.jsx";
-
+import { distritos, razas } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -29,33 +29,6 @@ import {
   getPetsByUserAsync,
   createPetAsync,
 } from "../../slices/petSlice.js";
-
-const distritos = [
-  "San Miguel",
-  "San Isidro",
-  "Miraflores",
-  "Breña",
-  "Barranco",
-  "San Borja",
-  "La Molina",
-];
-
-const razas = [
-  "Criollo",
-  "Golden Retriever",
-  "Bulldog",
-  "Boxer",
-  "Pit Bull",
-  "Pug",
-  "Beagle",
-  "Pastor Alemán",
-  "Doberman",
-  "Rottweiler",
-  "Cocker",
-  "Dálmata",
-  "Shar Pei",
-  "Otro",
-];
 
 const ClientProfile = () => {
   const [open, setOpen] = useState(false);

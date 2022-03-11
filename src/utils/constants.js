@@ -10,3 +10,20 @@ export const distritos = [
   "San Miguel",
 ];
 export const horasPaseo = [1, 2, 3];
+
+export const razas = [
+  "Criollo",
+  "Golden Retriever",
+  "Bulldog",
+  "Boxer",
+  "Pit Bull",
+  "Pug",
+  "Beagle",
+  "Pastor Alemán",
+  "Doberman",
+  "Rottweiler",
+  "Cocker",
+  "Dálmata",
+  "Shar Pei",
+  "Otro",
+];
