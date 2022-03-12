@@ -6,8 +6,16 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import "./_OptionsWalker.scss";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  datesWalker,
+  getDateByIdAsync,
+  updateDateAsync,
+  dateToEdit,
+  getDatesByWalkerAsync,
+} from "../../slices/dateSlice.js";
 
-const OptionsWalker = ({ aceptado, estado }) => {
+const OptionsWalker = ({ aceptado, estado, index, id }) => {
   const [openDetails, setOpenDetails] = useState(false);
   const [openChild, setOpenChild] = useState(false);
   const [openAccept, setOpenAccept] = useState(false);
@@ -20,6 +28,59 @@ const OptionsWalker = ({ aceptado, estado }) => {
   const handleCloseChild = () => setOpenChild(false);
   const handleOpenDetails = () => setOpenDetails(true);
   const handleCloseDetails = () => setOpenDetails(false);
+
+  //--------------REDUX-------------------------------------------
+  const dispatch = useDispatch();
+  const dateInfo = useSelector(datesWalker)[index];
+
+  const handleCancelDate = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      updateDateAsync({
+        idDate: id,
+        ...dateInfo,
+        calificated: true,
+        date_state: "Cancelado",
+        accepted: 0,
+      })
+    );
+    dispatch(getDatesByWalkerAsync(dateInfo.walker_id));
+    handleCloseChild();
+    handleCloseDetails();
+  };
+
+  const handleAcceptDate = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      updateDateAsync({
+        idDate: id,
+        ...dateInfo,
+        calificated: true,
+        date_state: "Confirmado",
+        accepted: 1,
+      })
+    );
+    dispatch(getDatesByWalkerAsync(dateInfo.walker_id));
+    handleCloseAccept();
+  };
+
+  const handleRejectDate = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      updateDateAsync({
+        idDate: id,
+        ...dateInfo,
+        calificated: true,
+        date_state: "Rechazado",
+        accepted: 0,
+      })
+    );
+    dispatch(getDatesByWalkerAsync(dateInfo.walker_id));
+    handleCloseAccept();
+  };
+
+  //--------------------------------------------------------------
+
   return (
     <>
       <ButtonGroup className="group" variant="none">
@@ -68,7 +129,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                   <Button style={ModalStyle.boton} onClick={handleCloseAccept}>
                     Cancelar
                   </Button>
-                  <Button style={ModalStyle.boton} onClick={handleCloseAccept}>
+                  <Button style={ModalStyle.boton} onClick={handleAcceptDate}>
                     Aceptar
                   </Button>
                 </div>
@@ -121,7 +182,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                   <Button style={ModalStyle.boton} onClick={handleCloseCancel}>
                     Cancelar
                   </Button>
-                  <Button style={ModalStyle.boton} onClick={handleCloseCancel}>
+                  <Button style={ModalStyle.boton} onClick={handleRejectDate}>
                     Aceptar
                   </Button>
                 </div>
@@ -154,33 +215,54 @@ const OptionsWalker = ({ aceptado, estado }) => {
           </div>
           <div style={ModalStyle.body} className="boxModalBody">
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              NOMBRE DEL CLIENTE: MANUEL BAELLA
+              NOMBRE DEL CLIENTE: {dateInfo?.user_name}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              DISTRITO: MIRAFLORES
+              NOMBRE DEL PASEADOR: {dateInfo?.walker_name}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              DIRECCIÓN:Av. Tomas Valle 3145 Miraflores
+              DISTRITO: {dateInfo?.district_selected}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              FECHA: 16-12-2021
+              DIRECCIÓN: {dateInfo?.client_address}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              HORARIO: 16:00-17:00 p.m
+              FECHA: {dateInfo?.date_day}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              TIEMPO: 1 HORA
+              HORARIO: {dateInfo?.date_hour}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              COSTO: S/16
+              TIEMPO: {dateInfo?.date_time}{" "}
+              {dateInfo?.date_time === 1 ? "Hora" : "Horas"}
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              COSTO: S/{dateInfo?.total_price}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
               Mascota(s):
             </p>
-            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              * Balto
+            {dateInfo?.pets_name.map((petName, i) => {
+              return (
+                <p
+                  key={i}
+                  style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                >
+                  * {petName}
+                </p>
+              );
+            })}
+            <p
+              style={{
+                margin: "15px 0",
+                fontFamily: "Rambla-Regular",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              USTED DEBE PRESENTAR SU DOCUMENTO DE IDENTIDAD ANTES DE INICIAR EL
+              PASEO
             </p>
-
             <div
               style={{
                 display: "flex",
@@ -240,7 +322,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                       </Button>
                       <Button
                         style={ModalStyle.boton}
-                        onClick={handleCloseChild}
+                        onClick={handleCancelDate}
                       >
                         Aceptar
                       </Button>

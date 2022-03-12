@@ -11,54 +11,13 @@ import Button from "@mui/material/Button";
 import "./_DatesWalker.scss";
 import OptionsWalker from "../../components/OptionsWalker/OptionsWalker";
 import { Paper } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { datesWalker, getDatesByWalkerAsync } from "../../slices/dateSlice";
 
-const dates = [
-  //0 : rechazado
-  //1 : aceptado
-  //2 : pendiente
-  {
-    cliente: "Manuel Baella",
-    fecha: "08/12/2021",
-    hora: "4:00 pm",
-    estado: "Realizado",
-    aceptado: 1,
-  },
-  {
-    cliente: "Manuel Baella",
-    fecha: "14/12/2021",
-    hora: "4:00 pm",
-    estado: "En curso",
-    aceptado: 1,
-  },
-  {
-    cliente: "Manuel Baella",
-    fecha: "16/12/2021",
-    hora: "4:00 pm",
-    estado: "Confirmado",
-    aceptado: 1,
-  },
-  {
-    cliente: "Manuel Baella",
-    fecha: "18/12/2021",
-    hora: "4:00 pm",
-    estado: "Sin confirmar",
-    aceptado: 2,
-  },
-  {
-    cliente: "Manuel Baella",
-    fecha: "19/12/2021",
-    hora: "3:00 pm",
-    estado: "Rechazado",
-    aceptado: 0,
-  },
-  {
-    cliente: "Manuel Baella",
-    fecha: "20/12/2021",
-    hora: "5:00 pm",
-    estado: "Cancelado",
-    aceptado: 0,
-  },
-];
+// ACCEPTED ESTADOS POSIBLES
+//0 : rechazado
+//1 : aceptado
+//2 : pendiente
 
 const DatesWalker = () => {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -77,6 +36,15 @@ const DatesWalker = () => {
       backgroundColor: theme.palette.action.hover,
     },
   }));
+
+  const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
+  //----REDUX-----------------------------------------------------
+  const dispatch = useDispatch();
+  const dates = useSelector(datesWalker);
+  console.log(dates);
+  React.useEffect(() => {
+    dispatch(getDatesByWalkerAsync(userID));
+  }, []);
 
   return (
     <div className="DatesWalker">
@@ -110,29 +78,31 @@ const DatesWalker = () => {
                 </TableRow>
               </TableHead>
               <TableBody size="small">
-                {dates.map((date) => (
-                  <StyledTableRow key={date.fecha}>
+                {dates?.map((date, i) => (
+                  <StyledTableRow key={i}>
                     <StyledTableCell
                       className="cell"
                       align="left"
                       component="th"
                       scope="row"
                     >
-                      {date.cliente}
+                      {date?.user_name}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {date.fecha}
+                      {date?.date_day}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {date.hora}
+                      {date?.date_hour}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {date.estado}
+                      {date?.date_state}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
                       <OptionsWalker
-                        aceptado={date.aceptado}
-                        estado={date.estado}
+                        index={i}
+                        id={date?._id}
+                        aceptado={date?.accepted}
+                        estado={date?.date_state}
                       />
                     </StyledTableCell>
                   </StyledTableRow>

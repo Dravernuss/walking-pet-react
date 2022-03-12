@@ -76,6 +76,10 @@ export const datesSlice = createSlice({
         state.loading = false;
         state.datesByUser = action.payload;
       })
+      .addCase(getDatesByWalkerAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.datesByWalker = action.payload;
+      })
       .addCase(getDateByIdAsync.pending, (state) => {
         state.loading = true;
       })
@@ -83,6 +87,7 @@ export const datesSlice = createSlice({
         state.loading = false;
         state.dateSelected = action.payload;
       });
+
     //   .addCase(getPetsByUserAsync.fulfilled, (state, action) => {
     //     state.loading = false;
     //     state.pets = action.payload;
@@ -96,9 +101,10 @@ export const datesSlice = createSlice({
   },
 });
 
-export const { datesToEdit } = datesSlice.actions;
+export const { dateToEdit } = datesSlice.actions;
 
 export const datesUser = (state) => state.dates.datesByUser;
+export const datesWalker = (state) => state.dates.datesByWalker;
 
 export const dateSelected = (state) => state.dates.dateSelected;
 

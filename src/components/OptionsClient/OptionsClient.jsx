@@ -11,7 +11,13 @@ import { styled } from "@mui/material/styles";
 import "./_OptionsClient.scss";
 import "../../pages/DatesClient/_DatesClient.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { dateSelected, getDateByIdAsync } from "../../slices/dateSlice.js";
+import {
+  datesUser,
+  getDateByIdAsync,
+  updateDateAsync,
+  dateToEdit,
+  getDatesByUserAsync,
+} from "../../slices/dateSlice.js";
 
 const OptionsClient = ({ calificado, estado, id, index }) => {
   const [value, setValue] = useState(0);
@@ -53,11 +59,25 @@ const OptionsClient = ({ calificado, estado, id, index }) => {
 
   //---------------REDUX------------------------
   const dispatch = useDispatch();
-  const dateInfo = useSelector(dateSelected);
+  const dateInfo = useSelector(datesUser)[index];
+  // const dateInfo = useSelector(dateSelected);
 
-  useEffect(() => {
-    dispatch(getDateByIdAsync(id));
-  }, []);
+  const handleCancelDate = async (e) => {
+    e.preventDefault();
+    dispatch(dateToEdit({ date_state: "Cancelado" }));
+    await dispatch(
+      updateDateAsync({
+        idDate: id,
+        ...dateInfo,
+        calificated: true,
+        date_state: "Cancelado",
+      })
+    );
+    dispatch(getDatesByUserAsync(dateInfo.user_id));
+    handleCloseChild();
+    handleCloseDetails();
+  };
+  useEffect(() => {}, []);
 
   //--------------------------------------------
 
@@ -392,32 +412,53 @@ const OptionsClient = ({ calificado, estado, id, index }) => {
           </div>
           <div style={ModalStyle.body} className="boxModalBody">
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              {/* NOMBRE DEL CLIENTE: MANUEL BAELLA */}
-              {}
+              NOMBRE DEL CLIENTE: {dateInfo?.user_name}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              DISTRITO: MIRAFLORES
+              NOMBRE DEL PASEADOR: {dateInfo?.walker_name}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              DIRECCIÓN:Av. Tomas Valle 3145 Miraflores
+              DISTRITO: {dateInfo?.district_selected}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              FECHA: 16-12-2021
+              DIRECCIÓN: {dateInfo?.client_address}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              HORARIO: 16:00-17:00 p.m
+              FECHA: {dateInfo?.date_day}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              TIEMPO: 1 HORA
+              HORARIO: {dateInfo?.date_hour}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              COSTO: S/16
+              TIEMPO: {dateInfo?.date_time}{" "}
+              {dateInfo?.date_time === 1 ? "Hora" : "Horas"}
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              COSTO: S/{dateInfo?.total_price}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
               Mascota(s):
             </p>
-            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              * Balto
+            {dateInfo?.pets_name.map((petName, i) => {
+              return (
+                <p
+                  key={i}
+                  style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                >
+                  * {petName}
+                </p>
+              );
+            })}
+            <p
+              style={{
+                margin: "15px 0",
+                fontFamily: "Rambla-Regular",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              EL PASEADOR DEBERÁ PRESENTAR SU DOCUMENTO DE IDENTIDAD ANTES DE
+              INICIAR EL PASEO
             </p>
             <div
               style={{
@@ -478,7 +519,7 @@ const OptionsClient = ({ calificado, estado, id, index }) => {
                       </Button>
                       <Button
                         style={ModalStyle.boton}
-                        onClick={handleCloseChild}
+                        onClick={handleCancelDate}
                       >
                         Aceptar
                       </Button>

@@ -107,6 +107,8 @@ export const createDate = (date, userId) => {
 };
 
 export const updateDate = ({ idDate, ...date }) => {
+  console.log("id", idDate);
+  console.log("date", date);
   // const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.UPDATE}/${idDate}`;
   return new Promise((resolve, reject) => {

@@ -47,50 +47,6 @@ const DatesClient = () => {
   console.log();
 
   //----------------------------------------------------------
-  const dates1 = [
-    {
-      paseador: "Helen Arias",
-      fecha: "08/12/2021",
-      hora: "4:00 pm",
-      estado: "Realizado",
-      calificado: false,
-    },
-    {
-      paseador: "Helen Arias",
-      fecha: "14/12/2021",
-      hora: "4:00 pm",
-      estado: "En curso",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      fecha: "16/12/2021",
-      hora: "4:00 pm",
-      estado: "Confirmado",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      fecha: "18/12/2021",
-      hora: "4:00 pm",
-      estado: "Sin confirmar",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      fecha: "19/12/2021",
-      hora: "3:00 pm",
-      estado: "Rechazado",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      fecha: "20/12/2021",
-      hora: "5:00 pm",
-      estado: "Cancelado",
-      calificado: true,
-    },
-  ];
 
   return (
     <div className="DatesClient">
