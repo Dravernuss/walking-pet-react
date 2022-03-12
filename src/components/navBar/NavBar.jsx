@@ -99,7 +99,7 @@ const NavBar = () => {
           </MenuItem>
           <Divider />
           {ROLE === "user" ? (
-            <>
+            <div>
               <MenuItem
                 style={{ width: "100%", padding: "0" }}
                 onClick={handleClose}
@@ -134,9 +134,9 @@ const NavBar = () => {
                 </Button>
               </MenuItem>
               <Divider />
-            </>
+            </div>
           ) : (
-            <>
+            <div>
               <MenuItem
                 style={{ width: "100%", padding: "0" }}
                 onClick={handleClose}
@@ -154,7 +154,7 @@ const NavBar = () => {
                 </Button>
               </MenuItem>
               <Divider />
-            </>
+            </div>
           )}
           <MenuItem
             style={{ width: "100%", padding: "0" }}

@@ -36,7 +36,6 @@ const Login = () => {
   const stateLoggedUser = JSON.parse(localStorage.getItem("infoUser"))?.token;
   const logguedUser = useSelector(selectUserLoggued); //Descubri que hace y porque es necesario
   const alertOnUser = useSelector(alertUser) ?? false;
-  console.log(stateLoggedUser);
 
   //------LOGIN WALKER-----------------------------------------
   const logguedWalker = useSelector(selectWalkerLoggued); // x2
@@ -56,7 +55,6 @@ const Login = () => {
     } else if (role === "walker") {
       dispatch(loginWalkerAsync(user));
     }
-    console.log("averUser", stateLoggedUser);
   };
 
   useEffect(() => {
