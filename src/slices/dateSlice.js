@@ -91,13 +91,6 @@ export const datesSlice = createSlice({
         state.created = true;
         state.date = action.payload;
       });
-    //   .addCase(getPetsByUserAsync.fulfilled, (state, action) => {
-    //     state.loading = false;
-    //     state.pets = action.payload;
-    //   })
-    //   .addCase(deletePetAsync.fulfilled, (state, action) => {
-    //     state.deleted = action.payload;
-    //   });
   },
 });
 

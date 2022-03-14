@@ -27,6 +27,10 @@ import {
 } from "../../slices/walkerSlice.js";
 import { useParams } from "react-router-dom";
 import { distritos } from "../../utils/constants";
+import {
+  getAllCommentsByWalkerAsync,
+  commentsByWalker,
+} from "../../slices/commentSlice.js";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -48,6 +52,7 @@ const GreenSwitch = styled(Switch)(({ theme }) => ({
 
 const WalkerProfile = () => {
   const thisWalker = useSelector((state) => state.walker.walker);
+  const comments = useSelector(commentsByWalker);
   const thisUser = useSelector((state) => state.user?.user);
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(thisWalker?.ready);
@@ -83,7 +88,10 @@ const WalkerProfile = () => {
   const { id } = useParams();
   useEffect(() => {
     if (ROLE === "user") {
+      dispatch(getAllCommentsByWalkerAsync(id));
       dispatch(getOneWalkerAsync(id));
+    } else {
+      dispatch(getAllCommentsByWalkerAsync(ID));
     }
   }, []);
   //----------------------------------------------------------
@@ -401,33 +409,40 @@ const WalkerProfile = () => {
         </div>
       </div>
       <div className="valorations">
-        <h2>Valoraciones sobre Helen Arias</h2>
-        <div className="rows">
-          <div>
-            <h3>Manuel Baella</h3>
-            <p>Es genial y super amable. Sin duda la volveria a contratar.</p>
-          </div>
-          <Rating
-            name="read-only"
-            value={4.9}
-            precision={0.5}
-            size="large"
-            readOnly
-          />
-        </div>
-        <div className="rows">
-          <div>
-            <h3>Fernanda Alva</h3>
-            <p>Se nota que tiene una muy buena vibra, mi perrito la adora.</p>
-          </div>
-          <Rating
-            name="read-only"
-            value={4.9}
-            precision={0.5}
-            size="large"
-            readOnly
-          />
-        </div>
+        <h2>
+          Valoraciones sobre {thisWalker?.firstname} {thisWalker?.lastname}
+        </h2>
+        {comments?.map((comment, i) => {
+          return (
+            <div className="rows" key={i}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: "1rem",
+                }}
+              >
+                <div className="infoUserComment">
+                  <h3>{comment.user_name}</h3>
+                  <p className="fechaComment">
+                    {new Date(comment.created_at).toLocaleDateString()}
+                  </p>
+                </div>
+
+                <Rating
+                  name="read-only"
+                  value={comment.rating}
+                  precision={0.5}
+                  size="large"
+                  readOnly
+                />
+              </div>
+              <p style={{ textAlign: "justify" }}>{comment.comment}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

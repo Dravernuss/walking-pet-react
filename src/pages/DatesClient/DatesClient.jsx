@@ -99,12 +99,7 @@ const DatesClient = () => {
                       {date.date_state}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      <OptionsClient
-                        id={date._id}
-                        index={i}
-                        calificated={date.calificated}
-                        date_state={date.date_state}
-                      />
+                      <OptionsClient date_id={date._id} index={i} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

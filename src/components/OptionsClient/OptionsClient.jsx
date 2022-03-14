@@ -21,8 +21,9 @@ import {
 } from "../../slices/dateSlice.js";
 import { useNavigate } from "react-router-dom";
 
-const OptionsClient = ({ calificated, date_state, id, index }) => {
+const OptionsClient = ({ date_id, index }) => {
   const navigate = useNavigate();
+  const [type, setType] = useState("");
   const [value, setValue] = useState(0);
   const [openDetails, setOpenDetails] = useState(false);
   const [openChild, setOpenChild] = useState(false);
@@ -31,14 +32,19 @@ const OptionsClient = ({ calificated, date_state, id, index }) => {
   const [openCalificacionRecibida, setOpenCalificacionRecibida] =
     useState(false);
   const [openReporteRecibido, setOpenReporteRecibido] = useState(false);
-  const handleOpenCalificar = () => setOpenCalificar(true);
+  const handleOpenCalificar = () => {
+    setType("Comment");
+    setOpenCalificar(true);
+  };
   const handleCloseCalificar = () => setOpenCalificar(false);
   const handleOpenReporte = () => {
+    setType("Report");
     setOpenCalificar(false);
     setOpenReporte(true);
   };
   const handleCloseReporte = () => setOpenReporte(false);
   const handleReturnCalificar = () => {
+    setType("Comment");
     setOpenReporte(false);
     setOpenCalificar(true);
   };
@@ -63,14 +69,13 @@ const OptionsClient = ({ calificated, date_state, id, index }) => {
   //---------------REDUX------------------------
   const dispatch = useDispatch();
   const dateInfo = useSelector(datesUser)[index];
-  // const dateInfo = useSelector(dateSelected);
 
   const handleCancelDate = async (e) => {
     e.preventDefault();
     dispatch(dateToEdit({ date_state: "Cancelado" }));
     await dispatch(
       updateDateAsync({
-        idDate: id,
+        idDate: date_id,
         ...dateInfo,
         date_state: "Cancelado",
         accepted: 0,
@@ -89,7 +94,9 @@ const OptionsClient = ({ calificated, date_state, id, index }) => {
       <Button
         onClick={handleOpenCalificar}
         className="botonT"
-        disabled={!(!calificated && date_state === "Realizado")}
+        disabled={
+          !(!dateInfo?.calificated && dateInfo?.date_state === "Realizado")
+        }
       >
         Calificar
       </Button>
@@ -479,7 +486,8 @@ const OptionsClient = ({ calificated, date_state, id, index }) => {
                 Volver
               </Button>
             </div>
-            {date_state === "Confirmado" || date_state === "Sin Confirmar" ? (
+            {dateInfo?.date_state === "Confirmado" ||
+            dateInfo?.date_state === "Sin Confirmar" ? (
               <div
                 style={{
                   display: "flex",

@@ -3,6 +3,7 @@ import userReducer from "../slices/userSlice";
 import petReducer from "../slices/petSlice";
 import walkerReducer from "../slices/walkerSlice";
 import datesReducer from "../slices/dateSlice";
+import commentsReducer from "../slices/commentSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     pet: petReducer,
     walker: walkerReducer,
     dates: datesReducer,
+    comments: commentsReducer,
   },
 });
