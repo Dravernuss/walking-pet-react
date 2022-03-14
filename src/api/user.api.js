@@ -12,7 +12,6 @@ const ENDPOINTS = {
 export const loginUser = (user) => {
   const path = `${API_SERVER}${ENDPOINTS.LOGIN}`;
   return new Promise((resolve, reject) => {
-    console.log("LOGIN", path);
     fetch(path, {
       method: "POST",
       body: JSON.stringify(user),

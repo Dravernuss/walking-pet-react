@@ -20,29 +20,27 @@ const AdminLogin = () => {
       email: elements[0].value,
       password: elements[2].value,
     };
-    if(admin){
-      try{
+    if (admin) {
+      try {
         const response = await loginAdmin(admin);
-        console.log('response',response)
-        const token= response.token;
+        const token = response.token;
         const decoded = jwt_decode(token);
         localStorage.setItem("token", token);
         localStorage.setItem("AdminInfo", JSON.stringify(decoded));
         navigate("/reservedtours");
-      }catch{
-        alert('No puede entrar: Revise su contraseña y usuario')
+      } catch {
+        alert("No puede entrar: Revise su contraseña y usuario");
       }
-    }else{
-      alert('verifique que haya llenado los campos')
+    } else {
+      alert("verifique que haya llenado los campos");
     }
-    // console.log("aver", stateLogged);
   };
 
   return (
     <div className="fondo">
       <LayoutForm title="Iniciar sesión">
         <form onSubmit={handleSubmit}>
-          <FormControl >
+          <FormControl>
             <FormLabel id="demo-radio-buttons-group-label"></FormLabel>
             <p style={{ fontFamily: "Roboto-Bold" }}>Soy administrador</p>
             <Box
@@ -77,10 +75,10 @@ const AdminLogin = () => {
             >
               Ingresar
             </Button> */}
-            <Button 
-            type="submit"
-            variant="contained" 
-            style={{
+            <Button
+              type="submit"
+              variant="contained"
+              style={{
                 backgroundColor: "#FFFF",
                 color: "#000",
                 width: "35%",
@@ -89,10 +87,10 @@ const AdminLogin = () => {
                 borderRadius: "15px",
                 fontSize: "15px",
                 fontFamily: "Roboto-bold",
-              }}>
-                Ingresar
+              }}
+            >
+              Ingresar
             </Button>
-            
           </FormControl>
         </form>
         <div

@@ -13,8 +13,8 @@ import "./_DatesClient.scss";
 import { Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import { getDatesByUserAsync, datesUser } from "../../slices/dateSlice";
+import { convertTime24to12 } from "../../utils/functions";
 
 const DatesClient = () => {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -39,12 +39,9 @@ const DatesClient = () => {
   const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
   //----REDUX-----------------------------------------------------
   const dates = useSelector(datesUser);
-  console.log(dates);
   React.useEffect(() => {
     dispatch(getDatesByUserAsync(userID));
   }, []);
-
-  console.log();
 
   //----------------------------------------------------------
 
@@ -93,10 +90,10 @@ const DatesClient = () => {
                       {date.walker_name}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {date.date_day}
+                      {date.date_day.split("-").reverse().join("-")}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {date.date_hour}
+                      {convertTime24to12(date.date_hour)}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
                       {date.date_state}
@@ -105,8 +102,8 @@ const DatesClient = () => {
                       <OptionsClient
                         id={date._id}
                         index={i}
-                        calificado={date.calificated}
-                        estado={date.date_state}
+                        calificated={date.calificated}
+                        date_state={date.date_state}
                       />
                     </StyledTableCell>
                   </StyledTableRow>

@@ -63,7 +63,9 @@ const NavBar = () => {
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
         >
-          <Avatar src={`${user ? user.photo_url : walker?.photo_url}`} />
+          <Avatar
+            src={`${ROLE === "user" ? user?.photo_url : walker?.photo_url}`}
+          />
           <img src={imagenes.img2} alt=" "></img>
         </Button>
         <Menu

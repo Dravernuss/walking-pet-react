@@ -24,6 +24,7 @@ import { Price } from "./components/Price";
 import { useParams } from "react-router-dom";
 import { getOneWalkerAsync } from "../../slices/walkerSlice.js";
 import { myPets, getPetsByUserAsync } from "../../slices/petSlice.js";
+import { createDateAsync } from "../../slices/dateSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -50,18 +51,15 @@ export const AskForDate = () => {
     if (!selectDogs.includes(pet.name)) {
       selectDogs.push(pet.name);
       setDogs(dogs + 1);
-      console.log(dogs);
     } else {
       let i = 0;
       while (i < selectDogs.length) {
         if (selectDogs[i] === pet.name) {
           selectDogs.splice(i, 1);
           setDogs(dogs - 1);
-          console.log(dogs);
         } else i++;
       }
     }
-    console.log("new", selectDogs);
   };
   useEffect(async () => {
     await dispatch(getOneWalkerAsync(id));
@@ -71,14 +69,31 @@ export const AskForDate = () => {
   const user = useSelector((state) => state.user.user);
   const pets = useSelector(myPets);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { elements } = e.target;
-    console.log(elements[0].value); //distrito
-    console.log(elements[2].value); //fecha
-    console.log(elements[4].value); //hora
-    console.log("horas", elements[6].value); // cantidad de horas
-    const date = {};
+    const total_price = () => {
+      if (selectDogs.length === 1) {
+        return walker.price * elements[6].value;
+      } else {
+        return selectDogs.length * (walker.price - 1) * elements[6].value;
+      }
+    };
+    const date = {
+      user_id: user._id,
+      user_name: `${user.firstname} ${user.lastname}`,
+      walker_id: walker._id,
+      walker_name: `${walker.firstname} ${walker.lastname}`,
+      pets_name: selectDogs,
+      district_selected: elements[0].value,
+      client_address: user.address,
+      date_day: elements[2].value,
+      date_hour: elements[4].value,
+      date_time: elements[6].value,
+      total_price: total_price(),
+    };
+    await dispatch(createDateAsync(date));
+    navigate("/dateinfo");
   };
   return (
     <>
@@ -147,6 +162,7 @@ export const AskForDate = () => {
                     id="date"
                     label="Seleccione una fecha"
                     type="date"
+                    // minDate={Date.now()}
                     sx={{ width: 200 }}
                     InputLabelProps={{
                       shrink: true,
@@ -187,7 +203,9 @@ export const AskForDate = () => {
                     </MenuItem>
                     {horasPaseo.map((horaPaseo, i) => (
                       <MenuItem key={i} value={horaPaseo}>
-                        {horaPaseo} Hora
+                        {horaPaseo === 1
+                          ? `${horaPaseo} Hora`
+                          : `${horaPaseo} Horas`}
                       </MenuItem>
                     ))}
                   </Select>

@@ -84,9 +84,9 @@ export const getDatesByWalker = (idWalker) => {
   });
 };
 
-export const createDate = (date, userId) => {
+export const createDate = (date) => {
   // const token = JSON.parse(localStorage.getItem("infoUser")).token;
-  const path = `${API_SERVER}${ENDPOINTS.CREATE}/${userId}`;
+  const path = `${API_SERVER}${ENDPOINTS.CREATE}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
       method: "POST",
@@ -98,7 +98,7 @@ export const createDate = (date, userId) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        resolve(true);
+        resolve({ data });
       })
       .catch((err) => {
         reject({ error: err });
@@ -107,8 +107,6 @@ export const createDate = (date, userId) => {
 };
 
 export const updateDate = ({ idDate, ...date }) => {
-  console.log("id", idDate);
-  console.log("date", date);
   // const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.UPDATE}/${idDate}`;
   return new Promise((resolve, reject) => {

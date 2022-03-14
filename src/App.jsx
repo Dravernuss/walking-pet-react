@@ -22,6 +22,7 @@ import ReservedTours from "./pagesAdmin/ReservedTours/ReservedTours";
 import WalkerRegistration from "./pagesAdmin/WalkerRegistration/WalkerRegistration";
 import Reports from "./pagesAdmin/Reports/Reports";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import DateInfo from "./pages/AskForDate/DateInfo";
 
 const App = () => {
   return (
@@ -47,6 +48,15 @@ const App = () => {
               <PrivateRouteClient routeLogin="/login">
                 <ClientProfile />
               </PrivateRouteClient>
+            }
+          />
+
+          <Route
+            path="/client/:id"
+            element={
+              <PrivateRouteWalker routeLogin="/login">
+                <ClientProfile />
+              </PrivateRouteWalker>
             }
           />
 
@@ -90,10 +100,19 @@ const App = () => {
           <Route path="/registerSuccess" element={<RegisterSuccess />} />
 
           <Route
-            path="/walker/:id/askForDate"
+            path="/walker/:id/askfordate"
             element={
               <PrivateRouteClient routeLogin="/login">
                 <AskForDate />
+              </PrivateRouteClient>
+            }
+          />
+
+          <Route
+            path="/dateinfo"
+            element={
+              <PrivateRouteClient routeLogin="/login">
+                <DateInfo />
               </PrivateRouteClient>
             }
           />

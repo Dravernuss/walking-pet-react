@@ -8,6 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
+import { convertTime24to12 } from "../../utils/functions";
 import "./_DatesWalker.scss";
 import OptionsWalker from "../../components/OptionsWalker/OptionsWalker";
 import { Paper } from "@mui/material";
@@ -17,7 +18,7 @@ import { datesWalker, getDatesByWalkerAsync } from "../../slices/dateSlice";
 // ACCEPTED ESTADOS POSIBLES
 //0 : rechazado
 //1 : aceptado
-//2 : pendiente
+//2 : sin confirmar
 
 const DatesWalker = () => {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -41,7 +42,6 @@ const DatesWalker = () => {
   //----REDUX-----------------------------------------------------
   const dispatch = useDispatch();
   const dates = useSelector(datesWalker);
-  console.log(dates);
   React.useEffect(() => {
     dispatch(getDatesByWalkerAsync(userID));
   }, []);
@@ -89,10 +89,10 @@ const DatesWalker = () => {
                       {date?.user_name}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {date?.date_day}
+                      {(date?.date_day).split("-").reverse().join("-")}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {date?.date_hour}
+                      {convertTime24to12(date?.date_hour)}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
                       {date?.date_state}
@@ -101,8 +101,8 @@ const DatesWalker = () => {
                       <OptionsWalker
                         index={i}
                         id={date?._id}
-                        aceptado={date?.accepted}
-                        estado={date?.date_state}
+                        accepted={date?.accepted}
+                        date_state={date?.date_state}
                       />
                     </StyledTableCell>
                   </StyledTableRow>

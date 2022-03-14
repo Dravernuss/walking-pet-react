@@ -19,21 +19,17 @@ export const RegisterWalker = () => {
   };
   const variable = useSelector((state) => state.walker);
   const equal = _.isEqual(variable, {});
-  console.log(equal);
   useEffect(() => {
     switch (step) {
       case 1:
-        console.log("useeffect step1");
         setView(<VerifyIdentity changeView={handleChangeView} />);
         setTitle("Verificación de Identidad");
         break;
       case 2:
-        console.log("useeffect step2");
         setView(<AboutYou changeView={handleChangeView} />);
         setTitle("Acerca de ti");
         break;
       case 3:
-        console.log("useeffect step3");
         setView(<ThanksForJoin />);
         setTitle("Gracias por registrarte");
         break;

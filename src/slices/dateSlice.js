@@ -45,9 +45,9 @@ export const getDatesByWalkerAsync = createAsyncThunk(
 
 export const createDateAsync = createAsyncThunk(
   "dates/create",
-  async ({ date, id }) => {
-    const response = await createDate(date, id);
-    return response;
+  async (date) => {
+    const response = await createDate(date);
+    return response.data;
   }
 );
 
@@ -86,14 +86,14 @@ export const datesSlice = createSlice({
       .addCase(getDateByIdAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.dateSelected = action.payload;
+      })
+      .addCase(createDateAsync.fulfilled, (state, action) => {
+        state.created = true;
+        state.date = action.payload;
       });
-
     //   .addCase(getPetsByUserAsync.fulfilled, (state, action) => {
     //     state.loading = false;
     //     state.pets = action.payload;
-    //   })
-    //   .addCase(createPetAsync.fulfilled, (state, action) => {
-    //     state.created = action.payload;
     //   })
     //   .addCase(deletePetAsync.fulfilled, (state, action) => {
     //     state.deleted = action.payload;

@@ -37,13 +37,11 @@ export const Register = () => {
   };
 
   const handleChangeRadio = (event) => {
-    console.log("changeRadio");
     setType(event.target.value);
   };
   const navigate = useNavigate();
 
   const handleSubmitTwo = async (data) => {
-    console.log("daga", data);
     if (type === "paseador") {
       await dispatch(walkerToCreate1(data));
       navigate("/registerWalker");

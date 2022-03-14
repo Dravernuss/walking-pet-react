@@ -10,6 +10,7 @@ import imagenes from "../../images/imagenes.jsx";
 import { styled } from "@mui/material/styles";
 import "./_OptionsClient.scss";
 import "../../pages/DatesClient/_DatesClient.scss";
+import { convertTime24to12 } from "../../utils/functions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   datesUser,
@@ -18,8 +19,10 @@ import {
   dateToEdit,
   getDatesByUserAsync,
 } from "../../slices/dateSlice.js";
+import { useNavigate } from "react-router-dom";
 
-const OptionsClient = ({ calificado, estado, id, index }) => {
+const OptionsClient = ({ calificated, date_state, id, index }) => {
+  const navigate = useNavigate();
   const [value, setValue] = useState(0);
   const [openDetails, setOpenDetails] = useState(false);
   const [openChild, setOpenChild] = useState(false);
@@ -69,8 +72,8 @@ const OptionsClient = ({ calificado, estado, id, index }) => {
       updateDateAsync({
         idDate: id,
         ...dateInfo,
-        calificated: true,
         date_state: "Cancelado",
+        accepted: 0,
       })
     );
     dispatch(getDatesByUserAsync(dateInfo.user_id));
@@ -86,7 +89,7 @@ const OptionsClient = ({ calificado, estado, id, index }) => {
       <Button
         onClick={handleOpenCalificar}
         className="botonT"
-        disabled={calificado}
+        disabled={!(!calificated && date_state === "Realizado")}
       >
         Calificar
       </Button>
@@ -415,7 +418,13 @@ const OptionsClient = ({ calificado, estado, id, index }) => {
               NOMBRE DEL CLIENTE: {dateInfo?.user_name}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              NOMBRE DEL PASEADOR: {dateInfo?.walker_name}
+              NOMBRE DEL PASEADOR:{" "}
+              <a
+                className="toWalker"
+                onClick={() => navigate(`/walker/${dateInfo.walker_id}`)}
+              >
+                {dateInfo?.walker_name}
+              </a>
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
               DISTRITO: {dateInfo?.district_selected}
@@ -424,10 +433,10 @@ const OptionsClient = ({ calificado, estado, id, index }) => {
               DIRECCIÓN: {dateInfo?.client_address}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              FECHA: {dateInfo?.date_day}
+              FECHA: {(dateInfo?.date_day).split("-").reverse().join("-")}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              HORARIO: {dateInfo?.date_hour}
+              HORARIO: {convertTime24to12(dateInfo?.date_hour)}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
               TIEMPO: {dateInfo?.date_time}{" "}
@@ -470,7 +479,7 @@ const OptionsClient = ({ calificado, estado, id, index }) => {
                 Volver
               </Button>
             </div>
-            {estado === "Confirmado" || estado === "Sin confirmar" ? (
+            {date_state === "Confirmado" || date_state === "Sin Confirmar" ? (
               <div
                 style={{
                   display: "flex",

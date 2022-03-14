@@ -5,6 +5,8 @@ import ModalStyle from "../../components/ModalStyle/ModalStyle.jsx";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { useNavigate } from "react-router-dom";
+import { convertTime24to12 } from "../../utils/functions";
 import "./_OptionsWalker.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,7 +17,13 @@ import {
   getDatesByWalkerAsync,
 } from "../../slices/dateSlice.js";
 
-const OptionsWalker = ({ aceptado, estado, index, id }) => {
+// ACCEPTED ESTADOS POSIBLES
+//0 : rechazado
+//1 : aceptado
+//2 : sin confirmar
+
+const OptionsWalker = ({ accepted, date_state, index, id }) => {
+  const navigate = useNavigate();
   const [openDetails, setOpenDetails] = useState(false);
   const [openChild, setOpenChild] = useState(false);
   const [openAccept, setOpenAccept] = useState(false);
@@ -39,7 +47,6 @@ const OptionsWalker = ({ aceptado, estado, index, id }) => {
       updateDateAsync({
         idDate: id,
         ...dateInfo,
-        calificated: true,
         date_state: "Cancelado",
         accepted: 0,
       })
@@ -55,7 +62,6 @@ const OptionsWalker = ({ aceptado, estado, index, id }) => {
       updateDateAsync({
         idDate: id,
         ...dateInfo,
-        calificated: true,
         date_state: "Confirmado",
         accepted: 1,
       })
@@ -70,7 +76,6 @@ const OptionsWalker = ({ aceptado, estado, index, id }) => {
       updateDateAsync({
         idDate: id,
         ...dateInfo,
-        calificated: true,
         date_state: "Rechazado",
         accepted: 0,
       })
@@ -84,13 +89,13 @@ const OptionsWalker = ({ aceptado, estado, index, id }) => {
   return (
     <>
       <ButtonGroup className="group" variant="none">
-        {aceptado === 0 ? (
+        {accepted === 0 ? (
           <></>
         ) : (
           <>
             <Button
               onClick={handleOpenAccept}
-              disabled={aceptado === 1}
+              disabled={accepted === 1}
               className="botonC"
             >
               ✅
@@ -137,13 +142,13 @@ const OptionsWalker = ({ aceptado, estado, index, id }) => {
             </Modal>
           </>
         )}
-        {aceptado === 1 ? (
+        {accepted === 1 ? (
           <></>
         ) : (
           <>
             <Button
               onClick={handleOpenCancel}
-              disabled={aceptado === 0}
+              disabled={accepted === 0}
               className="botonC"
             >
               ❌
@@ -215,7 +220,13 @@ const OptionsWalker = ({ aceptado, estado, index, id }) => {
           </div>
           <div style={ModalStyle.body} className="boxModalBody">
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              NOMBRE DEL CLIENTE: {dateInfo?.user_name}
+              NOMBRE DEL CLIENTE:{" "}
+              <a
+                className="toWalker"
+                onClick={() => navigate(`/client/${dateInfo.user_id}`)}
+              >
+                {dateInfo?.user_name}
+              </a>
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
               NOMBRE DEL PASEADOR: {dateInfo?.walker_name}
@@ -227,10 +238,10 @@ const OptionsWalker = ({ aceptado, estado, index, id }) => {
               DIRECCIÓN: {dateInfo?.client_address}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              FECHA: {dateInfo?.date_day}
+              FECHA: {(dateInfo?.date_day).split("-").reverse().join("-")}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              HORARIO: {dateInfo?.date_hour}
+              HORARIO: {convertTime24to12(dateInfo?.date_hour)}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
               TIEMPO: {dateInfo?.date_time}{" "}
@@ -273,7 +284,7 @@ const OptionsWalker = ({ aceptado, estado, index, id }) => {
                 Volver
               </Button>
             </div>
-            {aceptado === 1 && estado === "Confirmado" ? (
+            {accepted === 1 && date_state === "Confirmado" ? (
               <div
                 style={{
                   display: "flex",

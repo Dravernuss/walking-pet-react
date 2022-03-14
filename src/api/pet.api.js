@@ -31,7 +31,6 @@ export const getPetsByUser = (id) => {
 export const createPet = (pet, userId) => {
   const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.CREATE}/${userId}`;
-  console.log("pet-api", pet);
   return new Promise((resolve, reject) => {
     fetch(path, {
       method: "POST",

@@ -17,8 +17,7 @@ import { styled } from "@mui/material/styles";
 import PetCard from "../../components/PetCard/PetCard.jsx";
 import { distritos, razas } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
 import {
   updateUserAsync,
   userToEdit,
@@ -71,6 +70,7 @@ const ClientProfile = () => {
 
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
+  const ROLE = JSON.parse(localStorage.getItem("infoUser"))?.role;
   const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
   const handleOpen = () => {
     dispatch(userToEdit(user));
@@ -86,16 +86,18 @@ const ClientProfile = () => {
     };
     dispatch(userToEdit(dataUser));
     await dispatch(updateUserAsync({ id: userID, ...dataUser }));
-    // dispatch(getOneUserAsync(userID));
     handleClose();
   };
 
   //-------------------------------------------------------------
   ///////////////////////////////////////////////////////////////
   // Parte del REDUX TOOLKIT ------------PETS------------------
-
+  const { id } = useParams();
   useEffect(() => {
-    if (!pets) dispatch(getPetsByUserAsync(userID));
+    if (!pets) dispatch(getPetsByUserAsync(ROLE === "user" ? userID : id));
+    if (ROLE === "walker") {
+      dispatch(getOneUserAsync(id));
+    }
   }, []);
 
   const pets = useSelector(myPets);
@@ -147,327 +149,349 @@ const ClientProfile = () => {
           <p className="info-presentacionC">{user?.phone}</p>
 
           <div>
-            <div className="actions">
-              <Button
-                className="boton"
-                onClick={() => navigate("/datesclient")}
-              >
-                <img className="dogButton" src={imagenes.img9} alt="..."></img>
-                Ver mis Citas
-              </Button>
-              <Button className="boton" onClick={handleOpen}>
-                <img className="dogButton" src={imagenes.img10} alt="..."></img>
-                Editar Perfil
-              </Button>
-              <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={ModalStyle.style} className="boxModal">
-                  <div style={ModalStyle.header}>
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                      style={{
-                        fontFamily: "Roboto-Bold",
-                      }}
+            {ROLE === "user" ? (
+              <div className="actions">
+                <Button
+                  className="boton"
+                  onClick={() => navigate("/datesclient")}
+                >
+                  <img
+                    className="dogButton"
+                    src={imagenes.img9}
+                    alt="..."
+                  ></img>
+                  Ver mis Citas
+                </Button>
+                <Button className="boton" onClick={handleOpen}>
+                  <img
+                    className="dogButton"
+                    src={imagenes.img10}
+                    alt="..."
+                  ></img>
+                  Editar Perfil
+                </Button>
+
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={ModalStyle.style} className="boxModal">
+                    <div style={ModalStyle.header}>
+                      <Typography
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                        style={{
+                          fontFamily: "Roboto-Bold",
+                        }}
+                      >
+                        Editar Perfil
+                      </Typography>
+                    </div>
+                    <form
+                      onSubmit={handleEditProfile}
+                      style={ModalStyle.body}
+                      className="boxModalBody"
                     >
-                      Editar Perfil
-                    </Typography>
-                  </div>
-                  <form
-                    onSubmit={handleEditProfile}
-                    style={ModalStyle.body}
-                    className="boxModalBody"
-                  >
-                    <FormControl fullWidth style={{ marginTop: "10px" }}>
-                      <InputLabel
-                        size="small"
-                        id="demo-simple-select-autowidth-label"
-                      >
-                        Distrito
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-autowidth-label"
-                        id="demo-simple-select-autowidth"
-                        label="Distrito"
-                        size="small"
-                        margin="normal"
-                        defaultValue={user?.district}
-                        required
-                      >
-                        {distritos.map((distritoSel) => (
-                          <MenuItem key={distritoSel} value={distritoSel}>
-                            {distritoSel}
-                          </MenuItem>
-                        ))}
-                      </Select>
+                      <FormControl fullWidth style={{ marginTop: "10px" }}>
+                        <InputLabel
+                          size="small"
+                          id="demo-simple-select-autowidth-label"
+                        >
+                          Distrito
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-autowidth-label"
+                          id="demo-simple-select-autowidth"
+                          label="Distrito"
+                          size="small"
+                          style={{ margin: "10px 0px" }}
+                          defaultValue={user?.district}
+                          required
+                        >
+                          {distritos.map((distritoSel) => (
+                            <MenuItem key={distritoSel} value={distritoSel}>
+                              {distritoSel}
+                            </MenuItem>
+                          ))}
+                        </Select>
 
-                      <TextField
-                        className="input"
-                        margin="normal"
-                        label="Dirección"
-                        size="small"
-                        type="text"
-                        defaultValue={user?.address}
-                        required
-                      />
-                      <TextField
-                        className="input"
-                        margin="normal"
-                        label="Teléfono de Contacto"
-                        size="small"
-                        type="text"
-                        defaultValue={user?.phone}
-                        required
-                      />
-                      <p
-                        style={{
-                          color: "#A5A5A5",
-                          marginBottom: "5px",
-                          fontFamily: "Roboto-Regular",
-                        }}
-                      >
-                        Subir una foto de perfil
-                      </p>
-                      <div className="input-file">
-                        <span className="input-file-text">Choose file...</span>
-                        <label htmlFor="contained-button-file">
-                          <Input
-                            accept="image/*"
-                            id="contained-button-file"
-                            type="file"
-                          />
+                        <TextField
+                          className="input"
+                          style={{ margin: "10px 0px" }}
+                          label="Dirección"
+                          size="small"
+                          type="text"
+                          defaultValue={user?.address}
+                          required
+                        />
+                        <TextField
+                          className="input"
+                          style={{ margin: "10px 0px" }}
+                          label="Teléfono de Contacto"
+                          size="small"
+                          type="text"
+                          defaultValue={user?.phone}
+                          required
+                        />
+                        <p
+                          style={{
+                            color: "#A5A5A5",
+                            marginBottom: "5px",
+                            fontFamily: "Roboto-Regular",
+                          }}
+                        >
+                          Subir una foto de perfil
+                        </p>
+                        <div className="input-file">
+                          <span className="input-file-text">
+                            Choose file...
+                          </span>
+                          <label htmlFor="contained-button-file">
+                            <Input
+                              accept="image/*"
+                              id="contained-button-file"
+                              type="file"
+                            />
 
+                            <Button
+                              variant="contained"
+                              style={{
+                                backgroundColor: "#FFFF",
+                                color: "#000",
+                                width: "10srem",
+                                marginRight: "10px",
+                                borderRadius: "10px",
+                                fontSize: "14px",
+                                fontFamily: "Roboto-bold",
+                              }}
+                              component="span"
+                            >
+                              Choose File
+                            </Button>
+                          </label>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            columnGap: "10px",
+                          }}
+                        >
                           <Button
-                            variant="contained"
-                            style={{
-                              backgroundColor: "#FFFF",
-                              color: "#000",
-                              width: "10srem",
-                              marginRight: "10px",
-                              borderRadius: "10px",
-                              fontSize: "14px",
-                              fontFamily: "Roboto-bold",
-                            }}
-                            component="span"
+                            style={ModalStyle.boton}
+                            onClick={handleClose}
                           >
-                            Choose File
+                            Cerrar
                           </Button>
-                        </label>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          columnGap: "10px",
-                        }}
-                      >
-                        <Button style={ModalStyle.boton} onClick={handleClose}>
-                          Cerrar
-                        </Button>
-                        <Button type="submit" style={ModalStyle.boton}>
-                          Finalizar
-                        </Button>
-                      </div>
-                    </FormControl>
-                  </form>
-                </Box>
-              </Modal>
-            </div>
+                          <Button type="submit" style={ModalStyle.boton}>
+                            Finalizar
+                          </Button>
+                        </div>
+                      </FormControl>
+                    </form>
+                  </Box>
+                </Modal>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
       <div className="petsContainer">
-        <Button className="addPet" onClick={handleOpenAdd}>
-          <img className="add" src={imagenes.img13} alt="..."></img>
-          Añadir Mascota
-        </Button>
-        <Modal
-          open={openAdd}
-          onClose={handleCloseAdd}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={ModalStyle.style} className="boxModal">
-            <div style={ModalStyle.header}>
-              <Typography
-                id="modal-modal-title"
-                variant="h6"
-                component="h2"
-                style={{
-                  fontFamily: "Roboto-Bold",
-                }}
-              >
-                Añadir Mascota
-              </Typography>
-            </div>
-            <div style={ModalStyle.body} className="boxModalBody">
-              <form onSubmit={handleCreatePet}>
-                <TextField
-                  className="input"
-                  margin="normal"
-                  label="Nombre de la Mascota"
-                  size="small"
-                  type="text"
-                  required
-                />
-                <TextField
-                  className="input"
-                  margin="normal"
-                  label="Edad"
-                  size="small"
-                  type="number"
-                  inputProps={{ min: 1, max: 20 }}
-                  required
-                />
-                <FormControl fullWidth style={{ marginTop: "20px" }}>
-                  <InputLabel size="small" id="sexo">
-                    Sexo
-                  </InputLabel>
-                  <Select
-                    labelId="sexo"
-                    id="sexo"
-                    value={sexo}
-                    onChange={handleChangeSexo}
-                    label="Sexo"
-                    size="small"
-                    margin="normal"
-                    required
+        {ROLE === "user" ? (
+          <>
+            <Button className="addPet" onClick={handleOpenAdd}>
+              <img className="add" src={imagenes.img13} alt="..."></img>
+              Añadir Mascota
+            </Button>
+            <Modal
+              open={openAdd}
+              onClose={handleCloseAdd}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={ModalStyle.style} className="boxModal">
+                <div style={ModalStyle.header}>
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                    style={{
+                      fontFamily: "Roboto-Bold",
+                    }}
                   >
-                    <MenuItem value="Hembra">Hembra</MenuItem>
-                    <MenuItem value="Macho">Macho</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl fullWidth style={{ marginTop: "20px" }}>
-                  <InputLabel size="small" id="raza">
-                    Raza
-                  </InputLabel>
-                  <Select
-                    labelId="raza"
-                    id="raza"
-                    value={raza}
-                    onChange={handleChangeRaza}
-                    label="Raza"
-                    size="small"
-                    margin="normal"
-                    required
-                  >
-                    {razas.map((razaSel) => (
-                      <MenuItem key={razaSel} value={razaSel}>
-                        {razaSel}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <FormControl fullWidth style={{ marginTop: "20px" }}>
-                  <InputLabel size="small" id="tamano">
-                    Tamaño de la Mascota
-                  </InputLabel>
-                  <Select
-                    labelId="tamano"
-                    id="tamano"
-                    value={tamano}
-                    onChange={handleChangeTamano}
-                    label="Tamaño"
-                    size="small"
-                    margin="normal"
-                    required
-                  >
-                    <MenuItem value="Grande">Grande</MenuItem>
-                    <MenuItem value="Mediano">Mediano</MenuItem>
-                    <MenuItem value="Pequeño">Pequeño</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl fullWidth style={{ marginTop: "20px" }}>
-                  <InputLabel size="small" id="caracter">
-                    Carácter
-                  </InputLabel>
-                  <Select
-                    labelId="caracter"
-                    id="caracter"
-                    value={caracter}
-                    onChange={handleChangeCaracter}
-                    label="Carácter"
-                    size="small"
-                    margin="normal"
-                    required
-                  >
-                    <MenuItem value="Tímido">Tímido</MenuItem>
-                    <MenuItem value="Amigable">Amigable</MenuItem>
-                    <MenuItem value="Agresivo">Agresivo</MenuItem>
-                  </Select>
-                </FormControl>
-                <TextField
-                  className="input"
-                  margin="normal"
-                  label="Información Adicional"
-                  size="small"
-                  type="text"
-                  multiline
-                  rows={4}
-                />
-                <p
-                  style={{
-                    color: "#A5A5A5",
-                    marginBottom: "5px",
-                    fontFamily: "Roboto-Regular",
-                  }}
-                >
-                  Subir una foto de su mascota
-                </p>
-                <div className="input-file">
-                  <span className="input-file-text">Choose file...</span>
-                  <label htmlFor="contained-button-file">
-                    <Input
-                      accept="image/*"
-                      id="contained-button-file"
-                      type="file"
+                    Añadir Mascota
+                  </Typography>
+                </div>
+                <div style={ModalStyle.body} className="boxModalBody">
+                  <form onSubmit={handleCreatePet}>
+                    <TextField
+                      className="input"
+                      style={{ margin: "10px 0px" }}
+                      label="Nombre de la Mascota"
+                      size="small"
+                      type="text"
+                      required
                     />
-
-                    <Button
-                      variant="contained"
+                    <TextField
+                      className="input"
+                      style={{ margin: "10px 0px" }}
+                      label="Edad"
+                      size="small"
+                      type="number"
+                      inputProps={{ min: 1, max: 20 }}
+                      required
+                    />
+                    <FormControl fullWidth style={{ margin: "10px 0px" }}>
+                      <InputLabel size="small" id="sexo">
+                        Sexo
+                      </InputLabel>
+                      <Select
+                        labelId="sexo"
+                        id="sexo"
+                        value={sexo}
+                        onChange={handleChangeSexo}
+                        label="Sexo"
+                        size="small"
+                        required
+                      >
+                        <MenuItem value="Hembra">Hembra</MenuItem>
+                        <MenuItem value="Macho">Macho</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl fullWidth style={{ margin: "10px 0px" }}>
+                      <InputLabel size="small" id="raza">
+                        Raza
+                      </InputLabel>
+                      <Select
+                        labelId="raza"
+                        id="raza"
+                        value={raza}
+                        onChange={handleChangeRaza}
+                        label="Raza"
+                        size="small"
+                        required
+                      >
+                        {razas.map((razaSel) => (
+                          <MenuItem key={razaSel} value={razaSel}>
+                            {razaSel}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl fullWidth style={{ margin: "10px 0px" }}>
+                      <InputLabel size="small" id="tamano">
+                        Tamaño de la Mascota
+                      </InputLabel>
+                      <Select
+                        labelId="tamano"
+                        id="tamano"
+                        value={tamano}
+                        onChange={handleChangeTamano}
+                        label="Tamaño"
+                        size="small"
+                        required
+                      >
+                        <MenuItem value="Grande">Grande</MenuItem>
+                        <MenuItem value="Mediano">Mediano</MenuItem>
+                        <MenuItem value="Pequeño">Pequeño</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl fullWidth style={{ margin: "10px 0px" }}>
+                      <InputLabel size="small" id="caracter">
+                        Carácter
+                      </InputLabel>
+                      <Select
+                        labelId="caracter"
+                        id="caracter"
+                        value={caracter}
+                        onChange={handleChangeCaracter}
+                        label="Carácter"
+                        size="small"
+                        required
+                      >
+                        <MenuItem value="Tímido">Tímido</MenuItem>
+                        <MenuItem value="Amigable">Amigable</MenuItem>
+                        <MenuItem value="Agresivo">Agresivo</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <TextField
+                      className="input"
+                      style={{ margin: "10px 0px" }}
+                      label="Información Adicional"
+                      size="small"
+                      type="text"
+                      multiline
+                      rows={4}
+                    />
+                    <p
                       style={{
-                        backgroundColor: "#FFFF",
-                        color: "#000",
-                        width: "10srem",
-                        marginRight: "10px",
-                        borderRadius: "10px",
-                        fontSize: "14px",
-                        fontFamily: "Roboto-bold",
+                        color: "#A5A5A5",
+                        marginBottom: "5px",
+                        fontFamily: "Roboto-Regular",
                       }}
-                      component="span"
                     >
-                      Choose File
-                    </Button>
-                  </label>
+                      Subir una foto de su mascota
+                    </p>
+                    <div className="input-file">
+                      <span className="input-file-text">Choose file...</span>
+                      <label htmlFor="contained-button-file">
+                        <Input
+                          accept="image/*"
+                          id="contained-button-file"
+                          type="file"
+                        />
+
+                        <Button
+                          variant="contained"
+                          style={{
+                            backgroundColor: "#FFFF",
+                            color: "#000",
+                            width: "10srem",
+                            marginRight: "10px",
+                            borderRadius: "10px",
+                            fontSize: "14px",
+                            fontFamily: "Roboto-bold",
+                          }}
+                          component="span"
+                        >
+                          Choose File
+                        </Button>
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        columnGap: "10px",
+                      }}
+                    >
+                      <Button style={ModalStyle.boton} onClick={handleCloseAdd}>
+                        Cerrar
+                      </Button>
+                      <Button style={ModalStyle.boton} type="submit">
+                        Añadir
+                      </Button>
+                    </div>
+                  </form>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    columnGap: "10px",
-                  }}
-                >
-                  <Button style={ModalStyle.boton} onClick={handleCloseAdd}>
-                    Cerrar
-                  </Button>
-                  <Button style={ModalStyle.boton} type="submit">
-                    Añadir
-                  </Button>
-                </div>
-              </form>
-            </div>
-          </Box>
-        </Modal>
+              </Box>
+            </Modal>
+          </>
+        ) : (
+          <></>
+        )}
+
         <div className="pets">
           {pets?.length !== 0 ? (
             pets?.map((pet, i) => {
               return (
                 <PetCard
+                  ROLE={ROLE}
                   key={i}
                   user_id={pet.user_id}
                   _id={pet._id}

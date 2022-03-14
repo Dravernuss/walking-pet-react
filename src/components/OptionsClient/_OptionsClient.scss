@@ -23,6 +23,12 @@
   margin-left: 15px;
 }
 .boxModal {
+  .toWalker {
+    font-weight: bold;
+  }
+  .toWalker:hover {
+    cursor: pointer;
+  }
   .stars {
     font-size: 60px;
   }

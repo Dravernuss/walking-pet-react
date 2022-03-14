@@ -86,7 +86,6 @@ const WalkerProfile = () => {
       dispatch(getOneWalkerAsync(id));
     }
   }, []);
-  // console.log("this", thisWalker);
   //----------------------------------------------------------
   const navigate = useNavigate();
   return (
