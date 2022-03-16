@@ -115,7 +115,9 @@ const WalkerProfile = () => {
             size="large"
             readOnly
           />
-          <p className="card-calificationP">{thisWalker?.rating}</p>
+          <p className="card-calificationP">
+            {parseFloat(`${thisWalker?.rating}`).toFixed(1)}
+          </p>
           <p className="card-textP">
             {thisWalker?.greeting}
             <br></br>

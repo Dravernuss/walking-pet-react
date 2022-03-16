@@ -9,3 +9,7 @@ export const convertTime24to12 = (time) => {
     } else return `${hours}:${minutes} a.m.`;
   }
 };
+
+export const new_rating = (rating, total_rating, value_rating) => {
+  return (rating * total_rating + value_rating) / (total_rating + 1);
+};

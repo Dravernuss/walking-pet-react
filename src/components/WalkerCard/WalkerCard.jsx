@@ -34,12 +34,12 @@ const WalkerCard = ({
       </h2>
       <Rating
         name="read-only"
-        value={rating}
+        value={Number(rating)}
         precision={0.5}
         size="large"
         readOnly
       />
-      <p className="card-calification">{rating}</p>
+      <p className="card-calification">{Number(Number(rating).toFixed(1))}</p>
       <p className="card-text">
         {greeting}
         <br></br>

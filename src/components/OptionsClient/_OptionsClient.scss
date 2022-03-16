@@ -35,6 +35,12 @@
   .revisar {
     margin: 3rem;
   }
+  .boxModalBody {
+    .botonDisabled:disabled {
+      color: rgb(160, 160, 160) !important;
+      box-shadow: none !important;
+    }
+  }
 }
 .logoOC {
   margin-top: 15px;

@@ -83,15 +83,15 @@ export const commentsSlice = createSlice({
       .addCase(getAllCommentsByWalkerAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.commentsByWalker = action.payload;
+      })
+      .addCase(createCommentAsync.fulfilled, (state, action) => {
+        state.created = true;
+        state.commentCreated = action.payload;
       });
     //   .addCase(getDateByIdAsync.fulfilled, (state, action) => {
     //     state.loading = false;
     //     state.dateSelected = action.payload;
     //   })
-    //   .addCase(createDateAsync.fulfilled, (state, action) => {
-    //     state.created = true;
-    //     state.date = action.payload;
-    //   });
   },
 });
 

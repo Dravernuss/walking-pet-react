@@ -16,13 +16,20 @@ import {
   datesUser,
   getDateByIdAsync,
   updateDateAsync,
-  dateToEdit,
   getDatesByUserAsync,
+  dateToEdit,
 } from "../../slices/dateSlice.js";
+import {
+  updateWalkerAsync,
+  getOneWalkerAsync,
+} from "../../slices/walkerSlice.js";
+import { createCommentAsync } from "../../slices/commentSlice.js";
+import { new_rating } from "../../utils/functions";
 import { useNavigate } from "react-router-dom";
 
 const OptionsClient = ({ date_id, index }) => {
   const navigate = useNavigate();
+  const walker = useSelector((state) => state.walker?.walker);
   const [type, setType] = useState("");
   const [value, setValue] = useState(0);
   const [openDetails, setOpenDetails] = useState(false);
@@ -34,6 +41,7 @@ const OptionsClient = ({ date_id, index }) => {
   const [openReporteRecibido, setOpenReporteRecibido] = useState(false);
   const handleOpenCalificar = () => {
     setType("Comment");
+    dispatch(getOneWalkerAsync(dateInfo.walker_id));
     setOpenCalificar(true);
   };
   const handleCloseCalificar = () => setOpenCalificar(false);
@@ -52,12 +60,18 @@ const OptionsClient = ({ date_id, index }) => {
     setOpenReporte(false);
     setOpenReporteRecibido(true);
   };
-  const handleEndReporte = () => setOpenReporteRecibido(false);
+  const handleEndReporte = async () => {
+    await dispatch(getDatesByUserAsync(dateInfo?.user_id));
+    setOpenReporteRecibido(false);
+  };
   const handleEnviarCalificacion = () => {
     setOpenCalificar(false);
     setOpenCalificacionRecibida(true);
   };
-  const handleEndCalificacion = () => setOpenCalificacionRecibida(false);
+  const handleEndCalificacion = async () => {
+    await dispatch(getDatesByUserAsync(dateInfo?.user_id));
+    setOpenCalificacionRecibida(false);
+  };
   const handleOpenChild = () => setOpenChild(true);
   const handleCloseChild = () => setOpenChild(false);
   const handleOpenDetails = () => setOpenDetails(true);
@@ -72,7 +86,6 @@ const OptionsClient = ({ date_id, index }) => {
 
   const handleCancelDate = async (e) => {
     e.preventDefault();
-    dispatch(dateToEdit({ date_state: "Cancelado" }));
     await dispatch(
       updateDateAsync({
         idDate: date_id,
@@ -81,11 +94,76 @@ const OptionsClient = ({ date_id, index }) => {
         accepted: 0,
       })
     );
+    dispatch(dateToEdit({ date_state: "Cancelado" }));
     dispatch(getDatesByUserAsync(dateInfo.user_id));
     handleCloseChild();
     handleCloseDetails();
   };
-  useEffect(() => {}, []);
+
+  const handleCalificate = async (e) => {
+    e.preventDefault();
+    const { elements } = e.target;
+    const dataCalificate = {
+      date_id: date_id,
+      user_id: dateInfo.user_id,
+      user_name: dateInfo.user_name,
+      walker_id: dateInfo.walker_id,
+      rating: value,
+      comment: elements[11].value,
+      type: "Comment",
+    };
+    const sub_rating = Number(walker?.rating);
+    await dispatch(
+      updateWalkerAsync({
+        id: dateInfo.walker_id,
+        rating: new_rating(sub_rating, walker?.total_rating, value),
+        total_rating: walker?.total_rating + 1,
+      })
+    );
+    await dispatch(createCommentAsync(dataCalificate));
+    await dispatch(
+      updateDateAsync({
+        idDate: date_id,
+        calificated: true,
+      })
+    );
+    handleEnviarCalificacion();
+  };
+
+  const handleReport = async (e) => {
+    e.preventDefault();
+    const { elements } = e.target;
+    console.log("reporteee", elements[11].value);
+    const dataReport = {
+      date_id: date_id,
+      user_id: dateInfo.user_id,
+      user_name: dateInfo.user_name,
+      walker_id: dateInfo.walker_id,
+      rating: value,
+      comment: elements[11].value,
+      type: "Report",
+      report_photo_url: "www.photo.com",
+    };
+    const sub_rating = Number(walker?.rating);
+    await dispatch(
+      updateWalkerAsync({
+        id: dateInfo.walker_id,
+        rating: new_rating(sub_rating, walker?.total_rating, value),
+        total_rating: walker?.total_rating + 1,
+      })
+    );
+    await dispatch(createCommentAsync(dataReport));
+    await dispatch(
+      updateDateAsync({
+        idDate: date_id,
+        calificated: true,
+      })
+    );
+    handleEnviarReporte();
+  };
+  useEffect(() => {
+    // dispatch(getDatesByUserAsync(dateInfo?.user_id));
+  }, []);
 
   //--------------------------------------------
 
@@ -120,10 +198,14 @@ const OptionsClient = ({ date_id, index }) => {
                 fontFamily: "Roboto-Bold",
               }}
             >
-              Califica a Helen Arias
+              Califica a {dateInfo?.walker_name}
             </Typography>
           </div>
-          <div style={ModalStyle.body} className="boxModalBody">
+          <form
+            onSubmit={handleCalificate}
+            style={ModalStyle.body}
+            className="boxModalBody"
+          >
             <Typography fontFamily="Roboto-Bold">
               Tu opinión es muy importante para nosotros:
             </Typography>
@@ -146,6 +228,7 @@ const OptionsClient = ({ date_id, index }) => {
               />
             </div>
             <TextField
+              required
               className="input"
               label="Deja un comentario..."
               size="small"
@@ -180,12 +263,14 @@ const OptionsClient = ({ date_id, index }) => {
               </Button>
               <Button
                 style={ModalStyle.boton}
-                onClick={handleEnviarCalificacion}
+                className="botonDisabled"
+                type="submit"
+                disabled={value === 0}
               >
                 Enviar
               </Button>
             </div>
-          </div>
+          </form>
         </Box>
       </Modal>
       <Modal
@@ -214,7 +299,7 @@ const OptionsClient = ({ date_id, index }) => {
               textAlign="center"
               className="revisar"
             >
-              ¡Gracias por calificar a Helen Arias!
+              ¡Gracias por calificar a {dateInfo?.walker_name}!
             </Typography>
             <div
               style={{
@@ -263,7 +348,11 @@ const OptionsClient = ({ date_id, index }) => {
               Reporte sobre Helen Arias
             </Typography>
           </div>
-          <div style={ModalStyle.body} className="boxModalBody">
+          <form
+            onSubmit={handleReport}
+            style={ModalStyle.body}
+            className="boxModalBody"
+          >
             <Typography fontFamily="Roboto-Bold" className="cuentanos">
               Cuéntanos acera del incoveniente:
             </Typography>
@@ -337,11 +426,16 @@ const OptionsClient = ({ date_id, index }) => {
               <Button style={ModalStyle.boton} onClick={handleReturnCalificar}>
                 Regresar
               </Button>
-              <Button style={ModalStyle.boton} onClick={handleEnviarReporte}>
+              <Button
+                style={ModalStyle.boton}
+                className="botonDisabled"
+                type="submit"
+                disabled={value === 0}
+              >
                 Enviar
               </Button>
             </div>
-          </div>
+          </form>
         </Box>
       </Modal>
       <Modal
