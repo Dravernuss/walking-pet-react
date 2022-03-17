@@ -15,8 +15,6 @@ import { Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllWalkersAsync,
-  getOneWalkerAsync,
-  updateWalkerAsync,
 } from "../../slices/walkerSlice.js";
 
 const WalkerRegistration = () => {
@@ -37,7 +35,7 @@ const WalkerRegistration = () => {
 
   useEffect(() => {
     if(changeMade){
-      const obteinAllWakers = callingAllWalkers() 
+      const obteinAllWalkers = callingAllWalkers() 
     }
     setChangeMade(false)
   }, [changeMade])

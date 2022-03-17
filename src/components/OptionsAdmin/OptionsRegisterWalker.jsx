@@ -13,8 +13,6 @@ import "./_OptionsRegisterWalker.scss";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAllWalkersAsync,
-  getOneWalkerAsync,
   updateWalkerAsync,
 } from "../../slices/walkerSlice.js";
 
@@ -31,7 +29,6 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded}) => {
   useEffect(() => {
     if(usingApi){
       const updated = updatedWalkers(usingApi)
-      console.log(updated)
     }
   }, [usingApi])
 

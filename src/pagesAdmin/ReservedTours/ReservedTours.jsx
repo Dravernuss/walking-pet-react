@@ -1,5 +1,6 @@
 import NavBarAdmin from "../../components/navBar/NavBarAdmin";
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,8 +11,16 @@ import TableRow from "@mui/material/TableRow";
 import OptionsAdmin from "../../components/OptionsAdmin/OptionsAdmin";
 import "./_ReservedTours.scss";
 import { Paper } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllDatesAsync,
+} from "../../slices/dateSlice.js";
 
 const ReservedTours = () => {
+  const dispatch = useDispatch();
+  const [allDatesInformation, setAllDatesInformation] = useState([])
+  const allDate = useSelector((state) => state.date.allDate)
+  
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#C4C4C4",
@@ -29,6 +38,29 @@ const ReservedTours = () => {
     },
   }));
 
+  const  callingAllDates = async () => {
+    const resAllDates = await dispatch(getAllDatesAsync());
+    return resAllDates
+  };
+
+  useEffect(() => {
+    const obteinAllDates = callingAllDates() 
+  }, [])
+
+  useEffect(() => {
+    if (typeof allDate != "undefined") {
+      let arr =[]
+      arr.push(JSON.parse(allDate).map((date) => {
+        return date
+      })) 
+      setAllDatesInformation(arr)
+    }
+  }, [allDate])
+
+  function formatDate (date){
+    let formatted_date = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
+      return formatted_date;
+  }
   const dates = [
     {
       paseador: "Helen Arias",
@@ -94,6 +126,8 @@ const ReservedTours = () => {
               style={{ border: "1px solid #DADADA" }}
               aria-label="sticky table"
             >
+              {console.log('allDatesInformation ',allDatesInformation )}
+              
               <TableHead>
                 <TableRow>
                   <StyledTableCell className="cell" align="left">
@@ -117,37 +151,38 @@ const ReservedTours = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {dates.map((date) => (
-                  <StyledTableRow key={date.fecha}>
-                    <StyledTableCell
-                      className="cell"
-                      align="left"
-                      component="th"
-                      scope="row"
-                    >
-                      {date.paseador}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      className="cell"
-                      align="left"
-                      component="th"
-                      scope="row"
-                    >
-                      {date.cliente}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {date.fecha}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {date.hora}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {date.estado}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      <OptionsAdmin />
-                    </StyledTableCell>
-                  </StyledTableRow>
+                {allDatesInformation && allDatesInformation[0] &&
+                  allDatesInformation[0].map((date) => (
+                    <StyledTableRow key={date.date_day}>
+                      <StyledTableCell
+                        className="cell"
+                        align="left"
+                        component="th"
+                        scope="row"
+                      >
+                        {date.walker_name}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        className="cell"
+                        align="left"
+                        component="th"
+                        scope="row"
+                      >
+                        {date.user_name}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        {date.date_day}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        {date.date_hour}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        {date.date_state}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        <OptionsAdmin />
+                      </StyledTableCell>
+                    </StyledTableRow>
                 ))}
               </TableBody>
             </Table>
