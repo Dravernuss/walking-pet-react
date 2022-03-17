@@ -6,16 +6,16 @@ const { login, updateWalker, getOneWalker, createWalker, getAllWalkers } =
 
 const initialState = {};
 
-export const loginWalkerAsync = createAsyncThunk("login", async (walker) => {
+export const loginWalkerAsync = createAsyncThunk("login",
+  async (walker) => {
   const response = await login(walker);
   return response;
 });
 
 export const getAllWalkersAsync = createAsyncThunk(
-  "walker/getAllWalkers",
-  async () => {
-    const response = await getAllWalkers();
-    return response.data;
+  "walker/getAllWalker", async () => {
+    const response = await getAllWalkers()
+    return response.data
   }
 );
 
@@ -37,8 +37,8 @@ export const getOneWalkerAsync = createAsyncThunk(
 
 export const updateWalkerAsync = createAsyncThunk(
   "walker/update",
-  async (walker) => {
-    const response = await updateWalker(walker);
+  async (data) => {
+    const response = await updateWalker(data);
     return response;
   }
 );
@@ -59,6 +59,20 @@ export const walkerSlice = createSlice({
       .addCase(getOneWalkerAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.walker = action.payload;
+      })
+      .addCase(getAllWalkersAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllWalkersAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allWalker = action.payload;
+      })
+      .addCase(updateWalkerAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateWalkerAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.allWalker = action.payload;
       })
       .addCase(loginWalkerAsync.pending, (state, action) => {
         state.alert = false;
@@ -81,5 +95,5 @@ export const { walkerToEdit } = walkerSlice.actions;
 
 export const selectWalkerLoggued = (state) => state.walker.loggued;
 export const alertWalker = (state) => state.walker.alert;
-
+export const allWallkersObteined = (state) => state.walker.allWalkers;
 export default walkerSlice.reducer;

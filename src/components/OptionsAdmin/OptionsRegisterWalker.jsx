@@ -10,18 +10,67 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import "./_OptionsRegisterWalker.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllWalkersAsync,
+  getOneWalkerAsync,
+  updateWalkerAsync,
+} from "../../slices/walkerSlice.js";
 
-const OptionsRegisterWalker = ({ estado }) => {
+const OptionsRegisterWalker = ({ walker, estado, uploaded}) => {
+  const dispatch = useDispatch();
+  const [usingApi, setUsingApi] = useState(null)
   const [openDetails, setOpenDetails] = useState(false);
   const [openAccept, setOpenAccept] = useState(false);
   const [openCancel, setOpenCancel] = useState(false);
   const handleOpenDetails = () => setOpenDetails(true);
   const handleCloseDetails = () => setOpenDetails(false);
   const handleOpenAccept = () => setOpenAccept(true);
-  const handleCloseAccept = () => setOpenAccept(false);
+
+  useEffect(() => {
+    if(usingApi){
+      const updated = updatedWalkers(usingApi)
+      console.log(updated)
+    }
+  }, [usingApi])
+
+  const handleCloseAccept = (id) => {
+    if(typeof id === 'string') {
+      setUsingApi({
+        id:id, 
+        status:{
+          registration_state: "Aprobado",
+          avalaible: true,
+        }
+      })
+    } 
+    setOpenAccept(false)
+  };
+
+  async function updatedWalkers (data) {
+    let resAllWalkers = ''
+    if(data){
+      resAllWalkers = await dispatch(updateWalkerAsync(data));
+      uploaded()
+    }
+    return resAllWalkers
+  };
+
+  
   const handleOpenCancel = () => setOpenCancel(true);
-  const handleCloseCancel = () => setOpenCancel(false);
+  const handleCloseCancel = (id) => {
+    if(typeof id === 'string') {
+      setUsingApi({
+        id:id, 
+        status:{
+          registration_state: "Rechazado",
+          avalaible: false,
+        }
+      })
+    } 
+    setOpenCancel(false)
+  };
   return (
     <>
       <Button onClick={handleOpenDetails} className="botonT">
@@ -55,19 +104,19 @@ const OptionsRegisterWalker = ({ estado }) => {
                       marginTop: "15px",
                     }}
                   >
-                    <p>NOMBRE: Helen Arias</p>
-                    <p>CORREO: helenarias@gmail.com</p>
-                    <p>TELÉFONO: 997684321</p>
-                    <p>CIUDAD: Lima</p>
-                    <p>DIRECCION: Calle Las Amapolas 123</p>
+                    <p>NOMBRE: {`${walker.firstname} ${walker.lastname}`}</p>
+                    <p>CORREO: {walker.email}</p>
+                    <p>TELÉFONO: {walker.phone}</p>
+                    <p>CIUDAD: {walker.district}</p>
+                    <p>DIRECCION:{walker.address}</p>
                   </div>
                   <div>
                     <h2>DOCUMENTO DE IDENTIDAD</h2>
-                    <img src={imagenes.img14} width="300" alt="" />
+                    <img src={walker.dni_url} width="300" alt="" />
                   </div>
                   <div>
                     <h2>FOTO DE PERFIL</h2>
-                    <img src={imagenes.img15} width="250" alt="" />
+                    <img src={walker.photo_url} width="250" alt="" />
                   </div>
                 </div>
                 <div className="derecha">
@@ -79,7 +128,7 @@ const OptionsRegisterWalker = ({ estado }) => {
                       }}
                       margin="normal"
                       label="Cuéntanos sobre tu experiencia previa paseando o cuidando perros"
-                      defaultValue="Llevo paseando perros desde hace ya 2 años de manera independiente, me llevo muy bien con las mascotas de mis clientes, y siempre tengo mucho cuidado con ellos."
+                      defaultValue={walker.experience}
                       size="small"
                       type="text"
                       multiline
@@ -92,7 +141,7 @@ const OptionsRegisterWalker = ({ estado }) => {
                       }}
                       margin="normal"
                       label="¿Qué harías en caso de que el perro a tu cuidado se ponga agresivo?"
-                      defaultValue="Buscaria alejarlo de la situación que lo esta incomodando, siempre teniendo cuidado de que no se lastime  él mismo ni a nadie más."
+                      defaultValue={walker.reaction}
                       size="small"
                       type="text"
                       multiline
@@ -105,7 +154,7 @@ const OptionsRegisterWalker = ({ estado }) => {
                       }}
                       margin="normal"
                       label="¿Cuáles son las herramientas necesarias que un cuidador canino debe llevar en cada paseo?"
-                      defaultValue="Un bozal extra en caso extremo, agua para las mascotas, papeles toalla , croquetas de perro para incentivarlos."
+                      defaultValue={walker.tools}
                       size="small"
                       type="text"
                       multiline
@@ -120,19 +169,37 @@ const OptionsRegisterWalker = ({ estado }) => {
                         row
                         aria-labelledby="demo-row-radio-buttons-group-label"
                         name="row-radio-buttons-group"
-                      >
-                        <FormControlLabel
-                          disabled
-                          value="si"
-                          control={<Radio checked />}
-                          label="Sí"
-                        />
-                        <FormControlLabel
-                          disabled
-                          value="no"
-                          control={<Radio />}
-                          label="No"
-                        />
+                      >{walker.certification?
+                        <>
+                          <FormControlLabel
+                            disabled
+                            value="si"
+                            control={<Radio checked />}
+                            label="Sí"
+                          />
+                          <FormControlLabel
+                            disabled
+                            value="no"
+                            control={<Radio />}
+                            label="No"
+                          />
+                        </>
+                        :
+                        <>
+                          <FormControlLabel
+                            disabled
+                            value="si"
+                            control={<Radio />}
+                            label="Sí"
+                          />
+                          <FormControlLabel
+                            disabled
+                            value="no"
+                            control={<Radio checked />}
+                            label="No"
+                          />
+                        </>
+                      }
                       </RadioGroup>
                     </FormControl>
                   </div>
@@ -162,9 +229,9 @@ const OptionsRegisterWalker = ({ estado }) => {
                         Volver
                       </Button>
                       <Button
-                        disabled={estado !== "Sin Revisar"}
+                        disabled={estado}
                         style={
-                          estado === "Sin Revisar"
+                          !estado
                             ? ModalStyle.boton
                             : ModalStyle.botonDisabled
                         }
@@ -212,21 +279,24 @@ const OptionsRegisterWalker = ({ estado }) => {
                             </Button>
                             <Button
                               style={ModalStyle.boton}
-                              onClick={handleCloseAccept}
+                              onClick={
+                                ()=> handleCloseAccept(walker._id)
+                              }
                             >
                               Aceptar
                             </Button>
                           </div>
                         </Box>
                       </Modal>
+                      
                       <Button
                         style={
-                          estado === "Sin Revisar"
+                          !estado
                             ? ModalStyle.boton
                             : ModalStyle.botonDisabled
                         }
                         onClick={handleOpenCancel}
-                        disabled={estado !== "Sin Revisar"}
+                        disabled={estado}
                         className="buttonOR"
                       >
                         Rechazar
@@ -270,7 +340,7 @@ const OptionsRegisterWalker = ({ estado }) => {
                             </Button>
                             <Button
                               style={ModalStyle.boton}
-                              onClick={handleCloseCancel}
+                              onClick={()=> handleCloseCancel(walker._id)}
                             >
                               Rechazar
                             </Button>
