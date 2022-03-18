@@ -48,12 +48,11 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded}) => {
   async function updatedWalkers (data) {
     let resAllWalkers = ''
     if(data){
-      resAllWalkers = await dispatch(updateWalkerAsync(data));
+      resAllWalkers = await dispatch(updateWalkerAsync(data.id,data.status));
       uploaded()
     }
     return resAllWalkers
   };
-
   
   const handleOpenCancel = () => setOpenCancel(true);
   const handleCloseCancel = (id) => {

@@ -20,7 +20,7 @@ const ReservedTours = () => {
   const dispatch = useDispatch();
   const [allDatesInformation, setAllDatesInformation] = useState([])
   const allDates = useSelector((state) => state.dates.allDates)
-  // const allDates=''
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#C4C4C4",
@@ -58,61 +58,6 @@ const ReservedTours = () => {
     }
   }, [allDates])
 
-  function formatDate (date){
-    let formatted_date = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
-      return formatted_date;
-  }
-  const dates = [
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "08/12/2021",
-      hora: "4:00 pm",
-      estado: "Realizado",
-      calificado: false,
-    },
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "14/12/2021",
-      hora: "4:00 pm",
-      estado: "En curso",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "16/12/2021",
-      hora: "4:00 pm",
-      estado: "Confirmado",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "18/12/2021",
-      hora: "4:00 pm",
-      estado: "Sin confirmar",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "19/12/2021",
-      hora: "3:00 pm",
-      estado: "Rechazado",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "20/12/2021",
-      hora: "5:00 pm",
-      estado: "Cancelado",
-      calificado: true,
-    },
-  ];
-
   return (
     <div className="ReservedTours">
       <NavBarAdmin />
@@ -127,8 +72,6 @@ const ReservedTours = () => {
               style={{ border: "1px solid #DADADA" }}
               aria-label="sticky table"
             >
-              {console.log('allDatesInformation ',allDatesInformation )}
-              
               <TableHead>
                 <TableRow>
                   <StyledTableCell className="cell" align="left">
@@ -181,7 +124,7 @@ const ReservedTours = () => {
                         {date.date_state}
                       </StyledTableCell>
                       <StyledTableCell className="cell" align="left">
-                        <OptionsAdmin />
+                        <OptionsAdmin dateId={date._id}/>
                       </StyledTableCell>
                     </StyledTableRow>
                 ))}

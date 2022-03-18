@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import ModalStyle from "../../components/ModalStyle/ModalStyle.jsx";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { useSelector } from "react-redux";
 
-const OptionsAdmin = () => {
+const OptionsAdmin = (dateId) => {
+  console.log('dateID', dateId)
   const [openDetails, setOpenDetails] = useState(false);
+  const [dateSelected, setDateSelected] = useState('')
+
   const handleOpenDetails = () => setOpenDetails(true);
   const handleCloseDetails = () => setOpenDetails(false);
+
+  const allDates = useSelector((state) => state.dates.allDates);
+  
+  useEffect(() => {
+    const dateChosen = []
+    const x = allDates.map(date => {
+      if(date._id === dateId.dateId){
+        dateChosen.push(date) 
+      } 
+    })
+    console.log(dateChosen)
+    setDateSelected(dateChosen) 
+  }, [dateId])
+  
   return (
     <>
       <Button onClick={handleOpenDetails} className="botonT">
@@ -35,32 +53,43 @@ const OptionsAdmin = () => {
           </div>
           <div style={ModalStyle.body} className="boxModalBody">
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              NOMBRE DEL CLIENTE: MANUEL BAELLA
+              <strong>Nombre de cliente:</strong> &nbsp;&nbsp;
+              {dateSelected[0]?dateSelected[0].user_name:''}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              NOMBRE DEL PASEADOR: HELEN ARIAS
+            <strong>Nombre de paseador: </strong> &nbsp;&nbsp;
+              {dateSelected[0]?dateSelected[0].walker_name:''}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              DIRECCIÓN:Av. Tomas Valle 3145 Miraflores
+            <strong>Dirección:</strong> &nbsp;&nbsp;
+              {dateSelected[0]?dateSelected[0].client_address:''}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              FECHA: 16-12-2021
+            <strong>Fecha: </strong> &nbsp;&nbsp;
+              {dateSelected[0]?dateSelected[0].date_day:''}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              HORARIO: 16:00-17:00 p.m
+            <strong>Horario:</strong> &nbsp;&nbsp;
+              {dateSelected[0]?dateSelected[0].date_hour:''}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              TIEMPO: 1 HORA
+            <strong>Tiempo: </strong> &nbsp;&nbsp;
+              {dateSelected[0]?dateSelected[0].date_time:''}hr
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              COSTO: S/16
+            <strong>Costo: </strong> &nbsp;&nbsp;
+              S/{dateSelected[0]?dateSelected[0].total_price:''}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              Mascota(s):
+            <strong>Mascota(s):</strong>
             </p>
-            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              * Balto
-            </p>
+            {dateSelected[0]?dateSelected[0].pets_name.map(petname => {
+              return (
+              <li style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+                {petname}
+              </li>
+                )
+            }):''}
             <div
               style={{
                 display: "flex",
