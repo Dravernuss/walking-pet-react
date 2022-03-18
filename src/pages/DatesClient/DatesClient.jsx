@@ -61,19 +61,19 @@ const DatesClient = () => {
             >
               <TableHead>
                 <TableRow>
-                  <StyledTableCell className="cell" align="left">
+                  <StyledTableCell className="cell" align="center">
                     Paseador
                   </StyledTableCell>
-                  <StyledTableCell className="cell" align="left">
+                  <StyledTableCell className="cell" align="center">
                     Fecha
                   </StyledTableCell>
-                  <StyledTableCell className="cell" align="left">
+                  <StyledTableCell className="cell" align="center">
                     Hora
                   </StyledTableCell>
-                  <StyledTableCell className="cell" align="left">
+                  <StyledTableCell className="cell" align="center">
                     Estado
                   </StyledTableCell>
-                  <StyledTableCell className="cell" align="left">
+                  <StyledTableCell className="cell" align="center">
                     Opciones
                   </StyledTableCell>
                 </TableRow>
@@ -83,22 +83,22 @@ const DatesClient = () => {
                   <StyledTableRow key={i}>
                     <StyledTableCell
                       className="cell"
-                      align="left"
+                      align="center"
                       component="th"
                       scope="row"
                     >
                       {date.walker_name}
                     </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
+                    <StyledTableCell className="cell" align="center">
                       {date.date_day.split("-").reverse().join("-")}
                     </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
+                    <StyledTableCell className="cell" align="center">
                       {convertTime24to12(date.date_hour)}
                     </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
+                    <StyledTableCell className="cell" align="center">
                       {date.date_state}
                     </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
+                    <StyledTableCell className="cellOptions" align="center">
                       <OptionsClient date_id={date._id} index={i} />
                     </StyledTableCell>
                   </StyledTableRow>

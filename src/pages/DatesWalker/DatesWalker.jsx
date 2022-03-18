@@ -95,7 +95,7 @@ const DatesWalker = () => {
                       {convertTime24to12(date?.date_hour)}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {date?.date_state}
+                      {date?.date_state} / {date?.paid ? "Pagado" : "No pagado"}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
                       <OptionsWalker

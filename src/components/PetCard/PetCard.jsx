@@ -20,8 +20,8 @@ import {
   deletePetAsync,
   getPetsByUserAsync,
   updatePetAsync,
-  petToEdit,
 } from "../../slices/petSlice.js";
+import { cloudinary_constant } from "../../utils/functions.js";
 
 const PetCard = ({
   name,
@@ -62,6 +62,10 @@ const PetCard = ({
     setCaracter(event.target.value);
   };
 
+  //----------------useState Cloudinary-------------------------------
+  const [photoPetUrl, setPhotoPetUrl] = useState();
+  const [photoName, setPhotoName] = useState();
+  //---------------------------------------------------------------------
   const Input = styled("input")({
     display: "none",
   });
@@ -70,7 +74,8 @@ const PetCard = ({
   const dispatch = useDispatch();
 
   const handleOpenEdit = () => {
-    // dispatch(petToEdit(pet));
+    setPhotoPetUrl(pet.photo_url);
+    setPhotoName("Choose file...");
     setOpenEdit(true);
   };
 
@@ -82,6 +87,7 @@ const PetCard = ({
       size: elements[2].value,
       nature: elements[4].value,
       additional_information: elements[6].value,
+      photo_url: photoPetUrl,
     };
     // dispatch(petToEdit(dataPet));
     await dispatch(updatePetAsync({ id: _id, ...dataPet }));
@@ -94,6 +100,20 @@ const PetCard = ({
     await dispatch(getPetsByUserAsync(user_id));
     handleCloseEdit();
     handleCloseChild();
+  };
+
+  //------CLOUDINARY-----------------------------------------------------
+  const showWidgetPhotoPet = () => {
+    window.cloudinary.openUploadWidget(
+      cloudinary_constant("pet_photos"),
+      (err, result) => {
+        if (!err && result?.event === "success") {
+          const { secure_url, original_filename, format } = result.info;
+          setPhotoPetUrl(secure_url);
+          setPhotoName(`${original_filename}.${format}`);
+        }
+      }
+    );
   };
 
   //-----------------------------------------------
@@ -190,17 +210,11 @@ const PetCard = ({
                       fontFamily: "Roboto-Regular",
                     }}
                   >
-                    Subir una foto de su mascota
+                    Subir una foto de su mascota (Obligatorio)
                   </p>
                   <div className="input-file">
-                    <span className="input-file-text">Choose file...</span>
+                    <span className="input-file-text">{photoName}</span>
                     <label htmlFor="contained-button-file">
-                      <Input
-                        accept="image/*"
-                        id="contained-button-file"
-                        type="file"
-                      />
-
                       <Button
                         variant="contained"
                         style={{
@@ -213,46 +227,13 @@ const PetCard = ({
                           fontFamily: "Roboto-bold",
                         }}
                         component="span"
+                        onClick={showWidgetPhotoPet}
                       >
                         Choose File
                       </Button>
                     </label>
                   </div>
-                  <p
-                    style={{
-                      color: "#A5A5A5",
-                      marginBottom: "5px",
-                      fontFamily: "Roboto-Regular",
-                    }}
-                  >
-                    Subir una foto de su Carnet de Vacunación
-                  </p>
-                  <div className="input-file">
-                    <span className="input-file-text">Choose file...</span>
-                    <label htmlFor="contained-button-file">
-                      <Input
-                        accept="image/*"
-                        id="contained-button-file"
-                        type="file"
-                      />
 
-                      <Button
-                        variant="contained"
-                        style={{
-                          backgroundColor: "#FFFF",
-                          color: "#000",
-                          width: "10srem",
-                          marginRight: "10px",
-                          borderRadius: "10px",
-                          fontSize: "14px",
-                          fontFamily: "Roboto-bold",
-                        }}
-                        component="span"
-                      >
-                        Choose File
-                      </Button>
-                    </label>
-                  </div>
                   <div
                     style={{
                       display: "flex",
@@ -263,7 +244,12 @@ const PetCard = ({
                     <Button style={ModalStyle.boton} onClick={handleCloseEdit}>
                       Cerrar
                     </Button>
-                    <Button style={ModalStyle.boton} type="submit">
+                    <Button
+                      style={ModalStyle.boton}
+                      type="submit"
+                      disabled={photoPetUrl === ""}
+                      className="botonDisabled"
+                    >
                       Finalizar
                     </Button>
                   </div>

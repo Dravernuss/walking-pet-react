@@ -170,6 +170,15 @@ const OptionsClient = ({ date_id, index }) => {
   return (
     <>
       <Button
+        // onClick={handleOpenCalificar}
+        className="botonT"
+        disabled={
+          !(dateInfo?.date_state === "Confirmado" && dateInfo?.paid === false)
+        }
+      >
+        Pagar
+      </Button>
+      <Button
         onClick={handleOpenCalificar}
         className="botonT"
         disabled={
@@ -493,7 +502,7 @@ const OptionsClient = ({ date_id, index }) => {
       </Modal>
 
       <Button onClick={handleOpenDetails} className="botonT">
-        Ver Detalles
+        Detalles
       </Button>
       <Modal
         open={openDetails}

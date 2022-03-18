@@ -31,6 +31,7 @@ import {
   getAllCommentsByWalkerAsync,
   commentsByWalker,
 } from "../../slices/commentSlice.js";
+import { cloudinary_constant } from "../../utils/functions.js";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -60,6 +61,8 @@ const WalkerProfile = () => {
   const handleOpen = () => {
     setSelectDistricts(thisWalker?.avalaible_districts);
     setReady(thisWalker?.ready);
+    setPhotoName("Choose file...");
+    setPhotoWalkerUrl(thisWalker?.photo_url);
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
@@ -72,8 +75,7 @@ const WalkerProfile = () => {
       avalaible_districts: selectDistricts,
       greeting: elements[6].value,
       presentation: elements[9].value,
-      // photo_url:
-      //   "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
+      photo_url: photoWalkerUrl,
       ready: ready,
     };
     dispatch(walkerToEdit(dataWalker));
@@ -94,6 +96,23 @@ const WalkerProfile = () => {
       dispatch(getAllCommentsByWalkerAsync(ID));
     }
   }, []);
+
+  //-----------------CLOUDINARY-------------------------------------------
+  const [photoWalkerUrl, setPhotoWalkerUrl] = useState();
+  const [photoName, setPhotoName] = useState();
+
+  const showWidgetPhotoWalker = () => {
+    window.cloudinary.openUploadWidget(
+      cloudinary_constant("walker_photos"),
+      (err, result) => {
+        if (!err && result?.event === "success") {
+          const { secure_url, original_filename, format } = result.info;
+          setPhotoWalkerUrl(secure_url);
+          setPhotoName(`${original_filename}.${format}`);
+        }
+      }
+    );
+  };
   //----------------------------------------------------------
   const navigate = useNavigate();
   return (
@@ -293,16 +312,8 @@ const WalkerProfile = () => {
                             Subir una foto para su perfil
                           </p>
                           <div className="input-file-wp">
-                            <span className="input-file-text">
-                              Choose file...
-                            </span>
+                            <span className="input-file-text">{photoName}</span>
                             <label htmlFor="contained-button-file">
-                              <Input
-                                accept="image/*"
-                                id="contained-button-file"
-                                type="file"
-                              />
-
                               <Button
                                 variant="contained"
                                 style={{
@@ -315,6 +326,7 @@ const WalkerProfile = () => {
                                   fontFamily: "Roboto-bold",
                                 }}
                                 component="span"
+                                onClick={showWidgetPhotoWalker}
                               >
                                 Choose File
                               </Button>
@@ -415,35 +427,37 @@ const WalkerProfile = () => {
           Valoraciones sobre {thisWalker?.firstname} {thisWalker?.lastname}
         </h2>
         {comments?.map((comment, i) => {
-          return (
-            <div className="rows" key={i}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: "1rem",
-                }}
-              >
-                <div className="infoUserComment">
-                  <h3>{comment.user_name}</h3>
-                  <p className="fechaComment">
-                    {new Date(comment.created_at).toLocaleDateString()}
-                  </p>
-                </div>
+          if (comment.type === "Comment") {
+            return (
+              <div className="rows" key={i}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  <div className="infoUserComment">
+                    <h3>{comment.user_name}</h3>
+                    <p className="fechaComment">
+                      {new Date(comment.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
 
-                <Rating
-                  name="read-only"
-                  value={comment.rating}
-                  precision={0.5}
-                  size="large"
-                  readOnly
-                />
+                  <Rating
+                    name="read-only"
+                    value={comment.rating}
+                    precision={0.5}
+                    size="large"
+                    readOnly
+                  />
+                </div>
+                <p style={{ textAlign: "justify" }}>{comment.comment}</p>
               </div>
-              <p style={{ textAlign: "justify" }}>{comment.comment}</p>
-            </div>
-          );
+            );
+          }
         })}
       </div>
     </div>

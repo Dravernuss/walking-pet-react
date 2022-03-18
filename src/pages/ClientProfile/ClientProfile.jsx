@@ -28,12 +28,24 @@ import {
   getPetsByUserAsync,
   createPetAsync,
 } from "../../slices/petSlice.js";
-
+import { cloudinary_constant } from "../../utils/functions.js";
 const ClientProfile = () => {
+  //----------------useState Cloudinary-------------------------------
+  const [photoUserUrl, setPhotoUserUrl] = useState();
+  const [photoPetUrl, setPhotoPetUrl] = useState();
+  const [photoName, setPhotoName] = useState("Choose file...");
+
+  //--------------------------------------------------------------------
   const [open, setOpen] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
   const handleClose = () => setOpen(false);
-  const handleOpenAdd = () => setOpenAdd(true);
+
+  const handleOpenAdd = () => {
+    setPhotoName("Choose file...");
+    setPhotoPetUrl("");
+    setOpenAdd(true);
+  };
+
   const handleCloseAdd = () => {
     setSexo("");
     setRaza("");
@@ -72,10 +84,15 @@ const ClientProfile = () => {
   const user = useSelector((state) => state.user.user);
   const ROLE = JSON.parse(localStorage.getItem("infoUser"))?.role;
   const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
-  const handleOpen = () => {
-    dispatch(userToEdit(user));
+
+  const handleOpen = async () => {
+    // Funcion que abre solo el modal de editar usario
+    setPhotoName("Choose file..."); // cloudinary state
+    await dispatch(userToEdit(user));
+    setPhotoUserUrl(user.photo_url); // chose file.... change state
     setOpen(true);
   };
+
   const handleEditProfile = async (e) => {
     e.preventDefault();
     const { elements } = e.target;
@@ -83,12 +100,12 @@ const ClientProfile = () => {
       district: elements[0].value,
       address: elements[2].value,
       phone: elements[4].value,
+      photo_url: photoUserUrl, //CLOUDINARY
     };
     dispatch(userToEdit(dataUser));
     await dispatch(updateUserAsync({ id: userID, ...dataUser }));
     handleClose();
   };
-
   //-------------------------------------------------------------
   ///////////////////////////////////////////////////////////////
   // Parte del REDUX TOOLKIT ------------PETS------------------
@@ -101,6 +118,7 @@ const ClientProfile = () => {
   }, []);
 
   const pets = useSelector(myPets);
+
   const handleCreatePet = async (e) => {
     e.preventDefault();
 
@@ -114,11 +132,39 @@ const ClientProfile = () => {
       size: elements[8].value,
       nature: elements[10].value,
       additional_information: elements[12].value,
+      photo_url: photoPetUrl,
     };
 
     await dispatch(createPetAsync({ pet, id: userID }));
     await dispatch(getPetsByUserAsync(userID));
     handleCloseAdd();
+  };
+
+  //----------------------CLOUDINARY------------------------------------------------
+  const showWidgetPhotoUser = () => {
+    window.cloudinary.openUploadWidget(
+      cloudinary_constant("user_photos"),
+      (err, result) => {
+        if (!err && result?.event === "success") {
+          const { secure_url, original_filename, format } = result.info;
+          setPhotoUserUrl(secure_url);
+          setPhotoName(`${original_filename}.${format}`);
+        }
+      }
+    );
+  };
+
+  const showWidgetPhotoPet = () => {
+    window.cloudinary.openUploadWidget(
+      cloudinary_constant("pet_photos"),
+      (err, result) => {
+        if (!err && result?.event === "success") {
+          const { secure_url, original_filename, format } = result.info;
+          setPhotoPetUrl(secure_url);
+          setPhotoName(`${original_filename}.${format}`);
+        }
+      }
+    );
   };
   //------------------------------------------------------------------
 
@@ -246,16 +292,8 @@ const ClientProfile = () => {
                           Subir una foto de perfil
                         </p>
                         <div className="input-file">
-                          <span className="input-file-text">
-                            Choose file...
-                          </span>
+                          <span className="input-file-text">{photoName}</span>
                           <label htmlFor="contained-button-file">
-                            <Input
-                              accept="image/*"
-                              id="contained-button-file"
-                              type="file"
-                            />
-
                             <Button
                               variant="contained"
                               style={{
@@ -268,6 +306,7 @@ const ClientProfile = () => {
                                 fontFamily: "Roboto-bold",
                               }}
                               component="span"
+                              onClick={showWidgetPhotoUser}
                             >
                               Choose File
                             </Button>
@@ -435,17 +474,11 @@ const ClientProfile = () => {
                         fontFamily: "Roboto-Regular",
                       }}
                     >
-                      Subir una foto de su mascota
+                      Subir una foto de su mascota (Obligatorio)
                     </p>
                     <div className="input-file">
-                      <span className="input-file-text">Choose file...</span>
+                      <span className="input-file-text">{photoName}</span>
                       <label htmlFor="contained-button-file">
-                        <Input
-                          accept="image/*"
-                          id="contained-button-file"
-                          type="file"
-                        />
-
                         <Button
                           variant="contained"
                           style={{
@@ -458,6 +491,7 @@ const ClientProfile = () => {
                             fontFamily: "Roboto-bold",
                           }}
                           component="span"
+                          onClick={showWidgetPhotoPet}
                         >
                           Choose File
                         </Button>
@@ -473,7 +507,12 @@ const ClientProfile = () => {
                       <Button style={ModalStyle.boton} onClick={handleCloseAdd}>
                         Cerrar
                       </Button>
-                      <Button style={ModalStyle.boton} type="submit">
+                      <Button
+                        style={ModalStyle.boton}
+                        type="submit"
+                        className="botonDisabled"
+                        disabled={photoPetUrl === ""}
+                      >
                         Añadir
                       </Button>
                     </div>
