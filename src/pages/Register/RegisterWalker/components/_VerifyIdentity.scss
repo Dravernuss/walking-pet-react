@@ -38,6 +38,10 @@
       color: #a5a5a5;
       line-height: 50px;
       margin-left: 15px;
+      width: 100px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
     &-information {
       color: #a5a5a5;
@@ -85,6 +89,9 @@
         font-size: 1rem;
       }
       &__upload {
+        &-text {
+          width: 80px;
+        }
         .buttonChoose {
           width: 1rem;
           font-size: 10px;

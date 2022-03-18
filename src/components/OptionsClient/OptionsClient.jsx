@@ -26,6 +26,7 @@ import {
 import { createCommentAsync } from "../../slices/commentSlice.js";
 import { new_rating } from "../../utils/functions";
 import { useNavigate } from "react-router-dom";
+import { cloudinary_constant } from "../../utils/functions.js";
 
 const OptionsClient = ({ date_id, index }) => {
   const navigate = useNavigate();
@@ -47,6 +48,8 @@ const OptionsClient = ({ date_id, index }) => {
   const handleCloseCalificar = () => setOpenCalificar(false);
   const handleOpenReporte = () => {
     setType("Report");
+    setPhotoReportUrl("");
+    setPhotoName("Chose file...");
     setOpenCalificar(false);
     setOpenReporte(true);
   };
@@ -142,7 +145,7 @@ const OptionsClient = ({ date_id, index }) => {
       rating: value,
       comment: elements[11].value,
       type: "Report",
-      report_photo_url: "www.photo.com",
+      report_photo_url: photoReportUrl,
     };
     const sub_rating = Number(walker?.rating);
     await dispatch(
@@ -161,11 +164,24 @@ const OptionsClient = ({ date_id, index }) => {
     );
     handleEnviarReporte();
   };
-  useEffect(() => {
-    // dispatch(getDatesByUserAsync(dateInfo?.user_id));
-  }, []);
 
-  //--------------------------------------------
+  //---------------CLOUDINARY-----------------------------
+
+  const [photoReportUrl, setPhotoReportUrl] = useState();
+  const [photoName, setPhotoName] = useState();
+
+  const showWidgetPhotoReport = () => {
+    window.cloudinary.openUploadWidget(
+      cloudinary_constant("report_photos"),
+      (err, result) => {
+        if (!err && result?.event === "success") {
+          const { secure_url, original_filename, format } = result.info;
+          setPhotoReportUrl(secure_url);
+          setPhotoName(`${original_filename}.${format}`);
+        }
+      }
+    );
+  };
 
   return (
     <>
@@ -400,14 +416,8 @@ const OptionsClient = ({ date_id, index }) => {
               ¿Desea agregar alguna imagen?
             </p>
             <div className="input-file">
-              <span className="input-file-text">Choose file...</span>
+              <span className="input-file-text">{photoName}</span>
               <label htmlFor="contained-button-file">
-                <Input
-                  accept="image/*"
-                  id="contained-button-file"
-                  type="file"
-                />
-
                 <Button
                   variant="contained"
                   style={{
@@ -420,6 +430,7 @@ const OptionsClient = ({ date_id, index }) => {
                     fontFamily: "Roboto-bold",
                   }}
                   component="span"
+                  onClick={showWidgetPhotoReport}
                 >
                   Choose File
                 </Button>

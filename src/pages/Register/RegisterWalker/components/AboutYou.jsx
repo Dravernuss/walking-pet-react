@@ -6,16 +6,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import { Box, Button, Input, TextField } from "@mui/material";
 import imagenes from "../../../../images/imagenes";
-// import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import CircularProgress from "@mui/material/CircularProgress";
 import {
-  // walkerToCreate3,
   walkerCreated2,
   createWalkerAsync,
 } from "../../../../slices/walkerSlice";
 import "./_AboutYou.scss";
 import { useDispatch, useSelector } from "react-redux";
+import { cloudinary_constant } from "../../../../utils/functions";
 
 export const AboutYou = ({ changeView }) => {
   const dispatch = useDispatch();
@@ -31,18 +29,39 @@ export const AboutYou = ({ changeView }) => {
       reaction: elements[3].value,
       tools: elements[6].value,
       certification: certification,
-      photo_url: "www.facephoto.com",
+      photo_url: photoWalkerUrl,
     };
 
     await dispatch(createWalkerAsync({ ...newWalkerCreated, ...finalData }));
     changeView(3);
+  };
+
+  //------------------------------------------------------
+  const [photoWalkerUrl, setPhotoWalkerUrl] = useState("");
+  const [photoName, setPhotoName] = useState("Choose file...");
+
+  const showWidgetPhotoWalker = () => {
+    window.cloudinary.openUploadWidget(
+      cloudinary_constant("walker_photos"),
+      (err, result) => {
+        if (!err && result?.event === "success") {
+          const { secure_url, original_filename, format } = result.info;
+          setPhotoWalkerUrl(secure_url);
+          setPhotoName(`${original_filename}.${format}`);
+        }
+      }
+    );
   };
   return (
     <>
       <form
         onSubmit={handleSubmit}
         className="layoutForm__scroll"
-        style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+        }}
       >
         <FormControl>
           <Box
@@ -110,37 +129,27 @@ export const AboutYou = ({ changeView }) => {
                 label="No"
               />
             </RadioGroup>
-            {/* <p style={{ fontSize: "24" }}>Subir una foto de perfil</p> */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <label className="inputFileContent" htmlFor="profile123">
-                <AddAPhotoIcon className="photoIcon" fontSize="medium" /> Subir
-                una foto de perfil
-              </label>
-              <Input
-                style={{ display: "none" }}
-                accept=".jpg,.jpeg,.png"
-                type="file"
-                id="profile123"
-                // onChange={}
-              ></Input>
-              {/* {true && (
-                <CircularProgress
-                  size="25px"
+            <p style={{ fontSize: "24" }}>Subir una foto de perfil</p>
+            <div className="input-file" style={{ height: "3.5rem" }}>
+              <span className="input-file-text">{photoName}</span>
+              <label htmlFor="contained-button-file">
+                <Button
+                  variant="contained"
                   style={{
-                    position: "absolute",
-                    marginLeft: "180px",
-                    marginTop: "-13px",
-                    color: "#3493C2",
+                    backgroundColor: "#FFFF",
+                    color: "#000",
+                    width: "10srem",
+                    marginRight: "10px",
+                    borderRadius: "10px",
+                    fontSize: "14px",
+                    fontFamily: "Roboto-bold",
                   }}
-                />
-              )} */}
+                  component="span"
+                  onClick={showWidgetPhotoWalker}
+                >
+                  Choose File
+                </Button>
+              </label>
             </div>
           </Box>
 
@@ -151,12 +160,13 @@ export const AboutYou = ({ changeView }) => {
               color: "#000",
               width: "35%",
               padding: "10px 0",
-              margin: "30px auto ",
+              margin: "0px auto 20px auto ",
               borderRadius: "15px",
               fontSize: "16px",
               fontFamily: "Roboto-bold",
             }}
             type="submit"
+            disabled={photoWalkerUrl === ""}
           >
             Finalizar
           </Button>
