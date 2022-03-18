@@ -1,5 +1,6 @@
 import NavBarAdmin from "../../components/navBar/NavBarAdmin";
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,8 +11,16 @@ import TableRow from "@mui/material/TableRow";
 import OptionsAdmin from "../../components/OptionsAdmin/OptionsAdmin";
 import "./_ReservedTours.scss";
 import { Paper } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllDatesAsync,
+} from "../../slices/dateSlice.js";
 
 const ReservedTours = () => {
+  const dispatch = useDispatch();
+  const [allDatesInformation, setAllDatesInformation] = useState([])
+  const allDates = useSelector((state) => state.dates.allDates)
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#C4C4C4",
@@ -29,56 +38,25 @@ const ReservedTours = () => {
     },
   }));
 
-  const dates = [
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "08/12/2021",
-      hora: "4:00 pm",
-      estado: "Realizado",
-      calificado: false,
-    },
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "14/12/2021",
-      hora: "4:00 pm",
-      estado: "En curso",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "16/12/2021",
-      hora: "4:00 pm",
-      estado: "Confirmado",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "18/12/2021",
-      hora: "4:00 pm",
-      estado: "Sin confirmar",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "19/12/2021",
-      hora: "3:00 pm",
-      estado: "Rechazado",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "20/12/2021",
-      hora: "5:00 pm",
-      estado: "Cancelado",
-      calificado: true,
-    },
-  ];
+  const  callingAllDates = async () => {
+    const resAllDates = await dispatch(getAllDatesAsync());
+    return resAllDates
+  };
+
+  useEffect(() => {
+    const obteinAllDates = callingAllDates() 
+  }, [])
+
+  useEffect(() => {
+    if (typeof allDates != "undefined") {
+      let arr =[]
+      arr.push(allDates.map((date) => {
+        return date
+      })) 
+      console.log(arr)
+      setAllDatesInformation(arr)
+    }
+  }, [allDates])
 
   return (
     <div className="ReservedTours">
@@ -117,37 +95,38 @@ const ReservedTours = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {dates.map((date) => (
-                  <StyledTableRow key={date.fecha}>
-                    <StyledTableCell
-                      className="cell"
-                      align="left"
-                      component="th"
-                      scope="row"
-                    >
-                      {date.paseador}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      className="cell"
-                      align="left"
-                      component="th"
-                      scope="row"
-                    >
-                      {date.cliente}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {date.fecha}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {date.hora}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {date.estado}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      <OptionsAdmin />
-                    </StyledTableCell>
-                  </StyledTableRow>
+                {allDatesInformation && allDatesInformation[0] &&
+                  allDatesInformation[0].map((date) => (
+                    <StyledTableRow key={date.date_day}>
+                      <StyledTableCell
+                        className="cell"
+                        align="left"
+                        component="th"
+                        scope="row"
+                      >
+                        {date.walker_name}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        className="cell"
+                        align="left"
+                        component="th"
+                        scope="row"
+                      >
+                        {date.user_name}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        {date.date_day}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        {date.date_hour}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        {date.date_state}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        <OptionsAdmin dateId={date._id}/>
+                      </StyledTableCell>
+                    </StyledTableRow>
                 ))}
               </TableBody>
             </Table>

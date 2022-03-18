@@ -92,15 +92,14 @@ export const createWalker = (walker) => {
 };
 
 export const getAllWalkers = () => {
-  // const token = JSON.parse(localStorage.getItem("infoWalker")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_ALL_WALKERS}`;
   return new Promise((resolve, reject) => {
-    fetch(path, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
-    })
-      .then((response) => response.json())
+    const requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+    fetch(path, requestOptions)
+      .then((response) => response.text())
       .then((data) => {
         resolve({ data });
       })

@@ -1,5 +1,6 @@
 import NavBarAdmin from "../../components/navBar/NavBarAdmin";
 import * as React from "react";
+import { useState,useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,7 +12,44 @@ import "./_WalkerRegistration.scss";
 import OptionsRegisterWalker from "../../components/OptionsAdmin/OptionsRegisterWalker";
 import { Paper } from "@mui/material";
 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllWalkersAsync,
+} from "../../slices/walkerSlice.js";
+
 const WalkerRegistration = () => {
+
+  const dispatch = useDispatch();
+  const [changeMade, setChangeMade] = useState(true)
+  const [allWalkersInformation, setAllWalkersInformation] = useState([])
+  const allWalker = useSelector((state) => state.walker.allWalker)
+  
+  const  callingAllWalkers = async () => {
+    const resAllWalkers = await dispatch(getAllWalkersAsync());
+    return resAllWalkers
+  };
+
+  const itHasBeenUploaded =()=>{
+    setChangeMade(true)
+  }
+
+  useEffect(() => {
+    if(changeMade){
+      const obteinAllWalkers = callingAllWalkers() 
+    }
+    setChangeMade(false)
+  }, [changeMade])
+
+  useEffect(() => {
+    if (typeof allWalker != "undefined") {
+      let arr =[]
+      arr.push(JSON.parse(allWalker).map((walker) => {
+        return walker
+      })) 
+      setAllWalkersInformation(arr)
+    }
+  }, [allWalker])
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#C4C4C4",
@@ -28,22 +66,7 @@ const WalkerRegistration = () => {
       backgroundColor: theme.palette.action.hover,
     },
   }));
-
-  const walkers = [
-    {
-      nombre: "Helen Arias",
-      correo: "helenarias@gmail.com",
-      telefono: "997684321",
-      estado: "Sin Revisar",
-    },
-    {
-      nombre: "Alex Marino",
-      correo: "alexmarino@gmail.com",
-      telefono: "987684654",
-      estado: "Aceptado",
-    },
-  ];
-
+  
   return (
     <div className="WalkerRegistration">
       <NavBarAdmin />
@@ -73,20 +96,25 @@ const WalkerRegistration = () => {
                     Estado
                   </StyledTableCell>
                   <StyledTableCell className="cell" align="left">
+                    Aprobación
+                  </StyledTableCell>
+                  <StyledTableCell className="cell" align="left">
                     Ver Información
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {walkers.map((walker) => (
-                  <StyledTableRow key={walker.nombre}>
+                {allWalkersInformation && allWalkersInformation[0] &&
+                  allWalkersInformation[0].map((walker) => (
+                    
+                  <StyledTableRow key={walker._id}>
                     <StyledTableCell
                       className="cell"
                       align="left"
                       component="th"
                       scope="row"
                     >
-                      {walker.nombre}
+                      {`${walker.firstname} ${walker.lastname}`}
                     </StyledTableCell>
                     <StyledTableCell
                       className="cell"
@@ -94,16 +122,19 @@ const WalkerRegistration = () => {
                       component="th"
                       scope="row"
                     >
-                      {walker.correo}
+                      {walker.email}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {walker.telefono}
+                      {walker.phone}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {walker.estado}
+                      {walker.ready?'disponible':'no disponible'}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      <OptionsRegisterWalker estado={walker.estado} />
+                      {walker.registration_state}
+                    </StyledTableCell>
+                    <StyledTableCell className="cell" align="left">
+                      <OptionsRegisterWalker walker={walker} estado={walker.avalaible} uploaded={()=> itHasBeenUploaded()} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

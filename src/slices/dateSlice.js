@@ -69,6 +69,13 @@ export const datesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getAllDatesAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllDatesAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allDates = action.payload;
+      })
       .addCase(getDatesByUserAsync.pending, (state) => {
         state.loading = true;
       })
@@ -95,6 +102,9 @@ export const datesSlice = createSlice({
 });
 
 export const { dateToEdit } = datesSlice.actions;
+
+export const alertDate = (state) => state.date.alert;
+export const allDatesObteined = (state) => state.date.allDates;
 
 export const datesUser = (state) => state.dates.datesByUser;
 export const datesWalker = (state) => state.dates.datesByWalker;
