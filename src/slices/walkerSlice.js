@@ -96,13 +96,6 @@ export const walkerSlice = createSlice({
       .addCase(createWalkerAsync.fulfilled, (state, action) => {
         state.created = true;
       })
-      .addCase(getAllWalkersAsync.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(getAllWalkersAsync.fulfilled, (state, action) => {
-        state.loading = false;
-        state.walkers = action.payload;
-      });
   },
 });
 

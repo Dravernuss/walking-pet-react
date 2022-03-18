@@ -54,7 +54,7 @@ export const updateWalker = ({ id, ...walker }) => {
   return new Promise((resolve, reject) => {
     fetch(path, {
       method: "PUT",
-      body: JSON.stringify(cambio),
+      body: JSON.stringify(walker),
       headers: {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${token}`,

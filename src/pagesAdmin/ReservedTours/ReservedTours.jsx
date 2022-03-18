@@ -19,8 +19,8 @@ import {
 const ReservedTours = () => {
   const dispatch = useDispatch();
   const [allDatesInformation, setAllDatesInformation] = useState([])
-  const allDate = useSelector((state) => state.date.allDate)
-  
+  const allDates = useSelector((state) => state.dates.allDates)
+  // const allDates=''
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#C4C4C4",
@@ -48,14 +48,15 @@ const ReservedTours = () => {
   }, [])
 
   useEffect(() => {
-    if (typeof allDate != "undefined") {
+    if (typeof allDates != "undefined") {
       let arr =[]
-      arr.push(JSON.parse(allDate).map((date) => {
+      arr.push(allDates.map((date) => {
         return date
       })) 
+      console.log(arr)
       setAllDatesInformation(arr)
     }
-  }, [allDate])
+  }, [allDates])
 
   function formatDate (date){
     let formatted_date = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
