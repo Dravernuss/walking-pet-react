@@ -1,81 +1,104 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { date } from "../api/index";
 
-const { updateDate, getOneDate, createDate, getAllDates } = date;
+const {
+  getDatesByUser,
+  getDatesByWalker,
+  createDate,
+  updateDate,
+  getAllDates,
+  getDateById,
+} = date;
 
 const initialState = {};
 
 export const getAllDatesAsync = createAsyncThunk(
-  "date/getAllDate", async () => {
-    const response = await getAllDates()
-    return response.data
+  "dates/getAllDates",
+  async () => {
+    const response = await getAllDates();
+    return response.data;
+  }
+);
+
+export const getDateByIdAsync = createAsyncThunk(
+  "dates/getDateById",
+  async (id) => {
+    const response = await getDateById(id);
+    return response.data;
+  }
+);
+
+export const getDatesByUserAsync = createAsyncThunk(
+  "dates/datesByUser",
+  async (id) => {
+    const response = await getDatesByUser(id);
+    return response.data;
+  }
+);
+export const getDatesByWalkerAsync = createAsyncThunk(
+  "dates/datesByWalker",
+  async (id) => {
+    const response = await getDatesByWalker(id);
+    return response.data;
   }
 );
 
 export const createDateAsync = createAsyncThunk(
-  "date/create",
+  "dates/create",
   async (date) => {
     const response = await createDate(date);
-    return response;
-  }
-);
-
-export const getOneDateAsync = createAsyncThunk(
-  "date/getOneDate",
-  async (id) => {
-    const response = await getOneDate(id);
     return response.data;
   }
 );
 
 export const updateDateAsync = createAsyncThunk(
-  "date/update",
-  async (data) => {
-    //data debe ser id y el cambio a realizar
-    const response = await updateDate(data);
+  "dates/update",
+  async (date) => {
+    const response = await updateDate(date);
     return response;
   }
 );
 
-export const dateSlice = createSlice({
-  name: "date",
+export const datesSlice = createSlice({
+  name: "dates",
   initialState,
   reducers: {
     dateToEdit: (state, { payload: newDateData }) => {
-      state.date = { ...state.date, ...newDateData };
+      state.dateToEdit = { ...state.dateToEdit, ...newDateData };
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getOneDateAsync.pending, (state) => {
+      .addCase(getDatesByUserAsync.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getOneDateAsync.fulfilled, (state, action) => {
+      .addCase(getDatesByUserAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.date = action.payload;
+        state.datesByUser = action.payload;
       })
-      .addCase(getAllDatesAsync.pending, (state) => {
+      .addCase(getDatesByWalkerAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.datesByWalker = action.payload;
+      })
+      .addCase(getDateByIdAsync.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getAllDatesAsync.fulfilled, (state, action) => {
+      .addCase(getDateByIdAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.allDate = action.payload;
-      })
-      .addCase(updateDateAsync.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(updateDateAsync.fulfilled, (state, action) => {
-        state.loading = false;
-        // state.allDate = action.payload;
+        state.dateSelected = action.payload;
       })
       .addCase(createDateAsync.fulfilled, (state, action) => {
         state.created = true;
+        state.date = action.payload;
       });
   },
 });
 
-export const { dateToEdit } = dateSlice.actions;
+export const { dateToEdit } = datesSlice.actions;
 
-export const alertDate = (state) => state.date.alert;
-export const allDatesObteined = (state) => state.date.allDates;
-export default dateSlice.reducer;
+export const datesUser = (state) => state.dates.datesByUser;
+export const datesWalker = (state) => state.dates.datesByWalker;
+
+export const dateSelected = (state) => state.dates.dateSelected;
+
+export default datesSlice.reducer;

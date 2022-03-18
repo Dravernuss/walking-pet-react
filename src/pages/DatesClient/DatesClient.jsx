@@ -11,6 +11,10 @@ import Button from "@mui/material/Button";
 import OptionsClient from "../../components/OptionsClient/OptionsClient";
 import "./_DatesClient.scss";
 import { Paper } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getDatesByUserAsync, datesUser } from "../../slices/dateSlice";
+import { convertTime24to12 } from "../../utils/functions";
 
 const DatesClient = () => {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -30,50 +34,16 @@ const DatesClient = () => {
     },
   }));
 
-  const dates = [
-    {
-      paseador: "Helen Arias",
-      fecha: "08/12/2021",
-      hora: "4:00 pm",
-      estado: "Realizado",
-      calificado: false,
-    },
-    {
-      paseador: "Helen Arias",
-      fecha: "14/12/2021",
-      hora: "4:00 pm",
-      estado: "En curso",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      fecha: "16/12/2021",
-      hora: "4:00 pm",
-      estado: "Confirmado",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      fecha: "18/12/2021",
-      hora: "4:00 pm",
-      estado: "Sin confirmar",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      fecha: "19/12/2021",
-      hora: "3:00 pm",
-      estado: "Rechazado",
-      calificado: true,
-    },
-    {
-      paseador: "Helen Arias",
-      fecha: "20/12/2021",
-      hora: "5:00 pm",
-      estado: "Cancelado",
-      calificado: true,
-    },
-  ];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
+  //----REDUX-----------------------------------------------------
+  const dates = useSelector(datesUser);
+  React.useEffect(() => {
+    dispatch(getDatesByUserAsync(userID));
+  }, []);
+
+  //----------------------------------------------------------
 
   return (
     <div className="DatesClient">
@@ -91,48 +61,45 @@ const DatesClient = () => {
             >
               <TableHead>
                 <TableRow>
-                  <StyledTableCell className="cell" align="left">
+                  <StyledTableCell className="cell" align="center">
                     Paseador
                   </StyledTableCell>
-                  <StyledTableCell className="cell" align="left">
+                  <StyledTableCell className="cell" align="center">
                     Fecha
                   </StyledTableCell>
-                  <StyledTableCell className="cell" align="left">
+                  <StyledTableCell className="cell" align="center">
                     Hora
                   </StyledTableCell>
-                  <StyledTableCell className="cell" align="left">
+                  <StyledTableCell className="cell" align="center">
                     Estado
                   </StyledTableCell>
-                  <StyledTableCell className="cell" align="left">
+                  <StyledTableCell className="cell" align="center">
                     Opciones
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {dates.map((date) => (
-                  <StyledTableRow key={date.fecha}>
+                {dates?.map((date, i) => (
+                  <StyledTableRow key={i}>
                     <StyledTableCell
                       className="cell"
-                      align="left"
+                      align="center"
                       component="th"
                       scope="row"
                     >
-                      {date.paseador}
+                      {date.walker_name}
                     </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {date.fecha}
+                    <StyledTableCell className="cell" align="center">
+                      {date.date_day.split("-").reverse().join("-")}
                     </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {date.hora}
+                    <StyledTableCell className="cell" align="center">
+                      {convertTime24to12(date.date_hour)}
                     </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {date.estado}
+                    <StyledTableCell className="cell" align="center">
+                      {date.date_state}
                     </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      <OptionsClient
-                        calificado={date.calificado}
-                        estado={date.estado}
-                      />
+                    <StyledTableCell className="cellOptions" align="center">
+                      <OptionsClient date_id={date._id} index={i} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

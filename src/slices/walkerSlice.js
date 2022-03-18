@@ -1,16 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { walker } from "../api/index";
 
-const { login, updateWalker, getOneWalker, createWalker, getAllWalkers } =
+const { loginWalker, updateWalker, getOneWalker, createWalker, getAllWalkers } =
   walker;
 
 const initialState = {};
 
-export const loginWalkerAsync = createAsyncThunk("login",
+export const loginWalkerAsync = createAsyncThunk(
+  "loginWalker",
   async (walker) => {
-  const response = await login(walker);
-  return response;
-});
+    const response = await loginWalker(walker);
+    return response;
+  }
+);
 
 export const getAllWalkersAsync = createAsyncThunk(
   "walker/getAllWalker", async () => {
@@ -50,6 +52,12 @@ export const walkerSlice = createSlice({
     walkerToEdit: (state, { payload: newWalkerData }) => {
       state.walker = { ...state.walker, ...newWalkerData };
     },
+    walkerToCreate1: (state, { payload: newWalkerCreated }) => {
+      state.walkerCreated = { newWalkerCreated };
+    },
+    walkerToCreate2: (state, { payload: newWalkerCreated2 }) => {
+      state.walkerCreated = { newWalkerCreated2 };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -75,25 +83,38 @@ export const walkerSlice = createSlice({
         // state.allWalker = action.payload;
       })
       .addCase(loginWalkerAsync.pending, (state, action) => {
-        state.alert = false;
+        state.alertWalker = false;
       })
       .addCase(loginWalkerAsync.rejected, (state, action) => {
-        state.alert = true;
+        state.alertWalker = true;
       })
       .addCase(loginWalkerAsync.fulfilled, (state, action) => {
         state.walkerInfo = action.payload; // state.userInfo
-        state.loggued = true;
-        localStorage.setItem("infoWalker", JSON.stringify(action.payload));
+        state.logguedWalker = true;
+        localStorage.setItem("infoUser", JSON.stringify(action.payload));
       })
       .addCase(createWalkerAsync.fulfilled, (state, action) => {
         state.created = true;
+      })
+      .addCase(getAllWalkersAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllWalkersAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.walkers = action.payload;
       });
   },
 });
 
-export const { walkerToEdit } = walkerSlice.actions;
+export const { walkerToEdit, walkerToCreate1, walkerToCreate2 } =
+  walkerSlice.actions;
 
-export const selectWalkerLoggued = (state) => state.walker.loggued;
-export const alertWalker = (state) => state.walker.alert;
-export const allWallkersObteined = (state) => state.walker.allWalkers;
+export const selectWalkerLoggued = (state) => state.walker.logguedWalker;
+export const alertWalker = (state) => state.walker.alertWalker;
+export const toWalker = (state) => state.walker.walker;
+export const walkerCreated = (state) =>
+  state.walker?.walkerCreated?.newWalkerCreated;
+export const walkerCreated2 = (state) =>
+  state.walker.walkerCreated.newWalkerCreated2;
+
 export default walkerSlice.reducer;

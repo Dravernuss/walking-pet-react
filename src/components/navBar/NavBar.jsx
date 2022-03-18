@@ -10,29 +10,39 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getOneUserAsync } from "../../slices/userSlice.js";
+import { getOneUserAsync, toUser } from "../../slices/userSlice.js";
+import { getOneWalkerAsync, toWalker } from "../../slices/walkerSlice.js";
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const userID = JSON.parse(localStorage.getItem("infoUser"))._id;
+
+  //--------USER---------------------------------------
+  const user = useSelector(toUser);
+  // const ID = JSON.parse(localStorage.getItem("infoUser"))._id;
+  const ID = JSON.parse(localStorage.getItem("infoUser"))._id;
+  const ROLE = JSON.parse(localStorage.getItem("infoUser")).role;
 
   const endSession = async () => {
     await localStorage.removeItem("infoUser");
+    // await localStorage.removeItem("infoWalker");
     window.location = "/";
   };
 
+  //-------WALKER--------------------------------------
+  const walker = useSelector(toWalker);
+  // const walkerID = JSON.parse(localStorage.getItem("infoWalker"))._id;
   useEffect(() => {
-    if (!user) dispatch(getOneUserAsync(userID));
+    if (ROLE === "user" && !user) dispatch(getOneUserAsync(ID));
+    if (ROLE === "walker" && !walker) dispatch(getOneWalkerAsync(ID));
   }, []);
 
   return (
@@ -42,7 +52,9 @@ const NavBar = () => {
       </Button>
       <div className="userInfo">
         <p>
-          {user?.firstname} {user?.lastname}
+          {ROLE === "user"
+            ? user?.firstname + " " + user?.lastname
+            : walker?.firstname + " " + walker?.lastname}
         </p>
         <Button
           id="basic-button"
@@ -51,7 +63,9 @@ const NavBar = () => {
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
         >
-          <Avatar src={user?.photo_url} />
+          <Avatar
+            src={`${ROLE === "user" ? user?.photo_url : walker?.photo_url}`}
+          />
           <img src={imagenes.img2} alt=" "></img>
         </Button>
         <Menu
@@ -71,7 +85,9 @@ const NavBar = () => {
           >
             <Button
               onClick={() => {
-                navigate("/clientprofile");
+                if (user) {
+                  navigate("/clientprofile");
+                } else navigate("/walkerprofile");
               }}
               style={{
                 color: "black",
@@ -84,6 +100,64 @@ const NavBar = () => {
             </Button>
           </MenuItem>
           <Divider />
+          {ROLE === "user" ? (
+            <div>
+              <MenuItem
+                style={{ width: "100%", padding: "0" }}
+                onClick={handleClose}
+              >
+                <Button
+                  onClick={() => navigate("/principalpage")}
+                  style={{
+                    color: "black",
+                    fontFamily: "Roboto-Regular",
+                    width: "100%",
+                    padding: "10px 15px",
+                  }}
+                >
+                  Buscar Paseador
+                </Button>
+              </MenuItem>
+              <Divider />
+              <MenuItem
+                style={{ width: "100%", padding: "0" }}
+                onClick={handleClose}
+              >
+                <Button
+                  onClick={() => navigate("/datesclient")}
+                  style={{
+                    color: "black",
+                    fontFamily: "Roboto-Regular",
+                    width: "100%",
+                    padding: "10px 15px",
+                  }}
+                >
+                  Ver Mis Citas
+                </Button>
+              </MenuItem>
+              <Divider />
+            </div>
+          ) : (
+            <div>
+              <MenuItem
+                style={{ width: "100%", padding: "0" }}
+                onClick={handleClose}
+              >
+                <Button
+                  onClick={() => navigate("/dateswalker")}
+                  style={{
+                    color: "black",
+                    fontFamily: "Roboto-Regular",
+                    width: "100%",
+                    padding: "10px 15px",
+                  }}
+                >
+                  Ver Mis Citas
+                </Button>
+              </MenuItem>
+              <Divider />
+            </div>
+          )}
           <MenuItem
             style={{ width: "100%", padding: "0" }}
             onClick={handleClose}

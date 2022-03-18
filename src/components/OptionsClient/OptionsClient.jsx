@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import ModalStyle from "../../components/ModalStyle/ModalStyle.jsx";
 import Box from "@mui/material/Box";
@@ -10,8 +10,27 @@ import imagenes from "../../images/imagenes.jsx";
 import { styled } from "@mui/material/styles";
 import "./_OptionsClient.scss";
 import "../../pages/DatesClient/_DatesClient.scss";
+import { convertTime24to12 } from "../../utils/functions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  datesUser,
+  getDateByIdAsync,
+  updateDateAsync,
+  getDatesByUserAsync,
+  dateToEdit,
+} from "../../slices/dateSlice.js";
+import {
+  updateWalkerAsync,
+  getOneWalkerAsync,
+} from "../../slices/walkerSlice.js";
+import { createCommentAsync } from "../../slices/commentSlice.js";
+import { new_rating } from "../../utils/functions";
+import { useNavigate } from "react-router-dom";
 
-const OptionsClient = ({ calificado, estado }) => {
+const OptionsClient = ({ date_id, index }) => {
+  const navigate = useNavigate();
+  const walker = useSelector((state) => state.walker?.walker);
+  const [type, setType] = useState("");
   const [value, setValue] = useState(0);
   const [openDetails, setOpenDetails] = useState(false);
   const [openChild, setOpenChild] = useState(false);
@@ -20,14 +39,20 @@ const OptionsClient = ({ calificado, estado }) => {
   const [openCalificacionRecibida, setOpenCalificacionRecibida] =
     useState(false);
   const [openReporteRecibido, setOpenReporteRecibido] = useState(false);
-  const handleOpenCalificar = () => setOpenCalificar(true);
+  const handleOpenCalificar = () => {
+    setType("Comment");
+    dispatch(getOneWalkerAsync(dateInfo.walker_id));
+    setOpenCalificar(true);
+  };
   const handleCloseCalificar = () => setOpenCalificar(false);
   const handleOpenReporte = () => {
+    setType("Report");
     setOpenCalificar(false);
     setOpenReporte(true);
   };
   const handleCloseReporte = () => setOpenReporte(false);
   const handleReturnCalificar = () => {
+    setType("Comment");
     setOpenReporte(false);
     setOpenCalificar(true);
   };
@@ -35,12 +60,18 @@ const OptionsClient = ({ calificado, estado }) => {
     setOpenReporte(false);
     setOpenReporteRecibido(true);
   };
-  const handleEndReporte = () => setOpenReporteRecibido(false);
+  const handleEndReporte = async () => {
+    await dispatch(getDatesByUserAsync(dateInfo?.user_id));
+    setOpenReporteRecibido(false);
+  };
   const handleEnviarCalificacion = () => {
     setOpenCalificar(false);
     setOpenCalificacionRecibida(true);
   };
-  const handleEndCalificacion = () => setOpenCalificacionRecibida(false);
+  const handleEndCalificacion = async () => {
+    await dispatch(getDatesByUserAsync(dateInfo?.user_id));
+    setOpenCalificacionRecibida(false);
+  };
   const handleOpenChild = () => setOpenChild(true);
   const handleCloseChild = () => setOpenChild(false);
   const handleOpenDetails = () => setOpenDetails(true);
@@ -48,12 +79,111 @@ const OptionsClient = ({ calificado, estado }) => {
   const Input = styled("input")({
     display: "none",
   });
+
+  //---------------REDUX------------------------
+  const dispatch = useDispatch();
+  const dateInfo = useSelector(datesUser)[index];
+
+  const handleCancelDate = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      updateDateAsync({
+        idDate: date_id,
+        ...dateInfo,
+        date_state: "Cancelado",
+        accepted: 0,
+      })
+    );
+    dispatch(dateToEdit({ date_state: "Cancelado" }));
+    dispatch(getDatesByUserAsync(dateInfo.user_id));
+    handleCloseChild();
+    handleCloseDetails();
+  };
+
+  const handleCalificate = async (e) => {
+    e.preventDefault();
+    const { elements } = e.target;
+    const dataCalificate = {
+      date_id: date_id,
+      user_id: dateInfo.user_id,
+      user_name: dateInfo.user_name,
+      walker_id: dateInfo.walker_id,
+      rating: value,
+      comment: elements[11].value,
+      type: "Comment",
+    };
+    const sub_rating = Number(walker?.rating);
+    await dispatch(
+      updateWalkerAsync({
+        id: dateInfo.walker_id,
+        rating: new_rating(sub_rating, walker?.total_rating, value),
+        total_rating: walker?.total_rating + 1,
+      })
+    );
+    await dispatch(createCommentAsync(dataCalificate));
+    await dispatch(
+      updateDateAsync({
+        idDate: date_id,
+        calificated: true,
+      })
+    );
+    handleEnviarCalificacion();
+  };
+
+  const handleReport = async (e) => {
+    e.preventDefault();
+    const { elements } = e.target;
+    console.log("reporteee", elements[11].value);
+    const dataReport = {
+      date_id: date_id,
+      user_id: dateInfo.user_id,
+      user_name: dateInfo.user_name,
+      walker_id: dateInfo.walker_id,
+      rating: value,
+      comment: elements[11].value,
+      type: "Report",
+      report_photo_url: "www.photo.com",
+    };
+    const sub_rating = Number(walker?.rating);
+    await dispatch(
+      updateWalkerAsync({
+        id: dateInfo.walker_id,
+        rating: new_rating(sub_rating, walker?.total_rating, value),
+        total_rating: walker?.total_rating + 1,
+      })
+    );
+    await dispatch(createCommentAsync(dataReport));
+    await dispatch(
+      updateDateAsync({
+        idDate: date_id,
+        calificated: true,
+      })
+    );
+    handleEnviarReporte();
+  };
+  useEffect(() => {
+    // dispatch(getDatesByUserAsync(dateInfo?.user_id));
+  }, []);
+
+  //--------------------------------------------
+
   return (
     <>
       <Button
+        // onClick={handleOpenCalificar}
+        className="botonT"
+        disabled={
+          !(dateInfo?.date_state === "Confirmado" && dateInfo?.paid === false)
+        }
+      >
+        Pagar
+      </Button>
+      <Button
         onClick={handleOpenCalificar}
         className="botonT"
-        disabled={calificado}
+        disabled={
+          !(!dateInfo?.calificated && dateInfo?.date_state === "Realizado")
+        }
       >
         Calificar
       </Button>
@@ -77,10 +207,14 @@ const OptionsClient = ({ calificado, estado }) => {
                 fontFamily: "Roboto-Bold",
               }}
             >
-              Califica a Helen Arias
+              Califica a {dateInfo?.walker_name}
             </Typography>
           </div>
-          <div style={ModalStyle.body} className="boxModalBody">
+          <form
+            onSubmit={handleCalificate}
+            style={ModalStyle.body}
+            className="boxModalBody"
+          >
             <Typography fontFamily="Roboto-Bold">
               Tu opinión es muy importante para nosotros:
             </Typography>
@@ -103,6 +237,7 @@ const OptionsClient = ({ calificado, estado }) => {
               />
             </div>
             <TextField
+              required
               className="input"
               label="Deja un comentario..."
               size="small"
@@ -137,12 +272,14 @@ const OptionsClient = ({ calificado, estado }) => {
               </Button>
               <Button
                 style={ModalStyle.boton}
-                onClick={handleEnviarCalificacion}
+                className="botonDisabled"
+                type="submit"
+                disabled={value === 0}
               >
                 Enviar
               </Button>
             </div>
-          </div>
+          </form>
         </Box>
       </Modal>
       <Modal
@@ -171,7 +308,7 @@ const OptionsClient = ({ calificado, estado }) => {
               textAlign="center"
               className="revisar"
             >
-              ¡Gracias por calificar a Helen Arias!
+              ¡Gracias por calificar a {dateInfo?.walker_name}!
             </Typography>
             <div
               style={{
@@ -220,7 +357,11 @@ const OptionsClient = ({ calificado, estado }) => {
               Reporte sobre Helen Arias
             </Typography>
           </div>
-          <div style={ModalStyle.body} className="boxModalBody">
+          <form
+            onSubmit={handleReport}
+            style={ModalStyle.body}
+            className="boxModalBody"
+          >
             <Typography fontFamily="Roboto-Bold" className="cuentanos">
               Cuéntanos acera del incoveniente:
             </Typography>
@@ -240,7 +381,6 @@ const OptionsClient = ({ calificado, estado }) => {
                   setValue(newValue);
                 }}
                 size="large"
-                className="stars"
               />
             </div>
             <TextField
@@ -295,11 +435,16 @@ const OptionsClient = ({ calificado, estado }) => {
               <Button style={ModalStyle.boton} onClick={handleReturnCalificar}>
                 Regresar
               </Button>
-              <Button style={ModalStyle.boton} onClick={handleEnviarReporte}>
+              <Button
+                style={ModalStyle.boton}
+                className="botonDisabled"
+                type="submit"
+                disabled={value === 0}
+              >
                 Enviar
               </Button>
             </div>
-          </div>
+          </form>
         </Box>
       </Modal>
       <Modal
@@ -357,7 +502,7 @@ const OptionsClient = ({ calificado, estado }) => {
       </Modal>
 
       <Button onClick={handleOpenDetails} className="botonT">
-        Ver Detalles
+        Detalles
       </Button>
       <Modal
         open={openDetails}
@@ -380,31 +525,59 @@ const OptionsClient = ({ calificado, estado }) => {
           </div>
           <div style={ModalStyle.body} className="boxModalBody">
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              NOMBRE DEL CLIENTE: MANUEL BAELLA
+              NOMBRE DEL CLIENTE: {dateInfo?.user_name}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              DISTRITO: MIRAFLORES
+              NOMBRE DEL PASEADOR:{" "}
+              <a
+                className="toWalker"
+                onClick={() => navigate(`/walker/${dateInfo.walker_id}`)}
+              >
+                {dateInfo?.walker_name}
+              </a>
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              DIRECCIÓN:Av. Tomas Valle 3145 Miraflores
+              DISTRITO: {dateInfo?.district_selected}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              FECHA: 16-12-2021
+              DIRECCIÓN: {dateInfo?.client_address}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              HORARIO: 16:00-17:00 p.m
+              FECHA: {(dateInfo?.date_day).split("-").reverse().join("-")}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              TIEMPO: 1 HORA
+              HORARIO: {convertTime24to12(dateInfo?.date_hour)}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              COSTO: S/16
+              TIEMPO: {dateInfo?.date_time}{" "}
+              {dateInfo?.date_time === 1 ? "Hora" : "Horas"}
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              COSTO: S/{dateInfo?.total_price}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
               Mascota(s):
             </p>
-            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              * Balto
+            {dateInfo?.pets_name.map((petName, i) => {
+              return (
+                <p
+                  key={i}
+                  style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                >
+                  * {petName}
+                </p>
+              );
+            })}
+            <p
+              style={{
+                margin: "15px 0",
+                fontFamily: "Rambla-Regular",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              EL PASEADOR DEBERÁ PRESENTAR SU DOCUMENTO DE IDENTIDAD ANTES DE
+              INICIAR EL PASEO
             </p>
             <div
               style={{
@@ -416,7 +589,8 @@ const OptionsClient = ({ calificado, estado }) => {
                 Volver
               </Button>
             </div>
-            {estado === "Confirmado" || estado === "Sin confirmar" ? (
+            {dateInfo?.date_state === "Confirmado" ||
+            dateInfo?.date_state === "Sin Confirmar" ? (
               <div
                 style={{
                   display: "flex",
@@ -465,7 +639,7 @@ const OptionsClient = ({ calificado, estado }) => {
                       </Button>
                       <Button
                         style={ModalStyle.boton}
-                        onClick={handleCloseChild}
+                        onClick={handleCancelDate}
                       >
                         Aceptar
                       </Button>

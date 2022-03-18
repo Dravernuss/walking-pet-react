@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -9,12 +9,38 @@ import imagenes from "../../../../images/imagenes";
 // import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import CircularProgress from "@mui/material/CircularProgress";
+import {
+  // walkerToCreate3,
+  walkerCreated2,
+  createWalkerAsync,
+} from "../../../../slices/walkerSlice";
 import "./_AboutYou.scss";
+import { useDispatch, useSelector } from "react-redux";
 
 export const AboutYou = ({ changeView }) => {
+  const dispatch = useDispatch();
+  const newWalkerCreated = useSelector(walkerCreated2);
+
+  const [certification, setCertification] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { elements } = e.target;
+    const finalData = {
+      experience: elements[0].value,
+      reaction: elements[3].value,
+      tools: elements[6].value,
+      certification: certification,
+      photo_url: "www.facephoto.com",
+    };
+
+    await dispatch(createWalkerAsync({ ...newWalkerCreated, ...finalData }));
+    changeView(3);
+  };
   return (
     <>
-      <div
+      <form
+        onSubmit={handleSubmit}
         className="layoutForm__scroll"
         style={{ width: "100%", display: "flex", justifyContent: "center" }}
       >
@@ -34,6 +60,7 @@ export const AboutYou = ({ changeView }) => {
           >
             Cuéntanos sobre tu experiencia previa cuidando o paseando perros*
             <TextField
+              required
               id="outlined-multiline-static"
               multiline
               style={{ width: "30rem" }}
@@ -41,6 +68,7 @@ export const AboutYou = ({ changeView }) => {
             />
             ¿Qué harías en caso de que el perro a tu cuidado se ponga agresivo?*
             <TextField
+              required
               id="outlined-multiline-static"
               multiline
               style={{ width: "30rem" }}
@@ -49,6 +77,7 @@ export const AboutYou = ({ changeView }) => {
             ¿Cuáles son las herramientas necesarias que un cuidador canino debe
             llevar en cada paseo?*
             <TextField
+              required
               id="outlined-multiline-static"
               multiline
               style={{ width: "30rem" }}
@@ -66,8 +95,20 @@ export const AboutYou = ({ changeView }) => {
               defaultValue="paseador"
               name="radio-buttons-group"
             >
-              <FormControlLabel value={true} control={<Radio />} label="Sí" />
-              <FormControlLabel value={false} control={<Radio />} label="No" />
+              <FormControlLabel
+                value={true}
+                onChange={() => setCertification(true)}
+                checked={certification === true}
+                control={<Radio />}
+                label="Sí"
+              />
+              <FormControlLabel
+                value={false}
+                checked={certification === false}
+                onChange={() => setCertification(false)}
+                control={<Radio />}
+                label="No"
+              />
             </RadioGroup>
             {/* <p style={{ fontSize: "24" }}>Subir una foto de perfil</p> */}
             <div
@@ -115,14 +156,12 @@ export const AboutYou = ({ changeView }) => {
               fontSize: "16px",
               fontFamily: "Roboto-bold",
             }}
-            onClick={() => {
-              changeView(3);
-            }}
+            type="submit"
           >
             Finalizar
           </Button>
         </FormControl>
-      </div>
+      </form>
       <div className="layoutForm__footer">
         <div className="layoutForm__footer-center">
           ¿Ya tienes cuenta?{" "}

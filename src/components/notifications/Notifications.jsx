@@ -6,22 +6,30 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function Notifications({ alertOn }) {
-  const [open, setOpen] = React.useState(alertOn);
+export default function Notifications({ alertOnUser, alertOnWalker }) {
+  const [openUser, setOpenUser] = React.useState(alertOnUser);
+  const [openWalker, setOpenWalker] = React.useState(alertOnWalker);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-    setOpen(false);
-    alertOn = false;
+    setOpenUser(false);
+    setOpenWalker(false);
+    alertOnUser(false);
+    alertOnWalker(false);
   };
   React.useEffect(() => {
-    setOpen(alertOn);
-  }, [alertOn]);
+    setOpenUser(alertOnUser);
+    setOpenWalker(alertOnWalker);
+  }, [alertOnUser, alertOnWalker]);
 
   return (
-    <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+    <Snackbar
+      open={openUser || openWalker}
+      autoHideDuration={3000}
+      onClose={handleClose}
+    >
       <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
         Correo o Contraseña Incorrectos
       </Alert>

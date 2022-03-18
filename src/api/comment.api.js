@@ -1,17 +1,17 @@
 import API_SERVER from "./api.server.js";
 
 const ENDPOINTS = {
-  GET_ALL_DATES: "/api/dates",
-  GET_DATE_BY_ID: "/api/dates",
-  GET_DATES_BY_USER: "/api/dates/user",
-  GET_DATES_BY_WALKER: "/api/dates/walker",
-  CREATE: "/api/dates/create",
-  UPDATE: "/api/dates/update",
+  GET_ALL_COMMENTS: "/api/comments",
+  GET_ALL_COMMENTS_BY_WALKER: "/api/comments/walker",
+  GET_ALL_REPORTS: "/api/comments/reports",
+  GET_COMMENT_BY_ID: "/api/comments",
+  CREATE: "/api/comments/create",
+  UPDATE_ADMIN: "/api/comments/update",
 };
 
-export const getAllDates = () => {
+export const getAllComments = () => {
   // const token = JSON.parse(localStorage.getItem("infoWalker")).token;
-  const path = `${API_SERVER}${ENDPOINTS.GET_ALL_DATES}`;
+  const path = `${API_SERVER}${ENDPOINTS.GET_ALL_COMMENTS}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
       // headers: {
@@ -28,9 +28,9 @@ export const getAllDates = () => {
   });
 };
 
-export const getDateById = (id) => {
+export const getAllCommentsByWalker = (idWalker) => {
   //   const token = JSON.parse(localStorage.getItem("infoWalker")).token;
-  const path = `${API_SERVER}${ENDPOINTS.GET_DATE_BY_ID}/${id}`;
+  const path = `${API_SERVER}${ENDPOINTS.GET_ALL_COMMENTS_BY_WALKER}/${idWalker}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
       //   headers: {
@@ -47,27 +47,9 @@ export const getDateById = (id) => {
   });
 };
 
-export const getDatesByUser = (idUser) => {
+export const getAllReports = () => {
   // const token = JSON.parse(localStorage.getItem("infoUser")).token;
-  const path = `${API_SERVER}${ENDPOINTS.GET_DATES_BY_USER}/${idUser}`;
-  return new Promise((resolve, reject) => {
-    fetch(path, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        resolve({ data });
-      })
-      .catch((err) => {
-        reject({ error: err });
-      });
-  });
-};
-export const getDatesByWalker = (idWalker) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
-  const path = `${API_SERVER}${ENDPOINTS.GET_DATES_BY_WALKER}/${idWalker}`;
+  const path = `${API_SERVER}${ENDPOINTS.GET_ALL_REPORTS}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
       // headers: {
@@ -84,13 +66,32 @@ export const getDatesByWalker = (idWalker) => {
   });
 };
 
-export const createDate = (date) => {
+export const getCommentById = (id) => {
+  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const path = `${API_SERVER}${ENDPOINTS.GET_COMMENT_BY_ID}/${id}`;
+  return new Promise((resolve, reject) => {
+    fetch(path, {
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve({ data });
+      })
+      .catch((err) => {
+        reject({ error: err });
+      });
+  });
+};
+
+export const createComment = (comment) => {
   // const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.CREATE}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
       method: "POST",
-      body: JSON.stringify(date),
+      body: JSON.stringify(comment),
       headers: {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${token}`,
@@ -106,13 +107,13 @@ export const createDate = (date) => {
   });
 };
 
-export const updateDate = ({ idDate, ...date }) => {
+export const updateCommentByAdmin = ({ idComment, ...comment }) => {
   // const token = JSON.parse(localStorage.getItem("infoUser")).token;
-  const path = `${API_SERVER}${ENDPOINTS.UPDATE}/${idDate}`;
+  const path = `${API_SERVER}${ENDPOINTS.UPDATE_ADMIN}/${idComment}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
       method: "PUT",
-      body: JSON.stringify(date),
+      body: JSON.stringify(comment),
       headers: {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${token}`,

@@ -5,9 +5,25 @@ import ModalStyle from "../../components/ModalStyle/ModalStyle.jsx";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { useNavigate } from "react-router-dom";
+import { convertTime24to12 } from "../../utils/functions";
 import "./_OptionsWalker.scss";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  datesWalker,
+  getDateByIdAsync,
+  updateDateAsync,
+  dateToEdit,
+  getDatesByWalkerAsync,
+} from "../../slices/dateSlice.js";
 
-const OptionsWalker = ({ aceptado, estado }) => {
+// ACCEPTED ESTADOS POSIBLES
+//0 : rechazado
+//1 : aceptado
+//2 : sin confirmar
+
+const OptionsWalker = ({ accepted, date_state, index, id }) => {
+  const navigate = useNavigate();
   const [openDetails, setOpenDetails] = useState(false);
   const [openChild, setOpenChild] = useState(false);
   const [openAccept, setOpenAccept] = useState(false);
@@ -20,16 +36,66 @@ const OptionsWalker = ({ aceptado, estado }) => {
   const handleCloseChild = () => setOpenChild(false);
   const handleOpenDetails = () => setOpenDetails(true);
   const handleCloseDetails = () => setOpenDetails(false);
+
+  //--------------REDUX-------------------------------------------
+  const dispatch = useDispatch();
+  const dateInfo = useSelector(datesWalker)[index];
+
+  const handleCancelDate = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      updateDateAsync({
+        idDate: id,
+        ...dateInfo,
+        date_state: "Cancelado",
+        accepted: 0,
+      })
+    );
+    dispatch(getDatesByWalkerAsync(dateInfo.walker_id));
+    handleCloseChild();
+    handleCloseDetails();
+  };
+
+  const handleAcceptDate = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      updateDateAsync({
+        idDate: id,
+        ...dateInfo,
+        date_state: "Confirmado",
+        accepted: 1,
+      })
+    );
+    dispatch(getDatesByWalkerAsync(dateInfo.walker_id));
+    handleCloseAccept();
+  };
+
+  const handleRejectDate = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      updateDateAsync({
+        idDate: id,
+        ...dateInfo,
+        date_state: "Rechazado",
+        accepted: 0,
+      })
+    );
+    dispatch(getDatesByWalkerAsync(dateInfo.walker_id));
+    handleCloseAccept();
+  };
+
+  //--------------------------------------------------------------
+
   return (
     <>
       <ButtonGroup className="group" variant="none">
-        {aceptado === 0 ? (
+        {accepted === 0 ? (
           <></>
         ) : (
           <>
             <Button
               onClick={handleOpenAccept}
-              disabled={aceptado === 1}
+              disabled={accepted === 1}
               className="botonC"
             >
               ✅
@@ -68,7 +134,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                   <Button style={ModalStyle.boton} onClick={handleCloseAccept}>
                     Cancelar
                   </Button>
-                  <Button style={ModalStyle.boton} onClick={handleCloseAccept}>
+                  <Button style={ModalStyle.boton} onClick={handleAcceptDate}>
                     Aceptar
                   </Button>
                 </div>
@@ -76,13 +142,13 @@ const OptionsWalker = ({ aceptado, estado }) => {
             </Modal>
           </>
         )}
-        {aceptado === 1 ? (
+        {accepted === 1 ? (
           <></>
         ) : (
           <>
             <Button
               onClick={handleOpenCancel}
-              disabled={aceptado === 0}
+              disabled={accepted === 0}
               className="botonC"
             >
               ❌
@@ -121,7 +187,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                   <Button style={ModalStyle.boton} onClick={handleCloseCancel}>
                     Cancelar
                   </Button>
-                  <Button style={ModalStyle.boton} onClick={handleCloseCancel}>
+                  <Button style={ModalStyle.boton} onClick={handleRejectDate}>
                     Aceptar
                   </Button>
                 </div>
@@ -154,33 +220,60 @@ const OptionsWalker = ({ aceptado, estado }) => {
           </div>
           <div style={ModalStyle.body} className="boxModalBody">
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              NOMBRE DEL CLIENTE: MANUEL BAELLA
+              NOMBRE DEL CLIENTE:{" "}
+              <a
+                className="toWalker"
+                onClick={() => navigate(`/client/${dateInfo.user_id}`)}
+              >
+                {dateInfo?.user_name}
+              </a>
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              DISTRITO: MIRAFLORES
+              NOMBRE DEL PASEADOR: {dateInfo?.walker_name}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              DIRECCIÓN:Av. Tomas Valle 3145 Miraflores
+              DISTRITO: {dateInfo?.district_selected}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              FECHA: 16-12-2021
+              DIRECCIÓN: {dateInfo?.client_address}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              HORARIO: 16:00-17:00 p.m
+              FECHA: {(dateInfo?.date_day).split("-").reverse().join("-")}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              TIEMPO: 1 HORA
+              HORARIO: {convertTime24to12(dateInfo?.date_hour)}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              COSTO: S/16
+              TIEMPO: {dateInfo?.date_time}{" "}
+              {dateInfo?.date_time === 1 ? "Hora" : "Horas"}
+            </p>
+            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+              COSTO: S/{dateInfo?.total_price}
             </p>
             <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
               Mascota(s):
             </p>
-            <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-              * Balto
+            {dateInfo?.pets_name.map((petName, i) => {
+              return (
+                <p
+                  key={i}
+                  style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                >
+                  * {petName}
+                </p>
+              );
+            })}
+            <p
+              style={{
+                margin: "15px 0",
+                fontFamily: "Rambla-Regular",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              USTED DEBE PRESENTAR SU DOCUMENTO DE IDENTIDAD ANTES DE INICIAR EL
+              PASEO
             </p>
-
             <div
               style={{
                 display: "flex",
@@ -191,7 +284,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                 Volver
               </Button>
             </div>
-            {aceptado === 1 && estado === "Confirmado" ? (
+            {accepted === 1 && date_state === "Confirmado" ? (
               <div
                 style={{
                   display: "flex",
@@ -240,7 +333,7 @@ const OptionsWalker = ({ aceptado, estado }) => {
                       </Button>
                       <Button
                         style={ModalStyle.boton}
-                        onClick={handleCloseChild}
+                        onClick={handleCancelDate}
                       >
                         Aceptar
                       </Button>

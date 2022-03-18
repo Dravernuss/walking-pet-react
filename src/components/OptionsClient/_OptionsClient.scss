@@ -23,11 +23,23 @@
   margin-left: 15px;
 }
 .boxModal {
+  .toWalker {
+    font-weight: bold;
+  }
+  .toWalker:hover {
+    cursor: pointer;
+  }
   .stars {
     font-size: 60px;
   }
   .revisar {
     margin: 3rem;
+  }
+  .boxModalBody {
+    .botonDisabled:disabled {
+      color: rgb(160, 160, 160) !important;
+      box-shadow: none !important;
+    }
   }
 }
 .logoOC {

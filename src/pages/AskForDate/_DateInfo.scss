@@ -1,0 +1,61 @@
+.dateInfoContainer {
+  .root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    .h1Div {
+      width: 600px;
+    }
+    .title {
+      font-family: "Rambla-Italic";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 50px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      text-align: center;
+      color: #f9ba3e;
+    }
+    .infoDate {
+      padding: 2rem;
+      background-color: #ffe2a8;
+    }
+  }
+  .botonRegresar {
+    color: #f9ba3e;
+    text-transform: none;
+    font-family: "Rambla-Bold";
+    float: right;
+    margin: 1rem 1rem 0rem 0rem;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 550px) {
+  .dateInfoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .root {
+      .h1Div {
+        width: 350px;
+      }
+      .title {
+        font-size: 30px;
+      }
+    }
+    .infoDate {
+      p {
+        font-size: 13px;
+      }
+    }
+    .botonRegresar {
+      color: #f9ba3e;
+      text-transform: none;
+      font-family: "Rambla-Bold";
+      margin: 1rem 0rem 0rem 0rem;
+      font-size: 14px;
+    }
+  }
+}

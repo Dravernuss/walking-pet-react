@@ -9,10 +9,9 @@ const ENDPOINTS = {
   LOGIN: "/api/walkers/login",
 };
 
-export const login = (walker) => {
+export const loginWalker = (walker) => {
   const path = `${API_SERVER}${ENDPOINTS.LOGIN}`;
   return new Promise((resolve, reject) => {
-    console.log("LOGIN", path);
     fetch(path, {
       method: "POST",
       body: JSON.stringify(walker),
@@ -22,8 +21,7 @@ export const login = (walker) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        resolve({ token: data.token, _id: data._id });
-        // resolve(data);
+        resolve({ token: data.token, _id: data._id, role: data.role });
       })
       .catch((err) => {
         reject({ error: err, alert: true });
@@ -32,13 +30,13 @@ export const login = (walker) => {
 };
 
 export const getOneWalker = (id) => {
-  //   const token = JSON.parse(localStorage.getItem("infoWalker")).token;
+  // const token = JSON.parse(localStorage.getItem("infoWalker")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_ONE_WALKER}/${id}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -50,10 +48,8 @@ export const getOneWalker = (id) => {
   });
 };
 
-export const updateWalker = (data) => {
-  const id = data.id;
-  const cambio = data.status;
-  //   const token = JSON.parse(localStorage.getItem("infoWalker")).token;
+export const updateWalker = ({ id, ...walker }) => {
+  // const token = JSON.parse(localStorage.getItem("infoWalker")).token;
   const path = `${API_SERVER}${ENDPOINTS.UPDATE}/${id}`;
   return new Promise((resolve, reject) => {
     fetch(path, {

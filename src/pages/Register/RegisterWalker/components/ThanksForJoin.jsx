@@ -38,10 +38,9 @@ export const ThanksForJoin = () => {
           fontSize: "16px",
           fontFamily: "Roboto-bold",
         }}
+        href="/"
       >
-        <Link to="/" style={{ textDecoration: "none", color: "#000" }}>
-          Ir al inicio
-        </Link>
+        Ir al inicio
       </Button>
       <div className="layoutForm__footer-small">
         <div className="layoutForm__footer-logo">
