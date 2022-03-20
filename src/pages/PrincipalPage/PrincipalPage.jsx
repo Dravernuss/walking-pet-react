@@ -24,7 +24,8 @@ const drawerWidth = 200;
 
 const PrincipalPage = (props) => {
   const dispatch = useDispatch();
-  const walkers = useSelector((state) => state.walker.walkers);
+  // const walkers = useSelector((state) => state.walker.walkers);
+  const walkers = useSelector((state) => state.walker.allWalker);
   useEffect(async () => {
     const walkers_await = await dispatch(getAllWalkersAsync());
     setPaseadoresD(walkers_await.payload);

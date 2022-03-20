@@ -95,11 +95,12 @@ export const getAllWalkers = () => {
   const path = `${API_SERVER}${ENDPOINTS.GET_ALL_WALKERS}`;
   return new Promise((resolve, reject) => {
     const requestOptions = {
-      method: 'GET',
-      redirect: 'follow'
+      method: "GET",
+      redirect: "follow",
     };
     fetch(path, requestOptions)
-      .then((response) => response.text())
+      // .then((response) => response.text())
+      .then((response) => response.json())
       .then((data) => {
         resolve({ data });
       })
