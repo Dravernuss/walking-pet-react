@@ -48,7 +48,7 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded}) => {
   async function updatedWalkers (data) {
     let resAllWalkers = ''
     if(data){
-      resAllWalkers = await dispatch(updateWalkerAsync(data.id,data.status));
+      resAllWalkers = await dispatch(updateWalkerAsync(data));
       uploaded()
     }
     return resAllWalkers
@@ -225,9 +225,9 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded}) => {
                         Volver
                       </Button>
                       <Button
-                        disabled={estado}
+                        disabled={!estado}
                         style={
-                          !estado
+                          estado
                             ? ModalStyle.boton
                             : ModalStyle.botonDisabled
                         }
@@ -287,12 +287,12 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded}) => {
                       
                       <Button
                         style={
-                          !estado
+                          estado
                             ? ModalStyle.boton
                             : ModalStyle.botonDisabled
                         }
                         onClick={handleOpenCancel}
-                        disabled={estado}
+                        disabled={!estado}
                         className="buttonOR"
                       >
                         Rechazar
