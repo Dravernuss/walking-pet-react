@@ -1,5 +1,6 @@
 import NavBarAdmin from "../../components/navBar/NavBarAdmin";
 import * as React from "react";
+import { useEffect,useState } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,7 +12,16 @@ import "./_Reports.scss";
 import OptionsReport from "../../components/OptionsAdmin/OptionsReport";
 import { Paper } from "@mui/material";
 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllReportsAsync,
+} from "../../slices/commentSlice.js";
+
 const Reports = () => {
+  const dispatch = useDispatch();
+  const allReports = useSelector((state) => state.comments.reports)
+  const [allReportsInformation, setAllReportsInformation] = useState([])
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#C4C4C4",
@@ -20,14 +30,35 @@ const Reports = () => {
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 18,
-    },
+    }
   }));
 
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
       backgroundColor: theme.palette.action.hover,
-    },
+    }
   }));
+
+  const  callingAllReports = async () => {
+    const resAllReports = await dispatch(getAllReportsAsync());
+    return resAllReports
+  };
+
+  useEffect(() => {
+    const obteinAllReports = callingAllReports() 
+  }, [])
+
+  
+  useEffect(() => {
+    if (typeof allReports != "undefined") {
+      let arr =[]
+      arr.push(allReports.map((date) => {
+        return date
+      })) 
+      console.log(arr)
+      setAllReportsInformation(arr)
+    }
+  }, [allReports])
 
   const reports = [
     {
@@ -83,8 +114,9 @@ const Reports = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {reports.map((report) => (
-                  <StyledTableRow key={report.fecha}>
+                {allReportsInformation && allReportsInformation[0] &&
+                  allReportsInformation[0].map((report,index) => (
+                  <StyledTableRow key={index}>
                     <StyledTableCell
                       className="cell"
                       align="left"
@@ -99,19 +131,19 @@ const Reports = () => {
                       component="th"
                       scope="row"
                     >
-                      {report.cliente}
+                      {report.user_name}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {report.fecha}
+                      {report.created_at}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
                       {report.hora}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      {report.estado}
+                      {report.comment_state}
                     </StyledTableCell>
                     <StyledTableCell className="cell" align="left">
-                      <OptionsReport />
+                      <OptionsReport reportId={report._id}/>
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

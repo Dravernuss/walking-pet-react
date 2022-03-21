@@ -43,7 +43,7 @@ const WalkerRegistration = () => {
   useEffect(() => {
     if (typeof allWalker != "undefined") {
       let arr =[]
-      arr.push(JSON.parse(allWalker).map((walker) => {
+      arr.push(allWalker.map((walker) => {
         return walker
       })) 
       setAllWalkersInformation(arr)

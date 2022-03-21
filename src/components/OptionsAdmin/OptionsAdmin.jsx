@@ -7,7 +7,6 @@ import Modal from "@mui/material/Modal";
 import { useSelector } from "react-redux";
 
 const OptionsAdmin = (dateId) => {
-  console.log('dateID', dateId)
   const [openDetails, setOpenDetails] = useState(false);
   const [dateSelected, setDateSelected] = useState('')
 

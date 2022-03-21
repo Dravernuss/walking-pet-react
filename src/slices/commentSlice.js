@@ -70,6 +70,13 @@ export const commentsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+    .addCase(getAllReportsAsync.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(getAllReportsAsync.fulfilled, (state, action) => {
+      state.loading = false;
+      state.reports = action.payload;
+    })
       .addCase(getAllCommentsAsync.pending, (state) => {
         state.loading = true;
       })
