@@ -1,6 +1,6 @@
 import NavBarAdmin from "../../components/navBar/NavBarAdmin";
 import * as React from "react";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,14 +13,12 @@ import OptionsReport from "../../components/OptionsAdmin/OptionsReport";
 import { Paper } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllReportsAsync,
-} from "../../slices/commentSlice.js";
+import { getAllReportsAsync } from "../../slices/commentSlice.js";
 
 const Reports = () => {
   const dispatch = useDispatch();
-  const allReports = useSelector((state) => state.comments.reports)
-  const [allReportsInformation, setAllReportsInformation] = useState([])
+  const allReports = useSelector((state) => state.comments.reports);
+  const [allReportsInformation, setAllReportsInformation] = useState([]);
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -30,35 +28,36 @@ const Reports = () => {
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 18,
-    }
+    },
   }));
 
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
       backgroundColor: theme.palette.action.hover,
-    }
+    },
   }));
-
-  const  callingAllReports = async () => {
+  console.log(allReportsInformation);
+  const callingAllReports = async () => {
     const resAllReports = await dispatch(getAllReportsAsync());
-    return resAllReports
+    return resAllReports;
   };
 
   useEffect(() => {
-    const obteinAllReports = callingAllReports() 
-  }, [])
+    const obteinAllReports = callingAllReports();
+  }, []);
 
-  
   useEffect(() => {
     if (typeof allReports != "undefined") {
-      let arr =[]
-      arr.push(allReports.map((date) => {
-        return date
-      })) 
-      console.log(arr)
-      setAllReportsInformation(arr)
+      let arr = [];
+      arr.push(
+        allReports.map((date) => {
+          return date;
+        })
+      );
+      console.log(arr);
+      setAllReportsInformation(arr);
     }
-  }, [allReports])
+  }, [allReports]);
 
   const reports = [
     {
@@ -114,39 +113,40 @@ const Reports = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {allReportsInformation && allReportsInformation[0] &&
-                  allReportsInformation[0].map((report,index) => (
-                  <StyledTableRow key={index}>
-                    <StyledTableCell
-                      className="cell"
-                      align="left"
-                      component="th"
-                      scope="row"
-                    >
-                      {report.paseador}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      className="cell"
-                      align="left"
-                      component="th"
-                      scope="row"
-                    >
-                      {report.user_name}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {report.created_at}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {report.hora}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {report.comment_state}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      <OptionsReport reportId={report._id}/>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
+                {allReportsInformation &&
+                  allReportsInformation[0] &&
+                  allReportsInformation[0].map((report, index) => (
+                    <StyledTableRow key={index}>
+                      <StyledTableCell
+                        className="cell"
+                        align="left"
+                        component="th"
+                        scope="row"
+                      >
+                        {report.walker_name}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        className="cell"
+                        align="left"
+                        component="th"
+                        scope="row"
+                      >
+                        {report.user_name}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        {report.created_at}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        {report.hora}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        {report.comment_state}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        <OptionsReport reportId={report._id} />
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>

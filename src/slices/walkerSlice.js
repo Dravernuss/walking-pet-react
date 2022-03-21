@@ -1,8 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { walker } from "../api/index";
 
-const { loginWalker, updateWalker, getOneWalker, createWalker, getAllWalkers } =
-  walker;
+const {
+  loginWalker,
+  updateWalker,
+  getOneWalker,
+  createWalker,
+  getAllWalkers,
+  getAllWalkersRegistration,
+} = walker;
 
 const initialState = {};
 
@@ -15,9 +21,18 @@ export const loginWalkerAsync = createAsyncThunk(
 );
 
 export const getAllWalkersAsync = createAsyncThunk(
-  "walker/getAllWalker", async () => {
-    const response = await getAllWalkers()
-    return response.data
+  "walker/getAllWalker",
+  async () => {
+    const response = await getAllWalkers();
+    return response.data;
+  }
+);
+
+export const getAllWalkersRegistrationAsync = createAsyncThunk(
+  "walker/getAllWalkerRegistration",
+  async () => {
+    const response = await getAllWalkersRegistration();
+    return response.data;
   }
 );
 
@@ -75,6 +90,13 @@ export const walkerSlice = createSlice({
         state.loading = false;
         state.allWalker = action.payload;
       })
+      .addCase(getAllWalkersRegistrationAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllWalkersRegistrationAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allWalkerRegistration = action.payload;
+      })
       .addCase(updateWalkerAsync.pending, (state) => {
         state.loading = true;
       })
@@ -95,7 +117,7 @@ export const walkerSlice = createSlice({
       })
       .addCase(createWalkerAsync.fulfilled, (state, action) => {
         state.created = true;
-      })
+      });
   },
 });
 

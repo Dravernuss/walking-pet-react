@@ -1,6 +1,6 @@
 import NavBarAdmin from "../../components/navBar/NavBarAdmin";
 import * as React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,42 +13,41 @@ import OptionsRegisterWalker from "../../components/OptionsAdmin/OptionsRegister
 import { Paper } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllWalkersAsync,
-} from "../../slices/walkerSlice.js";
+import { getAllWalkersRegistrationAsync } from "../../slices/walkerSlice.js";
 
 const WalkerRegistration = () => {
-
   const dispatch = useDispatch();
-  const [changeMade, setChangeMade] = useState(true)
-  const [allWalkersInformation, setAllWalkersInformation] = useState([])
-  const allWalker = useSelector((state) => state.walker.allWalker)
-  
-  const  callingAllWalkers = async () => {
-    const resAllWalkers = await dispatch(getAllWalkersAsync());
-    return resAllWalkers
+  const [changeMade, setChangeMade] = useState(true);
+  const [allWalkersInformation, setAllWalkersInformation] = useState([]);
+  const allWalker = useSelector((state) => state.walker.allWalkerRegistration);
+
+  const callingAllWalkers = async () => {
+    const resAllWalkers = await dispatch(getAllWalkersRegistrationAsync());
+    return resAllWalkers;
   };
 
-  const itHasBeenUploaded =()=>{
-    setChangeMade(true)
-  }
+  const itHasBeenUploaded = () => {
+    setChangeMade(true);
+  };
 
   useEffect(() => {
-    if(changeMade){
-      const obteinAllWalkers = callingAllWalkers() 
+    if (changeMade) {
+      const obteinAllWalkers = callingAllWalkers();
     }
-    setChangeMade(false)
-  }, [changeMade])
+    setChangeMade(false);
+  }, [changeMade]);
 
   useEffect(() => {
     if (typeof allWalker != "undefined") {
-      let arr =[]
-      arr.push(allWalker.map((walker) => {
-        return walker
-      })) 
-      setAllWalkersInformation(arr)
+      let arr = [];
+      arr.push(
+        allWalker.map((walker) => {
+          return walker;
+        })
+      );
+      setAllWalkersInformation(arr);
     }
-  }, [allWalker])
+  }, [allWalker]);
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -66,7 +65,7 @@ const WalkerRegistration = () => {
       backgroundColor: theme.palette.action.hover,
     },
   }));
-  
+
   return (
     <div className="WalkerRegistration">
       <NavBarAdmin />
@@ -104,40 +103,44 @@ const WalkerRegistration = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {allWalkersInformation && allWalkersInformation[0] &&
+                {allWalkersInformation &&
+                  allWalkersInformation[0] &&
                   allWalkersInformation[0].map((walker) => (
-                    
-                  <StyledTableRow key={walker._id}>
-                    <StyledTableCell
-                      className="cell"
-                      align="left"
-                      component="th"
-                      scope="row"
-                    >
-                      {`${walker.firstname} ${walker.lastname}`}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      className="cell"
-                      align="left"
-                      component="th"
-                      scope="row"
-                    >
-                      {walker.email}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {walker.phone}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {walker.ready?'disponible':'no disponible'}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      {walker.registration_state}
-                    </StyledTableCell>
-                    <StyledTableCell className="cell" align="left">
-                      <OptionsRegisterWalker walker={walker} estado={walker.avalaible} uploaded={()=> itHasBeenUploaded()} />
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
+                    <StyledTableRow key={walker._id}>
+                      <StyledTableCell
+                        className="cell"
+                        align="left"
+                        component="th"
+                        scope="row"
+                      >
+                        {`${walker.firstname} ${walker.lastname}`}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        className="cell"
+                        align="left"
+                        component="th"
+                        scope="row"
+                      >
+                        {walker.email}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        {walker.phone}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        {walker.ready ? "disponible" : "no disponible"}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        {walker.registration_state}
+                      </StyledTableCell>
+                      <StyledTableCell className="cell" align="left">
+                        <OptionsRegisterWalker
+                          walker={walker}
+                          estado={walker.avalaible}
+                          uploaded={() => itHasBeenUploaded()}
+                        />
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>
