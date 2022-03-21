@@ -183,10 +183,69 @@ const OptionsClient = ({ date_id, index }) => {
     );
   };
 
+  //--------------ePayco--------------------------------------------
+
+  let data = {
+    //Parametros compra (obligatorio)
+    name: `Paseo con ${dateInfo?.walker_name}`,
+    description: `Paseo con ${dateInfo?.walker_name}`,
+    invoice: `${dateInfo?._id}`,
+    currency: "usd",
+    amount: `${(dateInfo?.total_price / 3.74).toFixed(2)}`,
+    tax_base: "0",
+    tax: "0",
+    country: "pe",
+    lang: "es",
+
+    //Onpage="false" - Standard="true"
+    external: "false",
+
+    //Atributos opcionales
+    // extra1: "extra1",
+    // extra2: "extra2",
+    // extra3: "extra3",
+    // confirmation: "http://confirmation.com",
+    // response: "http://response.com",
+    response: "http://localhost:3000/datesclient",
+
+    //Atributos cliente
+    name_billing: dateInfo?.user_name,
+    address_billing: dateInfo?.client_address,
+    type_doc_billing: "dni",
+    city: dateInfo?.district_selected,
+    // mobilephone_billing: "3050000000",
+    // number_doc_billing: "100000000",
+
+    //atributo deshabilitación metodo de pago
+    // methodsDisable: ["TDC", "PSE","SP","CASH","DP"]
+    methodsDisable: ["PSE", "CASH", "DP"],
+  };
+  // eslint-disable-next-line no-undef
+  let handler = ePayco.checkout.configure({
+    //pasarlo despues a .env
+    key: "1c30721668f9ae6f558233fa648b5894",
+    test: true,
+  });
+  const handlePayment = () => {
+    console.log(handler);
+    handler.open(data);
+    handler.onResponse(async (response) => {
+      if (response.cod_respuesta === 1) {
+        await dispatch(
+          updateDateAsync({
+            idDate: date_id,
+            paid: true,
+          })
+        );
+        dispatch(getDatesByUserAsync(dateInfo.user_id));
+      }
+    });
+  };
+  //----------------------------------------------------------------
   return (
     <>
       <Button
-        // onClick={handleOpenCalificar}
+        onClick={handlePayment}
         className="botonT"
         disabled={
           !(dateInfo?.date_state === "Confirmado" && dateInfo?.paid === false)
