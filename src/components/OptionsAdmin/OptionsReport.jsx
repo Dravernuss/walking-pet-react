@@ -9,18 +9,16 @@ import imagenes from "../../images/imagenes.jsx";
 import "./_OptionsReport.scss";
 import { Rating } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getDateByIdAsync,
-} from "../../slices/dateSlice.js";
+import { getDateByIdAsync } from "../../slices/dateSlice.js";
 
 const OptionsReport = (reportsId) => {
   const dispatch = useDispatch();
   const [openDetails, setOpenDetails] = useState(false);
   const [openPaseador, setOpenPaseador] = useState(false);
   const [openCliente, setOpenCliente] = useState(false);
-  const [reportSelected, setReportSelected] = useState('')
-  const [dateSelected, setDateSelected] = useState('')
-  const [dateID, setDateID] = useState('')
+  const [reportSelected, setReportSelected] = useState("");
+  const [dateSelected, setDateSelected] = useState("");
+  const [dateID, setDateID] = useState("");
 
   const handleOpenDetails = () => setOpenDetails(true);
   const handleCloseDetails = () => setOpenDetails(false);
@@ -31,30 +29,29 @@ const OptionsReport = (reportsId) => {
 
   const allReports = useSelector((state) => state.comments.reports);
 
-  const  callingDate = async (id) => {
+  const callingDate = async (id) => {
     const resDate = await dispatch(getDateByIdAsync(id));
-    setDateSelected(resDate.payload[0])
-    return resDate
+    setDateSelected(resDate.payload[0]);
+    return resDate;
   };
 
   useEffect(() => {
-    const reportChosen = []
-    const x = allReports.map(report => {
-      if(report._id === reportsId.reportId){
-        reportChosen.push(report) 
-        setDateID(report.date_id)
-      } 
-    })
-    console.log(reportChosen)
-    setReportSelected(reportChosen) 
-  }, [reportsId])
+    const reportChosen = [];
+    const x = allReports.map((report) => {
+      if (report._id === reportsId.reportId) {
+        reportChosen.push(report);
+        setDateID(report.date_id);
+      }
+    });
+    console.log(reportChosen);
+    setReportSelected(reportChosen);
+  }, [reportsId]);
 
   useEffect(() => {
     if (typeof dateID != "undefined") {
-      const date = callingDate(dateID)
+      const date = callingDate(dateID);
     }
-  }, [dateID])
-  
+  }, [dateID]);
 
   return (
     <>
@@ -91,58 +88,86 @@ const OptionsReport = (reportsId) => {
                   >
                     {console.log(dateSelected)}
                     <h2>Detalles del Paseo</h2>
-                    <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+                    <p
+                      style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                    >
                       <strong>Nombre del paseador:</strong> &nbsp;&nbsp;
-                      {dateSelected?dateSelected.walker_name:''}
+                      {dateSelected ? dateSelected.walker_name : ""}
                     </p>
-                    <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+                    <p
+                      style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                    >
                       <strong>Nombre de cliente:</strong> &nbsp;&nbsp;
-                      {dateSelected?dateSelected.user_name:''}
+                      {dateSelected ? dateSelected.user_name : ""}
                     </p>
-                    <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+                    <p
+                      style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                    >
                       <strong>Distrito</strong> &nbsp;&nbsp;
-                      {dateSelected?dateSelected.district_selected:''}
+                      {dateSelected ? dateSelected.district_selected : ""}
                     </p>
-                    <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+                    <p
+                      style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                    >
                       <strong>Dirección</strong> &nbsp;&nbsp;
-                      {dateSelected?dateSelected.client_address:''}
+                      {dateSelected ? dateSelected.client_address : ""}
                     </p>
-                    <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+                    <p
+                      style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                    >
                       <strong>Fecha</strong> &nbsp;&nbsp;
-                      {dateSelected?dateSelected.date_day:''}
+                      {dateSelected ? dateSelected.date_day : ""}
                     </p>
-                    <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+                    <p
+                      style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                    >
                       <strong>Hora</strong> &nbsp;&nbsp;
-                      {dateSelected?dateSelected.date_hour:''}
+                      {dateSelected ? dateSelected.date_hour : ""}
                     </p>
-                    <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+                    <p
+                      style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                    >
                       <strong>Tiempo de paseo</strong> &nbsp;&nbsp;
-                      {dateSelected?dateSelected.date_time:''}
+                      {dateSelected ? dateSelected.date_time : ""}
                     </p>
-                    <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                      <strong>Costo: </strong> &nbsp;&nbsp;
-                        S/{dateSelected?dateSelected.total_price:''}
+                    <p
+                      style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                    >
+                      <strong>Costo: </strong> &nbsp;&nbsp; S/
+                      {dateSelected ? dateSelected.total_price : ""}
                     </p>
-                    <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+                    <p
+                      style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                    >
                       <strong>Mascota(s):</strong>
-                      </p>
-                      {dateSelected?dateSelected.pets_name.map(petname => {
-                        return (
-                        <li style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
-                          {petname}
-                        </li>
-                          )
-                      }):''}
+                    </p>
+                    {dateSelected
+                      ? dateSelected.pets_name.map((petname) => {
+                          return (
+                            <li
+                              style={{
+                                margin: "15px 0",
+                                fontFamily: "Roboto-Regular",
+                              }}
+                            >
+                              {petname}
+                            </li>
+                          );
+                        })
+                      : ""}
                   </div>
                 </div>
                 <div className="derechaReport">
                   <h2>Reporte</h2>
-                  <p>FECHA: {reportSelected[0]?reportSelected[0].created_at:''}</p>
+                  <p>
+                    FECHA:{" "}
+                    {reportSelected[0] ? reportSelected[0].created_at : ""}
+                  </p>
                   <Rating
                     style={{ fontSize: "60px", margin: "15px" }}
                     name="read-only"
                     precision={0.5}
-                    value={reportSelected[0]?reportSelected[0].rating:0}
+                    value={reportSelected[0] ? reportSelected[0].rating : 0}
                     size="large"
                     readOnly
                   />
@@ -153,13 +178,24 @@ const OptionsReport = (reportsId) => {
                     }}
                     margin="normal"
                     label="Cuéntanos acerca del Inconveniente"
-                    defaultValue={reportSelected[0]?reportSelected[0].comment:''}
+                    defaultValue={
+                      reportSelected[0] ? reportSelected[0].comment : ""
+                    }
                     size="small"
                     type="text"
                     multiline
                     rows={3}
                   />
-                  <img src={imagenes.img16} width="200" alt="" />
+                  {/* <img src={imagenes.img16} width="200" alt="" /> */}
+                  <img
+                    src={
+                      reportSelected[0]
+                        ? reportSelected[0].report_photo_url
+                        : ""
+                    }
+                    width="200"
+                    alt=""
+                  />
                 </div>
               </div>
               <div
@@ -180,7 +216,9 @@ const OptionsReport = (reportsId) => {
                     Mensaje al Paseador
                   </Typography>
                   <TextField
-                    defaultValue={reportSelected[0]?reportSelected[0].message_walker:''}
+                    defaultValue={
+                      reportSelected[0] ? reportSelected[0].message_walker : ""
+                    }
                     className="input"
                     margin="normal"
                     size="small"
@@ -259,7 +297,9 @@ const OptionsReport = (reportsId) => {
                   </Typography>
 
                   <TextField
-                    defaultValue={reportSelected[0]?reportSelected[0].message_user:''}
+                    defaultValue={
+                      reportSelected[0] ? reportSelected[0].message_user : ""
+                    }
                     className="input"
                     margin="normal"
                     size="small"
