@@ -49,14 +49,13 @@ export const getOneWalker = (id) => {
   });
 };
 
-export const updateWalker = ({ id, status }) => {
+export const updateWalker = ({ id, ...walker }) => {
   // const token = JSON.parse(localStorage.getItem("infoWalker")).token;
   const path = `${API_SERVER}${ENDPOINTS.UPDATE}/${id}`;
   return new Promise((resolve, reject) => {
-    console.log('entra al fetch esta es la data', status)
     fetch(path, {
       method: "PUT",
-      body: JSON.stringify(status),
+      body: JSON.stringify(walker),
       headers: {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${token}`,

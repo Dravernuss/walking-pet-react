@@ -54,11 +54,15 @@ export const getOneWalkerAsync = createAsyncThunk(
 
 export const updateWalkerAsync = createAsyncThunk(
   "walker/update",
-  async ({ id, ...walker }) => {
-    console.log('entra al slice', { id, ...walker })
-    const response = await updateWalker({ id, ...walker });
+  async (data) => {
+    const response = await updateWalker(data);
     return response;
   }
+  // async ({ id, ...walker }) => {
+  //   console.log('entra al slice', { id, ...walker })
+  //   const response = await updateWalker({ id, ...walker });
+  //   return response;
+  // }
 );
 
 export const walkerSlice = createSlice({

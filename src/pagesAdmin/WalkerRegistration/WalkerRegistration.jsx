@@ -133,10 +133,13 @@ const WalkerRegistration = () => {
                         {walker.registration_state}
                       </StyledTableCell>
                       <StyledTableCell className="cell" align="left">
-                        {console.log('walkerWALKER',walker)}
                         <OptionsRegisterWalker
                           walker={walker}
-                          estado={(walker.registration_state === 'Sin Revisar'? true : false)}
+                          estado={
+                            walker.registration_state === "Sin Revisar"
+                              ? true
+                              : false
+                          }
                           uploaded={() => itHasBeenUploaded()}
                         />
                       </StyledTableCell>

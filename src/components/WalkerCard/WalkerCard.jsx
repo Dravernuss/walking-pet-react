@@ -46,9 +46,11 @@ const WalkerCard = ({
         <br></br>
         <span>
           {total_rating}{" "}
-          {total_rating === 1 ? "calificación" : "calificaciones"} |{" "}
-          {total_walking}{" "}
-          {total_walking === 1 ? "paseo realizado" : "paseos realizados"}
+          {total_rating === 1
+            ? "calificación / paseo realizado"
+            : "calificaciones / paseos realizados"}{" "}
+          {/* {total_walking}{" "}
+          {total_walking === 1 ? "paseo realizado" : "paseos realizados"} */}
         </span>
       </p>
       <Button className="btn" onClick={handleToProfile}>

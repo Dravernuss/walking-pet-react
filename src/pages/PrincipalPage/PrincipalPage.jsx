@@ -193,22 +193,35 @@ const PrincipalPage = (props) => {
           </div>
 
           <div className="card_container">
-            {paseadoresD?.map((key, i) => {
-              return (
-                <WalkerCard
-                  key={i}
-                  photo_url={key.photo_url}
-                  price={key.price}
-                  firstname={key.firstname}
-                  lastname={key.lastname}
-                  rating={key.rating}
-                  greeting={key.greeting}
-                  total_rating={key.total_rating}
-                  total_walking={key.total_walking}
-                  _id={key._id}
+            {paseadoresD?.length > 0 ? (
+              paseadoresD?.map((key, i) => {
+                return (
+                  <WalkerCard
+                    key={i}
+                    photo_url={key.photo_url}
+                    price={key.price}
+                    firstname={key.firstname}
+                    lastname={key.lastname}
+                    rating={key.rating}
+                    greeting={key.greeting}
+                    total_rating={key.total_rating}
+                    total_walking={key.total_walking}
+                    _id={key._id}
+                  />
+                );
+              })
+            ) : (
+              <div className="noPet" style={{ backgroundColor: "#a0f06a" }}>
+                <h2 className="noPetTitle">
+                  No hay paseadores diponibles en este distrito
+                </h2>
+                <img
+                  className="noPetImg"
+                  src={imagenes.img28}
+                  alt="perro pregunta"
                 />
-              );
-            })}
+              </div>
+            )}
           </div>
         </Box>
       </Box>

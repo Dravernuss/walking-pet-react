@@ -12,60 +12,64 @@ import FormControl from "@mui/material/FormControl";
 import "./_OptionsRegisterWalker.scss";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  updateWalkerAsync,
-} from "../../slices/walkerSlice.js";
+import { updateWalkerAsync } from "../../slices/walkerSlice.js";
 
-const OptionsRegisterWalker = ({ walker, estado, uploaded}) => {
+const OptionsRegisterWalker = ({ walker, estado, uploaded }) => {
   const dispatch = useDispatch();
-  const [usingApi, setUsingApi] = useState(null)
+  const [usingApi, setUsingApi] = useState(null);
   const [openDetails, setOpenDetails] = useState(false);
   const [openAccept, setOpenAccept] = useState(false);
   const [openCancel, setOpenCancel] = useState(false);
   const handleOpenDetails = () => setOpenDetails(true);
   const handleCloseDetails = () => setOpenDetails(false);
   const handleOpenAccept = () => setOpenAccept(true);
-
+  const [adminComment, setAdminComment] = useState("");
   useEffect(() => {
-    if(usingApi){
-      const updated = updatedWalkers(usingApi)
+    if (usingApi) {
+      const updated = updatedWalkers(usingApi);
     }
-  }, [usingApi])
+  }, [usingApi]);
 
   const handleCloseAccept = (id) => {
-    if(typeof id === 'string') {
+    if (typeof id === "string") {
       setUsingApi({
-        id:id, 
-        status:{
+        id: id,
+        status: {
           registration_state: "Aprobado",
           avalaible: true,
-        }
-      })
-    } 
-    setOpenAccept(false)
+          admin_comment: adminComment,
+        },
+      });
+    }
+    setOpenAccept(false);
   };
 
-  async function updatedWalkers (data) {
-    let resAllWalkers = ''
-    if(data){
-      resAllWalkers = await dispatch(updateWalkerAsync(data));
-      uploaded()
+  async function updatedWalkers(data) {
+    let resAllWalkers = "";
+    if (data) {
+      console.log(data);
+      // resAllWalkers = await dispatch(updateWalkerAsync(data));
+      resAllWalkers = await dispatch(
+        updateWalkerAsync({ id: data.id, ...data.status })
+      );
+      uploaded();
     }
-    return resAllWalkers
-  };
-  
+    return resAllWalkers;
+  }
+
   const handleOpenCancel = () => setOpenCancel(true);
   const handleCloseCancel = (id) => {
-    if(typeof id === 'string') {
+    if (typeof id === "string") {
       setUsingApi({
-        id:id, 
-        status:{
+        id: id,
+        status: {
           registration_state: "Rechazado",
           avalaible: false,
-        }
-      })
-    } 
-    setOpenCancel(false)
+          admin_comment: adminComment,
+        },
+      });
+    }
+    setOpenCancel(false);
   };
   return (
     <>
@@ -165,37 +169,38 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded}) => {
                         row
                         aria-labelledby="demo-row-radio-buttons-group-label"
                         name="row-radio-buttons-group"
-                      >{walker.certification?
-                        <>
-                          <FormControlLabel
-                            disabled
-                            value="si"
-                            control={<Radio checked />}
-                            label="Sí"
-                          />
-                          <FormControlLabel
-                            disabled
-                            value="no"
-                            control={<Radio />}
-                            label="No"
-                          />
-                        </>
-                        :
-                        <>
-                          <FormControlLabel
-                            disabled
-                            value="si"
-                            control={<Radio />}
-                            label="Sí"
-                          />
-                          <FormControlLabel
-                            disabled
-                            value="no"
-                            control={<Radio checked />}
-                            label="No"
-                          />
-                        </>
-                      }
+                      >
+                        {walker.certification ? (
+                          <>
+                            <FormControlLabel
+                              disabled
+                              value="si"
+                              control={<Radio checked />}
+                              label="Sí"
+                            />
+                            <FormControlLabel
+                              disabled
+                              value="no"
+                              control={<Radio />}
+                              label="No"
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <FormControlLabel
+                              disabled
+                              value="si"
+                              control={<Radio />}
+                              label="Sí"
+                            />
+                            <FormControlLabel
+                              disabled
+                              value="no"
+                              control={<Radio checked />}
+                              label="No"
+                            />
+                          </>
+                        )}
                       </RadioGroup>
                     </FormControl>
                   </div>
@@ -204,6 +209,10 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded}) => {
                       className="input"
                       margin="normal"
                       label="Añadir sugerencia..."
+                      value={adminComment}
+                      onChange={(e) => {
+                        setAdminComment(e.target.value);
+                      }}
                       size="small"
                       type="text"
                       multiline
@@ -227,9 +236,7 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded}) => {
                       <Button
                         disabled={!estado}
                         style={
-                          estado
-                            ? ModalStyle.boton
-                            : ModalStyle.botonDisabled
+                          estado ? ModalStyle.boton : ModalStyle.botonDisabled
                         }
                         onClick={handleOpenAccept}
                         className="buttonOR"
@@ -275,21 +282,17 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded}) => {
                             </Button>
                             <Button
                               style={ModalStyle.boton}
-                              onClick={
-                                ()=> handleCloseAccept(walker._id)
-                              }
+                              onClick={() => handleCloseAccept(walker._id)}
                             >
                               Aceptar
                             </Button>
                           </div>
                         </Box>
                       </Modal>
-                      
+
                       <Button
                         style={
-                          estado
-                            ? ModalStyle.boton
-                            : ModalStyle.botonDisabled
+                          estado ? ModalStyle.boton : ModalStyle.botonDisabled
                         }
                         onClick={handleOpenCancel}
                         disabled={!estado}
@@ -336,7 +339,7 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded}) => {
                             </Button>
                             <Button
                               style={ModalStyle.boton}
-                              onClick={()=> handleCloseCancel(walker._id)}
+                              onClick={() => handleCloseCancel(walker._id)}
                             >
                               Rechazar
                             </Button>

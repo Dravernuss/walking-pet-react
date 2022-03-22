@@ -143,12 +143,12 @@ const WalkerProfile = () => {
             <span>
               {thisWalker?.total_rating}{" "}
               {thisWalker?.total_rating === 1
-                ? "calificación"
-                : "calificaciones"}{" "}
-              | {thisWalker?.total_walking}{" "}
+                ? "calificación / paseo realizado"
+                : "calificaciones / paseos realizados"}
+              {/* | {thisWalker?.total_walking}{" "}
               {thisWalker?.total_walking === 1
                 ? "paseo realizado"
-                : "paseos realizados"}
+                : "paseos realizados"} */}
             </span>
           </p>
         </div>
