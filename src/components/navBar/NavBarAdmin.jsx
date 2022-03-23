@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import imagenes from "../../images/imagenes.jsx";
 import "./_NavBar.scss";
+import { Divider } from "@mui/material";
 
 const NavBarAdmin = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -14,6 +15,12 @@ const NavBarAdmin = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const endSession = async () => {
+    await localStorage.removeItem("AdminInfo");
+    await localStorage.removeItem("token");
+    window.location = "/admin";
   };
 
   return (
@@ -54,6 +61,7 @@ const NavBarAdmin = () => {
               </p>
             </Button>
           </MenuItem>
+          <Divider />
           <MenuItem onClick={handleClose}>
             <Button href="/walkerregistration">
               <p style={{ color: "black", fontFamily: "Roboto-Regular" }}>
@@ -61,6 +69,7 @@ const NavBarAdmin = () => {
               </p>
             </Button>
           </MenuItem>
+          <Divider />
           <MenuItem onClick={handleClose}>
             <Button href="/reports">
               <p style={{ color: "black", fontFamily: "Roboto-Regular" }}>
@@ -68,8 +77,9 @@ const NavBarAdmin = () => {
               </p>
             </Button>
           </MenuItem>
+          <Divider />
           <MenuItem onClick={handleClose}>
-            <Button href="/admin">
+            <Button onClick={endSession}>
               <p style={{ color: "black", fontFamily: "Roboto-Regular" }}>
                 Cerrar Sesión
               </p>

@@ -12,14 +12,13 @@ import OptionsAdmin from "../../components/OptionsAdmin/OptionsAdmin";
 import "./_ReservedTours.scss";
 import { Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllDatesAsync,
-} from "../../slices/dateSlice.js";
+import { getAllDatesAsync } from "../../slices/dateSlice.js";
+import { convertTime24to12 } from "../../utils/functions";
 
 const ReservedTours = () => {
   const dispatch = useDispatch();
-  const [allDatesInformation, setAllDatesInformation] = useState([])
-  const allDates = useSelector((state) => state.dates.allDates)
+  const [allDatesInformation, setAllDatesInformation] = useState([]);
+  const allDates = useSelector((state) => state.dates.allDates);
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -38,25 +37,27 @@ const ReservedTours = () => {
     },
   }));
 
-  const  callingAllDates = async () => {
+  const callingAllDates = async () => {
     const resAllDates = await dispatch(getAllDatesAsync());
-    return resAllDates
+    return resAllDates;
   };
 
   useEffect(() => {
-    const obteinAllDates = callingAllDates() 
-  }, [])
+    const obteinAllDates = callingAllDates();
+  }, []);
 
   useEffect(() => {
     if (typeof allDates != "undefined") {
-      let arr =[]
-      arr.push(allDates.map((date) => {
-        return date
-      })) 
-      console.log(arr)
-      setAllDatesInformation(arr)
+      let arr = [];
+      arr.push(
+        allDates.map((date) => {
+          return date;
+        })
+      );
+      console.log(arr);
+      setAllDatesInformation(arr);
     }
-  }, [allDates])
+  }, [allDates]);
 
   return (
     <div className="ReservedTours">
@@ -95,7 +96,8 @@ const ReservedTours = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {allDatesInformation && allDatesInformation[0] &&
+                {allDatesInformation &&
+                  allDatesInformation[0] &&
                   allDatesInformation[0].map((date) => (
                     <StyledTableRow key={date.date_day}>
                       <StyledTableCell
@@ -115,19 +117,19 @@ const ReservedTours = () => {
                         {date.user_name}
                       </StyledTableCell>
                       <StyledTableCell className="cell" align="left">
-                        {date.date_day}
+                        {date.date_day.split("-").reverse().join("-")}
                       </StyledTableCell>
                       <StyledTableCell className="cell" align="left">
-                        {date.date_hour}
+                        {convertTime24to12(date.date_hour)}
                       </StyledTableCell>
                       <StyledTableCell className="cell" align="left">
                         {date.date_state}
                       </StyledTableCell>
                       <StyledTableCell className="cell" align="left">
-                        <OptionsAdmin dateId={date._id}/>
+                        <OptionsAdmin dateId={date._id} />
                       </StyledTableCell>
                     </StyledTableRow>
-                ))}
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>

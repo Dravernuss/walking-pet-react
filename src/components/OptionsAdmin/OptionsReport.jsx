@@ -10,6 +10,7 @@ import "./_OptionsReport.scss";
 import { Rating } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getDateByIdAsync } from "../../slices/dateSlice.js";
+import { convertTime24to12 } from "../../utils/functions.js";
 
 const OptionsReport = (reportsId) => {
   const dispatch = useDispatch();
@@ -91,43 +92,47 @@ const OptionsReport = (reportsId) => {
                     <p
                       style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
                     >
-                      <strong>Nombre del paseador:</strong> &nbsp;&nbsp;
+                      <strong>Nombre del paseador: </strong> &nbsp;&nbsp;
                       {dateSelected ? dateSelected.walker_name : ""}
                     </p>
                     <p
                       style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
                     >
-                      <strong>Nombre de cliente:</strong> &nbsp;&nbsp;
+                      <strong>Nombre de cliente: </strong> &nbsp;&nbsp;
                       {dateSelected ? dateSelected.user_name : ""}
                     </p>
                     <p
                       style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
                     >
-                      <strong>Distrito</strong> &nbsp;&nbsp;
+                      <strong>Distrito: </strong> &nbsp;&nbsp;
                       {dateSelected ? dateSelected.district_selected : ""}
                     </p>
                     <p
                       style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
                     >
-                      <strong>Dirección</strong> &nbsp;&nbsp;
+                      <strong>Dirección: </strong> &nbsp;&nbsp;
                       {dateSelected ? dateSelected.client_address : ""}
                     </p>
                     <p
                       style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
                     >
-                      <strong>Fecha</strong> &nbsp;&nbsp;
-                      {dateSelected ? dateSelected.date_day : ""}
+                      <strong>Fecha:</strong> &nbsp;&nbsp;
+                      {dateSelected
+                        ? dateSelected.date_day.split("-").reverse().join("-")
+                        : ""}
                     </p>
                     <p
                       style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
                     >
-                      <strong>Hora</strong> &nbsp;&nbsp;
-                      {dateSelected ? dateSelected.date_hour : ""}
+                      <strong>Hora: </strong> &nbsp;&nbsp;
+                      {dateSelected
+                        ? convertTime24to12(dateSelected.date_hour)
+                        : ""}
                     </p>
                     <p
                       style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
                     >
-                      <strong>Tiempo de paseo</strong> &nbsp;&nbsp;
+                      <strong>Tiempo de paseo: </strong> &nbsp;&nbsp;
                       {dateSelected ? dateSelected.date_time : ""}
                     </p>
                     <p

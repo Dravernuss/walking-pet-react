@@ -110,13 +110,34 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded }) => {
                     <p>CIUDAD: {walker.district}</p>
                     <p>DIRECCION:{walker.address}</p>
                   </div>
-                  <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
                     <h2>DOCUMENTO DE IDENTIDAD</h2>
-                    <img src={walker.dni_url} width="300" alt="" />
+                    <img
+                      style={{
+                        maxWidth: "200px",
+                        minHeight: "200px",
+                      }}
+                      src={walker.dni_url}
+                      alt=""
+                    />
                   </div>
                   <div>
                     <h2>FOTO DE PERFIL</h2>
-                    <img src={walker.photo_url} width="250" alt="" />
+                    <img
+                      src={walker.photo_url}
+                      style={{
+                        minWidth: "150px",
+                        maxWidth: "190px",
+                        maxHeight: "200px",
+                      }}
+                      alt=""
+                    />
                   </div>
                 </div>
                 <div className="derecha">
@@ -217,6 +238,7 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded }) => {
                       type="text"
                       multiline
                       rows={4}
+                      disabled={!estado}
                     />
                     <div
                       style={{

@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import LayoutForm from "../../components/LayoutForm/LayoutForm";
-import React from "react";
+import React, { useEffect } from "react";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import imagenes from "../../images/imagenes.jsx";
@@ -13,6 +13,14 @@ import { loginAdmin } from "../../api/admin.api";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
+  const stateLoggedAdmin = JSON.parse(localStorage.getItem("AdminInfo"));
+
+  useEffect(() => {
+    if (stateLoggedAdmin) {
+      navigate("/reservedtours");
+    }
+  }, [stateLoggedAdmin]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { elements } = e.target;

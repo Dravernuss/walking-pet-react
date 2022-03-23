@@ -99,10 +99,10 @@ const Reports = () => {
                     Cliente
                   </StyledTableCell>
                   <StyledTableCell className="cell" align="left">
-                    Fecha
+                    Fecha del Reporte
                   </StyledTableCell>
                   <StyledTableCell className="cell" align="left">
-                    Hora
+                    Hora del Reporte
                   </StyledTableCell>
                   <StyledTableCell className="cell" align="left">
                     Estado
@@ -134,10 +134,18 @@ const Reports = () => {
                         {report.user_name}
                       </StyledTableCell>
                       <StyledTableCell className="cell" align="left">
-                        {report.created_at}
+                        {
+                          new Date(report.created_at)
+                            .toLocaleString()
+                            .split(" ")[0]
+                        }
                       </StyledTableCell>
                       <StyledTableCell className="cell" align="left">
-                        {report.hora}
+                        {
+                          new Date(report.created_at)
+                            .toLocaleString()
+                            .split(" ")[1]
+                        }
                       </StyledTableCell>
                       <StyledTableCell className="cell" align="left">
                         {report.comment_state}
