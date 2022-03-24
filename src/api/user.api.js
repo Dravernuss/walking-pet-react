@@ -1,11 +1,9 @@
 import API_SERVER from "./api.server.js";
 
 const ENDPOINTS = {
-  //   GET_ALL_USERS: "/api/users",
   GET_ONE_USER: "/api/users",
   CREATE: "/api/users/create",
   UPDATE: "/api/users/update",
-  //   DELETE: "/api/users/delete",
   LOGIN: "/api/users/login",
 };
 
@@ -22,7 +20,6 @@ export const loginUser = (user) => {
       .then((response) => response.json())
       .then((data) => {
         resolve({ token: data.token, _id: data._id, role: data.role });
-        // resolve(data);
       })
       .catch((err) => {
         reject({ error: err, alert: true });

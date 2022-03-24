@@ -89,7 +89,6 @@ const PetCard = ({
       additional_information: elements[6].value,
       photo_url: photoPetUrl,
     };
-    // dispatch(petToEdit(dataPet));
     await dispatch(updatePetAsync({ id: _id, ...dataPet }));
     await dispatch(getPetsByUserAsync(user_id));
     setOpenEdit(false);

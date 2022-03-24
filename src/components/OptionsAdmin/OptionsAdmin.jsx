@@ -23,7 +23,6 @@ const OptionsAdmin = (dateId) => {
         dateChosen.push(date);
       }
     });
-    console.log(dateChosen);
     setDateSelected(dateChosen);
   }, [dateId]);
 
@@ -88,9 +87,10 @@ const OptionsAdmin = (dateId) => {
               <strong>Mascota(s):</strong>
             </p>
             {dateSelected[0]
-              ? dateSelected[0].pets_name.map((petname) => {
+              ? dateSelected[0].pets_name.map((petname, i) => {
                   return (
                     <li
+                      key={i}
                       style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
                     >
                       {petname}

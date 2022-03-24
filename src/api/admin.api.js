@@ -14,18 +14,14 @@ export const loginAdmin = (admin) => {
       headers: {
         "Content-Type": "application/json",
       },
-      redirect: 'follow'
-    }
-    console.log("LOGIN", path);
-    console.log('body',body)
+      redirect: "follow",
+    };
     fetch(path, body)
       .then((response) => {
-        // if(!response.ok) throw new Error(response.status);
         return response.json();
       })
       .then((data) => {
         resolve({ token: data.token });
-        // resolve(data);
       })
       .catch((err) => {
         reject({ error: err, alert: true });

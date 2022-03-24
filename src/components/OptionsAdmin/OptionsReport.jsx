@@ -5,12 +5,15 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import imagenes from "../../images/imagenes.jsx";
 import "./_OptionsReport.scss";
 import { Rating } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getDateByIdAsync } from "../../slices/dateSlice.js";
 import { convertTime24to12 } from "../../utils/functions.js";
+import {
+  getAllReportsAsync,
+  updateCommentByAdminAsync,
+} from "../../slices/commentSlice.js";
 
 const OptionsReport = (reportsId) => {
   const dispatch = useDispatch();
@@ -44,7 +47,6 @@ const OptionsReport = (reportsId) => {
         setDateID(report.date_id);
       }
     });
-    console.log(reportChosen);
     setReportSelected(reportChosen);
   }, [reportsId]);
 
@@ -53,6 +55,48 @@ const OptionsReport = (reportsId) => {
       const date = callingDate(dateID);
     }
   }, [dateID]);
+
+  const [commentToWalker, setCommentToWalker] = useState(
+    reportSelected[0]?.message_walker
+  );
+  const [commentToUser, setCommentToUser] = useState(
+    reportSelected[0]?.message_user
+  );
+
+  const handleSendMessageUser = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      updateCommentByAdminAsync({
+        idComment: reportsId.reportId,
+        message_user: commentToUser,
+        destinatary: "user",
+      })
+    );
+    handleCloseCliente();
+  };
+  const handleSendMessageWalker = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      updateCommentByAdminAsync({
+        idComment: reportsId.reportId,
+        message_walker: commentToWalker,
+        destinatary: "walker",
+      })
+    );
+    handleClosePaseador();
+  };
+
+  const handleFinishReport = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      updateCommentByAdminAsync({
+        idComment: reportsId.reportId,
+        comment_state: "Revisado",
+      })
+    );
+    await dispatch(getAllReportsAsync());
+    handleCloseDetails();
+  };
 
   return (
     <>
@@ -87,7 +131,6 @@ const OptionsReport = (reportsId) => {
                       marginTop: "15px",
                     }}
                   >
-                    {console.log(dateSelected)}
                     <h2>Detalles del Paseo</h2>
                     <p
                       style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
@@ -147,9 +190,10 @@ const OptionsReport = (reportsId) => {
                       <strong>Mascota(s):</strong>
                     </p>
                     {dateSelected
-                      ? dateSelected.pets_name.map((petname) => {
+                      ? dateSelected.pets_name.map((petname, i) => {
                           return (
                             <li
+                              key={i}
                               style={{
                                 margin: "15px 0",
                                 fontFamily: "Roboto-Regular",
@@ -165,8 +209,17 @@ const OptionsReport = (reportsId) => {
                 <div className="derechaReport">
                   <h2>Reporte</h2>
                   <p>
-                    FECHA:{" "}
-                    {reportSelected[0] ? reportSelected[0].created_at : ""}
+                    FECHA Y HORA DE REPORTE:{" "}
+                    {reportSelected[0]
+                      ? new Date(reportSelected[0].created_at)
+                          .toLocaleString()
+                          .split(" ")[0]
+                      : ""}{" "}
+                    {reportSelected[0]
+                      ? new Date(reportSelected[0].created_at)
+                          .toLocaleString()
+                          .split(" ")[1]
+                      : ""}
                   </p>
                   <Rating
                     style={{ fontSize: "60px", margin: "15px" }}
@@ -224,12 +277,17 @@ const OptionsReport = (reportsId) => {
                     defaultValue={
                       reportSelected[0] ? reportSelected[0].message_walker : ""
                     }
+                    value={commentToWalker}
+                    onChange={(e) => setCommentToWalker(e.target.value)}
                     className="input"
                     margin="normal"
                     size="small"
                     type="text"
                     multiline
                     rows={3}
+                    InputProps={{
+                      readOnly: reportSelected[0]?.comment_state === "Revisado",
+                    }}
                   />
                   <div
                     style={{
@@ -239,8 +297,13 @@ const OptionsReport = (reportsId) => {
                     }}
                   >
                     <Button
-                      style={ModalStyle.boton}
+                      style={
+                        reportSelected[0]?.comment_state === "Revisado"
+                          ? ModalStyle.botonDisabled
+                          : ModalStyle.boton
+                      }
                       onClick={handleOpenPaseador}
+                      disabled={reportSelected[0]?.comment_state === "Revisado"}
                     >
                       Enviar
                     </Button>
@@ -283,7 +346,7 @@ const OptionsReport = (reportsId) => {
                           </Button>
                           <Button
                             style={ModalStyle.boton}
-                            onClick={handleClosePaseador}
+                            onClick={handleSendMessageWalker}
                           >
                             Aceptar
                           </Button>
@@ -305,12 +368,17 @@ const OptionsReport = (reportsId) => {
                     defaultValue={
                       reportSelected[0] ? reportSelected[0].message_user : ""
                     }
+                    value={commentToUser}
+                    onChange={(e) => setCommentToUser(e.target.value)}
                     className="input"
                     margin="normal"
                     size="small"
                     type="text"
                     multiline
                     rows={3}
+                    InputProps={{
+                      readOnly: reportSelected[0]?.comment_state === "Revisado",
+                    }}
                   />
                   <div
                     style={{
@@ -320,8 +388,13 @@ const OptionsReport = (reportsId) => {
                     }}
                   >
                     <Button
-                      style={ModalStyle.boton}
+                      style={
+                        reportSelected[0]?.comment_state === "Revisado"
+                          ? ModalStyle.botonDisabled
+                          : ModalStyle.boton
+                      }
                       onClick={handleOpenCliente}
+                      disabled={reportSelected[0]?.comment_state === "Revisado"}
                     >
                       Enviar
                     </Button>
@@ -364,7 +437,7 @@ const OptionsReport = (reportsId) => {
                           </Button>
                           <Button
                             style={ModalStyle.boton}
-                            onClick={handleCloseCliente}
+                            onClick={handleSendMessageUser}
                           >
                             Aceptar
                           </Button>
@@ -383,8 +456,13 @@ const OptionsReport = (reportsId) => {
                 }}
               >
                 <Button
-                  style={ModalStyle.botonBig}
-                  onClick={handleCloseDetails}
+                  style={
+                    reportSelected[0]?.comment_state === "Revisado"
+                      ? ModalStyle.botonDisabled
+                      : ModalStyle.botonBig
+                  }
+                  onClick={handleFinishReport}
+                  disabled={reportSelected[0]?.comment_state === "Revisado"}
                 >
                   Terminar Reporte
                 </Button>

@@ -105,10 +105,8 @@ export const AboutYou = ({ changeView }) => {
             ¿Cuentas con alguna certificación para cuidar perror? No es
             obligatoria para participar en esta plataforma*
             <RadioGroup
-              //   row
               style={{
                 width: "100%",
-                // justifyContent: "space-between",
               }}
               aria-labelledby="demo-radio-buttons-group-label"
               defaultValue="paseador"

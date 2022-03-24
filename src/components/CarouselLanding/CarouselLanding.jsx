@@ -71,22 +71,6 @@ function CarouselLanding() {
         </Paper>
       </div>
       <div className="item-c">
-        {/* <Button
-          className="button-c"
-          style={{
-            backgroundColor: "rgba(255,255,255)",
-            border: "1px solid grey",
-          }}
-          size="small"
-          onClick={handleBack}
-          disabled={activeStep === 0}
-        >
-          {theme.direction === "rtl" ? (
-            <KeyboardArrowRight />
-          ) : (
-            <KeyboardArrowLeft />
-          )}
-        </Button> */}
         <div className="root">
           <AutoPlaySwipeableViews
             interval={5000}
@@ -119,18 +103,6 @@ function CarouselLanding() {
             activeStep={activeStep}
           />
         </div>
-        {/* <Button
-          className="button-c"
-          size="small"
-          onClick={handleNext}
-          disabled={activeStep === maxSteps - 1}
-        >
-          {theme.direction === "rtl" ? (
-            <KeyboardArrowLeft />
-          ) : (
-            <KeyboardArrowRight />
-          )}
-        </Button> */}
       </div>
     </div>
   );

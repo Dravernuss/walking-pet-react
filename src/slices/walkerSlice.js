@@ -58,11 +58,6 @@ export const updateWalkerAsync = createAsyncThunk(
     const response = await updateWalker(data);
     return response;
   }
-  // async ({ id, ...walker }) => {
-  //   console.log('entra al slice', { id, ...walker })
-  //   const response = await updateWalker({ id, ...walker });
-  //   return response;
-  // }
 );
 
 export const walkerSlice = createSlice({
@@ -107,7 +102,6 @@ export const walkerSlice = createSlice({
       })
       .addCase(updateWalkerAsync.fulfilled, (state, action) => {
         state.loading = false;
-        // state.allWalker = action.payload;
       })
       .addCase(loginWalkerAsync.pending, (state, action) => {
         state.alertWalker = false;

@@ -10,13 +10,13 @@ const ENDPOINTS = {
 };
 
 export const getAllDates = () => {
-  // const token = JSON.parse(localStorage.getItem("infoWalker")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_ALL_DATES}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -29,13 +29,13 @@ export const getAllDates = () => {
 };
 
 export const getDateById = (id) => {
-  //   const token = JSON.parse(localStorage.getItem("infoWalker")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_DATE_BY_ID}/${id}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -48,13 +48,13 @@ export const getDateById = (id) => {
 };
 
 export const getDatesByUser = (idUser) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_DATES_BY_USER}/${idUser}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -66,13 +66,13 @@ export const getDatesByUser = (idUser) => {
   });
 };
 export const getDatesByWalker = (idWalker) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_DATES_BY_WALKER}/${idWalker}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -85,7 +85,7 @@ export const getDatesByWalker = (idWalker) => {
 };
 
 export const createDate = (date) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.CREATE}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
@@ -93,7 +93,7 @@ export const createDate = (date) => {
       body: JSON.stringify(date),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -107,7 +107,7 @@ export const createDate = (date) => {
 };
 
 export const updateDate = ({ idDate, ...date }) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.UPDATE}/${idDate}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
@@ -115,7 +115,7 @@ export const updateDate = ({ idDate, ...date }) => {
       body: JSON.stringify(date),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())

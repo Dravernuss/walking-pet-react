@@ -10,13 +10,13 @@ const ENDPOINTS = {
 };
 
 export const getAllComments = () => {
-  // const token = JSON.parse(localStorage.getItem("infoWalker")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_ALL_COMMENTS}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -29,13 +29,13 @@ export const getAllComments = () => {
 };
 
 export const getAllCommentsByWalker = (idWalker) => {
-  //   const token = JSON.parse(localStorage.getItem("infoWalker")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_ALL_COMMENTS_BY_WALKER}/${idWalker}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -48,13 +48,13 @@ export const getAllCommentsByWalker = (idWalker) => {
 };
 
 export const getAllReports = () => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_ALL_REPORTS}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -67,13 +67,13 @@ export const getAllReports = () => {
 };
 
 export const getCommentById = (id) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_COMMENT_BY_ID}/${id}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -86,7 +86,7 @@ export const getCommentById = (id) => {
 };
 
 export const createComment = (comment) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.CREATE}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
@@ -94,7 +94,7 @@ export const createComment = (comment) => {
       body: JSON.stringify(comment),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -108,7 +108,7 @@ export const createComment = (comment) => {
 };
 
 export const updateCommentByAdmin = ({ idComment, ...comment }) => {
-  // const token = JSON.parse(localStorage.getItem("infoUser")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.UPDATE_ADMIN}/${idComment}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
@@ -116,7 +116,7 @@ export const updateCommentByAdmin = ({ idComment, ...comment }) => {
       body: JSON.stringify(comment),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())

@@ -162,7 +162,6 @@ export const AskForDate = () => {
                     id="date"
                     label="Seleccione una fecha"
                     type="date"
-                    // minDate={Date.now()}
                     sx={{ width: 200 }}
                     InputLabelProps={{
                       shrink: true,

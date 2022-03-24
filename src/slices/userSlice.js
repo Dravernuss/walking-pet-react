@@ -67,7 +67,5 @@ export const { userToEdit } = userSlice.actions;
 export const selectUserLoggued = (state) => state.user.logguedUser;
 export const alertUser = (state) => state.user.alertUser;
 export const toUser = (state) => state.user.user;
-// export const selectUser = (state) => state.user.userInfo;
-// export const selectUserToEdit = (state) => state.user.userToEdit;
 
 export default userSlice.reducer;

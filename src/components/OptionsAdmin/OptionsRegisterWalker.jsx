@@ -47,7 +47,6 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded }) => {
   async function updatedWalkers(data) {
     let resAllWalkers = "";
     if (data) {
-      console.log(data);
       // resAllWalkers = await dispatch(updateWalkerAsync(data));
       resAllWalkers = await dispatch(
         updateWalkerAsync({ id: data.id, ...data.status })

@@ -18,8 +18,7 @@ const NavBarAdmin = () => {
   };
 
   const endSession = async () => {
-    await localStorage.removeItem("AdminInfo");
-    await localStorage.removeItem("token");
+    await localStorage.removeItem("infoUser");
     window.location = "/admin";
   };
 

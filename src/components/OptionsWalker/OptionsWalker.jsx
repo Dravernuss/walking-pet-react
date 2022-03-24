@@ -18,9 +18,9 @@ import {
 } from "../../slices/dateSlice.js";
 
 // ACCEPTED ESTADOS POSIBLES
-//0 : rechazado
-//1 : aceptado
-//2 : sin confirmar
+//0 : Rechazado
+//1 : Aceptado
+//2 : Sin Confirmar
 
 const OptionsWalker = ({ accepted, date_state, index, id }) => {
   const navigate = useNavigate();

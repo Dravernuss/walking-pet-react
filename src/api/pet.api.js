@@ -5,8 +5,6 @@ const ENDPOINTS = {
   CREATE: "/api/pets/create",
   DELETE: "/api/pets/delete",
   UPDATE: "/api/pets/update",
-  //   GET_ONE_USER: "/api/users",
-  //   LOGIN: "/api/users/login",
 };
 
 export const getPetsByUser = (id) => {

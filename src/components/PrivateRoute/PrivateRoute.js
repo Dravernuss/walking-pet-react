@@ -1,7 +1,7 @@
 import { Navigate, Route } from "react-router-dom";
 
 export const PrivateRoute = ({ children, routeLogin }) => {
-  const adminInfo = JSON.parse(localStorage.getItem("AdminInfo"));
+  const adminInfo = JSON.parse(localStorage.getItem("infoUser"));
   if (adminInfo) {
     return adminInfo.role === "Admin" ? children : <Navigate to={routeLogin} />;
   } else {

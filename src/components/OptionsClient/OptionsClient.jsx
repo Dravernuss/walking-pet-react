@@ -14,7 +14,6 @@ import { convertTime24to12 } from "../../utils/functions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   datesUser,
-  getDateByIdAsync,
   updateDateAsync,
   getDatesByUserAsync,
   dateToEdit,
@@ -137,7 +136,6 @@ const OptionsClient = ({ date_id, index }) => {
   const handleReport = async (e) => {
     e.preventDefault();
     const { elements } = e.target;
-    console.log("reporteee", elements[11].value);
     const dataReport = {
       date_id: date_id,
       user_id: dateInfo.user_id,
@@ -203,11 +201,6 @@ const OptionsClient = ({ date_id, index }) => {
     external: "false",
 
     //Atributos opcionales
-    // extra1: "extra1",
-    // extra2: "extra2",
-    // extra3: "extra3",
-    // confirmation: "http://confirmation.com",
-    // response: "http://response.com",
     response: "http://localhost:3000/datesclient",
 
     //Atributos cliente
@@ -215,8 +208,6 @@ const OptionsClient = ({ date_id, index }) => {
     address_billing: dateInfo?.client_address,
     type_doc_billing: "dni",
     city: dateInfo?.district_selected,
-    // mobilephone_billing: "3050000000",
-    // number_doc_billing: "100000000",
 
     //atributo deshabilitación metodo de pago
     // methodsDisable: ["TDC", "PSE","SP","CASH","DP"]
@@ -229,7 +220,6 @@ const OptionsClient = ({ date_id, index }) => {
     test: true,
   });
   const handlePayment = () => {
-    console.log(handler);
     handler.open(data);
     handler.onResponse(async (response) => {
       if (response.cod_respuesta === 1) {

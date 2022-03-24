@@ -6,7 +6,6 @@ const ENDPOINTS = {
   GET_ONE_WALKER: "/api/walkers",
   CREATE: "/api/walkers/create",
   UPDATE: "/api/walkers/update",
-  //   DELETE: "/api/users/delete",
   LOGIN: "/api/walkers/login",
 };
 
@@ -31,13 +30,13 @@ export const loginWalker = (walker) => {
 };
 
 export const getOneWalker = (id) => {
-  // const token = JSON.parse(localStorage.getItem("infoWalker")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.GET_ONE_WALKER}/${id}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -50,7 +49,7 @@ export const getOneWalker = (id) => {
 };
 
 export const updateWalker = ({ id, ...walker }) => {
-  // const token = JSON.parse(localStorage.getItem("infoWalker")).token;
+  const token = JSON.parse(localStorage.getItem("infoUser")).token;
   const path = `${API_SERVER}${ENDPOINTS.UPDATE}/${id}`;
   return new Promise((resolve, reject) => {
     fetch(path, {
@@ -58,7 +57,7 @@ export const updateWalker = ({ id, ...walker }) => {
       body: JSON.stringify(walker),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -100,7 +99,6 @@ export const getAllWalkers = () => {
       redirect: "follow",
     };
     fetch(path, requestOptions)
-      // .then((response) => response.text())
       .then((response) => response.json())
       .then((data) => {
         resolve({ data });
@@ -118,7 +116,6 @@ export const getAllWalkersRegistration = () => {
       redirect: "follow",
     };
     fetch(path, requestOptions)
-      // .then((response) => response.text())
       .then((response) => response.json())
       .then((data) => {
         resolve({ data });

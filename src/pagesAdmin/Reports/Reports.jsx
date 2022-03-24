@@ -36,7 +36,6 @@ const Reports = () => {
       backgroundColor: theme.palette.action.hover,
     },
   }));
-  console.log(allReportsInformation);
   const callingAllReports = async () => {
     const resAllReports = await dispatch(getAllReportsAsync());
     return resAllReports;
@@ -54,27 +53,9 @@ const Reports = () => {
           return date;
         })
       );
-      console.log(arr);
       setAllReportsInformation(arr);
     }
   }, [allReports]);
-
-  const reports = [
-    {
-      paseador: "Helen Arias",
-      cliente: "Manuel Baella",
-      fecha: "08/12/2021",
-      hora: "4:00 pm",
-      estado: "No revisado",
-    },
-    {
-      paseador: "Alex Marino",
-      cliente: "Manuel Baella",
-      fecha: "08/12/2021",
-      hora: "6:00 pm",
-      estado: "Revisado",
-    },
-  ];
 
   return (
     <div className="Reports">

@@ -33,8 +33,7 @@ const AdminLogin = () => {
         const response = await loginAdmin(admin);
         const token = response.token;
         const decoded = jwt_decode(token);
-        localStorage.setItem("token", token);
-        localStorage.setItem("AdminInfo", JSON.stringify(decoded));
+        localStorage.setItem("infoUser", JSON.stringify({ ...decoded, token }));
         navigate("/reservedtours");
       } catch {
         alert("No puede entrar: Revise su contraseña y usuario");

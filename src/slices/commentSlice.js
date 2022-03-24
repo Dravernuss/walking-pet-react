@@ -70,13 +70,13 @@ export const commentsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(getAllReportsAsync.pending, (state) => {
-      state.loading = true;
-    })
-    .addCase(getAllReportsAsync.fulfilled, (state, action) => {
-      state.loading = false;
-      state.reports = action.payload;
-    })
+      .addCase(getAllReportsAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllReportsAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.reports = action.payload;
+      })
       .addCase(getAllCommentsAsync.pending, (state) => {
         state.loading = true;
       })
@@ -95,18 +95,11 @@ export const commentsSlice = createSlice({
         state.created = true;
         state.commentCreated = action.payload;
       });
-    //   .addCase(getDateByIdAsync.fulfilled, (state, action) => {
-    //     state.loading = false;
-    //     state.dateSelected = action.payload;
-    //   })
   },
 });
 
 export const { commentToEdit } = commentsSlice.actions;
 
 export const commentsByWalker = (state) => state.comments.commentsByWalker;
-// export const datesWalker = (state) => state.dates.datesByWalker;
-
-// export const dateSelected = (state) => state.dates.dateSelected;
 
 export default commentsSlice.reducer;

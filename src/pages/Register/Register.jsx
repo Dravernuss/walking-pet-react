@@ -56,7 +56,6 @@ export const Register = () => {
 
   //-----REDUX------CREATE USER-------------------------------
   const dispatch = useDispatch();
-  // const selector = useSelector();
 
   //----------------------------------------------------------
 
@@ -131,10 +130,8 @@ export const Register = () => {
                 />
                 <TextField
                   style={{ width: "100%" }}
-                  // id="password"
                   type="password"
                   label="Contraseña"
-                  // value={password}
                   {...register("password", {
                     required: "Password is required!",
                   })}

@@ -426,39 +426,53 @@ const WalkerProfile = () => {
         <h2>
           Valoraciones sobre {thisWalker?.firstname} {thisWalker?.lastname}
         </h2>
-        {comments?.map((comment, i) => {
-          if (comment.type === "Comment") {
-            return (
-              <div className="rows" key={i}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginBottom: "1rem",
-                  }}
-                >
-                  <div className="infoUserComment">
-                    <h3>{comment.user_name}</h3>
-                    <p className="fechaComment">
-                      {new Date(comment.created_at).toLocaleDateString()}
-                    </p>
-                  </div>
+        {comments?.filter((comment) => comment.type === "Comment")?.length >
+        0 ? (
+          comments?.map((comment, i) => {
+            if (comment.type === "Comment") {
+              return (
+                <div className="rows" key={i}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    <div className="infoUserComment">
+                      <h3>{comment.user_name}</h3>
+                      <p className="fechaComment">
+                        {new Date(comment.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
 
-                  <Rating
-                    name="read-only"
-                    value={comment.rating}
-                    precision={0.5}
-                    size="large"
-                    readOnly
-                  />
+                    <Rating
+                      name="read-only"
+                      value={comment.rating}
+                      precision={0.5}
+                      size="large"
+                      readOnly
+                    />
+                  </div>
+                  <p style={{ textAlign: "justify" }}>{comment.comment}</p>
                 </div>
-                <p style={{ textAlign: "justify" }}>{comment.comment}</p>
-              </div>
-            );
-          }
-        })}
+              );
+            }
+          })
+        ) : (
+          <div className="noPet" style={{ backgroundColor: "#f0e96a" }}>
+            <h2 className="noPetTitle">
+              Este paseador aún no tiene Valoraciones
+            </h2>
+            <img
+              className="noPetImg"
+              src={imagenes.img28}
+              alt="perro pregunta"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

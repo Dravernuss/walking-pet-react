@@ -54,7 +54,6 @@ const ReservedTours = () => {
           return date;
         })
       );
-      console.log(arr);
       setAllDatesInformation(arr);
     }
   }, [allDates]);
@@ -98,8 +97,8 @@ const ReservedTours = () => {
               <TableBody>
                 {allDatesInformation &&
                   allDatesInformation[0] &&
-                  allDatesInformation[0].map((date) => (
-                    <StyledTableRow key={date.date_day}>
+                  allDatesInformation[0].map((date, i) => (
+                    <StyledTableRow key={i}>
                       <StyledTableCell
                         className="cell"
                         align="left"

@@ -27,19 +27,17 @@ const NavBar = () => {
 
   //--------USER---------------------------------------
   const user = useSelector(toUser);
-  // const ID = JSON.parse(localStorage.getItem("infoUser"))._id;
   const ID = JSON.parse(localStorage.getItem("infoUser"))._id;
   const ROLE = JSON.parse(localStorage.getItem("infoUser")).role;
 
   const endSession = async () => {
     await localStorage.removeItem("infoUser");
-    // await localStorage.removeItem("infoWalker");
     window.location = "/";
   };
 
   //-------WALKER--------------------------------------
   const walker = useSelector(toWalker);
-  // const walkerID = JSON.parse(localStorage.getItem("infoWalker"))._id;
+
   useEffect(() => {
     if (ROLE === "user" && !user) dispatch(getOneUserAsync(ID));
     if (ROLE === "walker" && !walker) dispatch(getOneWalkerAsync(ID));
