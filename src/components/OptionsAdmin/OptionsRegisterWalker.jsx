@@ -4,14 +4,13 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import imagenes from "../../images/imagenes.jsx";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import "./_OptionsRegisterWalker.scss";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateWalkerAsync } from "../../slices/walkerSlice.js";
 
 const OptionsRegisterWalker = ({ walker, estado, uploaded }) => {
@@ -47,7 +46,6 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded }) => {
   async function updatedWalkers(data) {
     let resAllWalkers = "";
     if (data) {
-      // resAllWalkers = await dispatch(updateWalkerAsync(data));
       resAllWalkers = await dispatch(
         updateWalkerAsync({ id: data.id, ...data.status })
       );

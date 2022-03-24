@@ -244,7 +244,6 @@ const OptionsReport = (reportsId) => {
                     multiline
                     rows={3}
                   />
-                  {/* <img src={imagenes.img16} width="200" alt="" /> */}
                   <img
                     src={
                       reportSelected[0]

@@ -315,7 +315,6 @@ const PetCard = ({
       )}
       <div className="petcard">
         <div className="petInfo">
-          {/* <img className="image" src={photo} alt="..."></img> */}
           <Avatar className="image" alt="Remy Sharp" src={photo_url}>
             <PetsIcon className="imageIcon" />
           </Avatar>
