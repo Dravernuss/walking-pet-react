@@ -95,7 +95,7 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
           <>
             <Button
               onClick={handleOpenAccept}
-              disabled={accepted === 1}
+              disabled={accepted === 1 || date_state !== "Sin Confirmar"}
               className="botonC"
             >
               ✅
@@ -148,7 +148,7 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
           <>
             <Button
               onClick={handleOpenCancel}
-              disabled={accepted === 0}
+              disabled={accepted === 0 || date_state !== "Sin Confirmar"}
               className="botonC"
             >
               ❌
