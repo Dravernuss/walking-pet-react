@@ -134,7 +134,11 @@ const Login = () => {
           </div>
         </div>
       </LayoutForm>
-      <Notifications alertOnUser={alertOnUser} alertOnWalker={alertOnWalker} />
+      <Notifications
+        alertOnUser={alertOnUser}
+        alertOnWalker={alertOnWalker}
+        message="Correo o Contraseña Incorrectos"
+      />
     </LayoutInicial>
   );
 };

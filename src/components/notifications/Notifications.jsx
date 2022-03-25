@@ -6,7 +6,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function Notifications({ alertOnUser, alertOnWalker }) {
+export default function Notifications({ alertOnUser, alertOnWalker, message }) {
   const [openUser, setOpenUser] = React.useState(alertOnUser);
   const [openWalker, setOpenWalker] = React.useState(alertOnWalker);
 
@@ -31,7 +31,7 @@ export default function Notifications({ alertOnUser, alertOnWalker }) {
       onClose={handleClose}
     >
       <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-        Correo o Contraseña Incorrectos
+        {message}
       </Alert>
     </Snackbar>
   );

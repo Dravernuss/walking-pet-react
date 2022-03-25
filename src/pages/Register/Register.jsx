@@ -15,13 +15,22 @@ import MenuItem from "@mui/material/MenuItem";
 import { distritos } from "../../utils/constants";
 import imagenes from "../../images/imagenes.jsx";
 import "./_Register.scss";
-
-import { createUserAsync } from "../../slices/userSlice";
+import Notifications from "../../components/notifications/Notifications";
+import {
+  createUserAsync,
+  alertUserRegister,
+  userCreated,
+} from "../../slices/userSlice";
+import { alertWalkerRegister } from "../../slices/walkerSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { walkerToCreate1 } from "../../slices/walkerSlice";
 import { create } from "@mui/material/styles/createTransitions";
 
 export const Register = () => {
+  const alertOnUser = useSelector(alertUserRegister) ?? false;
+  const alertOnWalker = useSelector(alertWalkerRegister) ?? false;
+  const userStateCreated = useSelector(userCreated);
+
   const [type, setType] = useState("cliente");
   const [distrito, setDistrito] = useState("");
   const token = JSON.parse(localStorage.getItem("infoUser"))?.token;
@@ -44,12 +53,16 @@ export const Register = () => {
   const handleSubmitTwo = async (data) => {
     if (type === "paseador") {
       await dispatch(walkerToCreate1(data));
+
       navigate("/registerWalker");
     } else if (type === "cliente") {
       await dispatch(createUserAsync(data));
-      navigate("/registerSuccess");
     }
   };
+  useEffect(() => {
+    if (userStateCreated) navigate("/registerSuccess");
+  }, [userStateCreated]);
+
   useEffect(() => {
     token && navigate("/principalpage");
   }, []);
@@ -231,6 +244,11 @@ export const Register = () => {
           </div>
         </div>
       </LayoutForm>
+      <Notifications
+        alertOnUser={alertOnUser}
+        alertOnWalker={alertOnWalker}
+        message="Este correo ya existe."
+      />
     </LayoutInicial>
   );
 };

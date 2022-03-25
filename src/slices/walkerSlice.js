@@ -114,6 +114,12 @@ export const walkerSlice = createSlice({
         state.logguedWalker = true;
         localStorage.setItem("infoUser", JSON.stringify(action.payload));
       })
+      .addCase(createWalkerAsync.pending, (state, action) => {
+        state.alertWalkerRegister = false;
+      })
+      .addCase(createWalkerAsync.rejected, (state, action) => {
+        state.alertWalkerRegister = true;
+      })
       .addCase(createWalkerAsync.fulfilled, (state, action) => {
         state.created = true;
       });
@@ -125,6 +131,7 @@ export const { walkerToEdit, walkerToCreate1, walkerToCreate2 } =
 
 export const selectWalkerLoggued = (state) => state.walker.logguedWalker;
 export const alertWalker = (state) => state.walker.alertWalker;
+export const alertWalkerRegister = (state) => state.walker.alertWalkerRegister;
 export const toWalker = (state) => state.walker.walker;
 export const walkerCreated = (state) =>
   state.walker?.walkerCreated?.newWalkerCreated;
