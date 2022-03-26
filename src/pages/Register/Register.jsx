@@ -21,7 +21,10 @@ import {
   alertUserRegister,
   userCreated,
 } from "../../slices/userSlice";
-import { alertWalkerRegister } from "../../slices/walkerSlice";
+import {
+  alertWalkerRegister,
+  getOneWalkerByEmailAsync,
+} from "../../slices/walkerSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { walkerToCreate1 } from "../../slices/walkerSlice";
 import { create } from "@mui/material/styles/createTransitions";
@@ -31,6 +34,7 @@ export const Register = () => {
   const alertOnWalker = useSelector(alertWalkerRegister) ?? false;
   const userStateCreated = useSelector(userCreated);
 
+  // const [alertOnWalker, setAlertOneWalker] = useState(false);
   const [type, setType] = useState("cliente");
   const [distrito, setDistrito] = useState("");
   const token = JSON.parse(localStorage.getItem("infoUser"))?.token;
@@ -52,9 +56,11 @@ export const Register = () => {
 
   const handleSubmitTwo = async (data) => {
     if (type === "paseador") {
-      await dispatch(walkerToCreate1(data));
-
-      navigate("/registerWalker");
+      const existe = await dispatch(getOneWalkerByEmailAsync(data.email));
+      if (!existe.payload) {
+        await dispatch(walkerToCreate1(data));
+        navigate("/registerWalker");
+      }
     } else if (type === "cliente") {
       await dispatch(createUserAsync(data));
     }

@@ -4,6 +4,7 @@ const ENDPOINTS = {
   GET_ALL_WALKERS: "/api/walkers",
   GET_ALL_WALKERS_REGISTRATION: "/api/walkers/registration",
   GET_ONE_WALKER: "/api/walkers",
+  GET_ONE_WALKER_BY_EMAIL: "/api/walkers/exists",
   CREATE: "/api/walkers/create",
   UPDATE: "/api/walkers/update",
   LOGIN: "/api/walkers/login",
@@ -38,6 +39,20 @@ export const getOneWalker = (id) => {
         Authorization: `Bearer ${token}`,
       },
     })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve({ data });
+      })
+      .catch((err) => {
+        reject({ error: err });
+      });
+  });
+};
+
+export const getOneWalkerByEmail = (email) => {
+  const path = `${API_SERVER}${ENDPOINTS.GET_ONE_WALKER_BY_EMAIL}/${email}`;
+  return new Promise((resolve, reject) => {
+    fetch(path)
       .then((response) => response.json())
       .then((data) => {
         resolve({ data });

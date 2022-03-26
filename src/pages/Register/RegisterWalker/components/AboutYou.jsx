@@ -127,27 +127,35 @@ export const AboutYou = ({ changeView }) => {
                 label="No"
               />
             </RadioGroup>
-            <p style={{ fontSize: "24" }}>Subir una foto de perfil</p>
-            <div className="input-file" style={{ height: "3.5rem" }}>
-              <span className="input-file-text">{photoName}</span>
-              <label htmlFor="contained-button-file">
-                <Button
-                  variant="contained"
-                  style={{
-                    backgroundColor: "#FFFF",
-                    color: "#000",
-                    width: "10srem",
-                    marginRight: "10px",
-                    borderRadius: "10px",
-                    fontSize: "14px",
-                    fontFamily: "Roboto-bold",
-                  }}
-                  component="span"
-                  onClick={showWidgetPhotoWalker}
-                >
-                  Choose File
-                </Button>
-              </label>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <p style={{ fontSize: "24" }}>Subir una foto de perfil</p>
+              <div className="input-file" style={{ height: "3.5rem" }}>
+                <span className="input-file-text">{photoName}</span>
+                <label htmlFor="contained-button-file">
+                  <Button
+                    variant="contained"
+                    style={{
+                      backgroundColor: "#FFFF",
+                      color: "#000",
+                      width: "10srem",
+                      marginRight: "10px",
+                      borderRadius: "10px",
+                      fontSize: "14px",
+                      fontFamily: "Roboto-bold",
+                    }}
+                    component="span"
+                    onClick={showWidgetPhotoWalker}
+                  >
+                    Choose File
+                  </Button>
+                </label>
+              </div>
             </div>
           </Box>
 

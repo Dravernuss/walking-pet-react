@@ -8,6 +8,7 @@ const {
   createWalker,
   getAllWalkers,
   getAllWalkersRegistration,
+  getOneWalkerByEmail,
 } = walker;
 
 const initialState = {};
@@ -52,6 +53,14 @@ export const getOneWalkerAsync = createAsyncThunk(
   }
 );
 
+export const getOneWalkerByEmailAsync = createAsyncThunk(
+  "walker/getOneWalkerByEmail",
+  async (email) => {
+    const response = await getOneWalkerByEmail(email);
+    return response.data;
+  }
+);
+
 export const updateWalkerAsync = createAsyncThunk(
   "walker/update",
   async (data) => {
@@ -76,6 +85,15 @@ export const walkerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getOneWalkerByEmailAsync.pending, (state, action) => {
+        state.alertWalkerRegister = false;
+      })
+      .addCase(getOneWalkerByEmailAsync.rejected, (state, action) => {
+        state.alertWalkerRegister = false;
+      })
+      .addCase(getOneWalkerByEmailAsync.fulfilled, (state, action) => {
+        state.alertWalkerRegister = true;
+      })
       .addCase(getOneWalkerAsync.pending, (state) => {
         state.loading = true;
       })
@@ -113,12 +131,6 @@ export const walkerSlice = createSlice({
         state.walkerInfo = action.payload; // state.userInfo
         state.logguedWalker = true;
         localStorage.setItem("infoUser", JSON.stringify(action.payload));
-      })
-      .addCase(createWalkerAsync.pending, (state, action) => {
-        state.alertWalkerRegister = false;
-      })
-      .addCase(createWalkerAsync.rejected, (state, action) => {
-        state.alertWalkerRegister = true;
       })
       .addCase(createWalkerAsync.fulfilled, (state, action) => {
         state.created = true;
