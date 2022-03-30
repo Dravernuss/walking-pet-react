@@ -9,10 +9,20 @@ const LandingPage = () => {
       <section className="section__One">
         <img src={imagenes.img18} className="logoBlanco" alt=""></img>
         <div className="buttonGroup">
-          <Button variant="contained" className="botonHome" href="/login">
+          <Button
+            data-test-id="enter-login"
+            variant="contained"
+            className="botonHome"
+            href="/login"
+          >
             Ingresar
           </Button>
-          <Button variant="contained" className="botonHome" href="/register">
+          <Button
+            data-test-id="enter-register"
+            variant="contained"
+            className="botonHome"
+            href="/register"
+          >
             Registrate
           </Button>
         </div>

@@ -84,6 +84,7 @@ export const AboutYou = ({ changeView }) => {
               multiline
               style={{ width: "30rem" }}
               rows={3}
+              data-test-id="text-1"
             />
             ¿Qué harías en caso de que el perro a tu cuidado se ponga agresivo?*
             <TextField
@@ -92,6 +93,7 @@ export const AboutYou = ({ changeView }) => {
               multiline
               style={{ width: "30rem" }}
               rows={3}
+              data-test-id="text-2"
             />
             ¿Cuáles son las herramientas necesarias que un cuidador canino debe
             llevar en cada paseo?*
@@ -101,6 +103,7 @@ export const AboutYou = ({ changeView }) => {
               multiline
               style={{ width: "30rem" }}
               rows={3}
+              data-test-id="text-3"
             />
             ¿Cuentas con alguna certificación para cuidar perror? No es
             obligatoria para participar en esta plataforma*
@@ -116,14 +119,14 @@ export const AboutYou = ({ changeView }) => {
                 value={true}
                 onChange={() => setCertification(true)}
                 checked={certification === true}
-                control={<Radio />}
+                control={<Radio data-test-id="yes" />}
                 label="Sí"
               />
               <FormControlLabel
                 value={false}
                 checked={certification === false}
                 onChange={() => setCertification(false)}
-                control={<Radio />}
+                control={<Radio data-test-id="no" />}
                 label="No"
               />
             </RadioGroup>
@@ -151,6 +154,7 @@ export const AboutYou = ({ changeView }) => {
                     }}
                     component="span"
                     onClick={showWidgetPhotoWalker}
+                    data-test-id="choose-file-2"
                   >
                     Choose File
                   </Button>
@@ -173,6 +177,7 @@ export const AboutYou = ({ changeView }) => {
             }}
             type="submit"
             disabled={photoWalkerUrl === ""}
+            data-test-id="register-finished"
           >
             Finalizar
           </Button>

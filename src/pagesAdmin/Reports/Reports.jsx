@@ -93,7 +93,7 @@ const Reports = () => {
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody data-test-id="reports-list">
                 {allReportsInformation &&
                   allReportsInformation[0] &&
                   allReportsInformation[0].map((report, index) => (

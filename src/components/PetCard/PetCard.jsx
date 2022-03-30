@@ -157,6 +157,7 @@ const PetCard = ({
                     type="number"
                     defaultValue={pet?.age}
                     inputProps={{ min: 1, max: 20 }}
+                    data-test-id="edit-age"
                   />
                   <FormControl fullWidth style={{ margin: "10px 0px" }}>
                     <InputLabel size="small" id="tamano">
@@ -169,10 +170,17 @@ const PetCard = ({
                       label="Tamaño"
                       size="small"
                       defaultValue={pet?.size}
+                      data-test-id="edit-size"
                     >
-                      <MenuItem value="Grande">Grande</MenuItem>
-                      <MenuItem value="Mediano">Mediano</MenuItem>
-                      <MenuItem value="Pequeño">Pequeño</MenuItem>
+                      <MenuItem value="Grande" data-test-id="size-big">
+                        Grande
+                      </MenuItem>
+                      <MenuItem value="Mediano" data-test-id="size-medium">
+                        Mediano
+                      </MenuItem>
+                      <MenuItem value="Pequeño" data-test-id="size-small">
+                        Pequeño
+                      </MenuItem>
                     </Select>
                   </FormControl>
                   <FormControl fullWidth style={{ margin: "10px 0px" }}>
@@ -186,10 +194,17 @@ const PetCard = ({
                       label="Carácter"
                       size="small"
                       defaultValue={pet?.nature}
+                      data-test-id="edit-nature"
                     >
-                      <MenuItem value="Tímido">Tímido</MenuItem>
-                      <MenuItem value="Amigable">Amigable</MenuItem>
-                      <MenuItem value="Agresivo">Agresivo</MenuItem>
+                      <MenuItem value="Tímido" data-test-id="nature-shy">
+                        Tímido
+                      </MenuItem>
+                      <MenuItem value="Amigable" data-test-id="nature-friendly">
+                        Amigable
+                      </MenuItem>
+                      <MenuItem value="Agresivo" data-test-id="nature-agresive">
+                        Agresivo
+                      </MenuItem>
                     </Select>
                   </FormControl>
                   <TextField
@@ -201,6 +216,7 @@ const PetCard = ({
                     multiline
                     rows={4}
                     defaultValue={pet?.additional_information}
+                    data-test-id="edit-info"
                   />
                   <p
                     style={{
@@ -209,7 +225,7 @@ const PetCard = ({
                       fontFamily: "Roboto-Regular",
                     }}
                   >
-                    Subir una foto de su mascota (Obligatorio)
+                    Cambiar foto de su mascota
                   </p>
                   <div className="input-file">
                     <span className="input-file-text">{photoName}</span>
@@ -227,6 +243,7 @@ const PetCard = ({
                         }}
                         component="span"
                         onClick={showWidgetPhotoPet}
+                        data-test-id="choose-file"
                       >
                         Choose File
                       </Button>
@@ -248,6 +265,7 @@ const PetCard = ({
                       type="submit"
                       disabled={photoPetUrl === ""}
                       className="botonDisabled"
+                      data-test-id="edit-finished"
                     >
                       Finalizar
                     </Button>
@@ -259,7 +277,9 @@ const PetCard = ({
                       marginTop: "10px",
                     }}
                   >
-                    <Button onClick={handleOpenChild}>Eliminar Mascota</Button>
+                    <Button onClick={handleOpenChild} data-test-id="delete-pet">
+                      Eliminar Mascota
+                    </Button>
                   </div>
 
                   <Modal
@@ -284,7 +304,7 @@ const PetCard = ({
                         id="child-modal-description"
                         style={{ marginBottom: "10px" }}
                       >
-                        ¿Seguro que desea eliminar la informacion de {name}?
+                        ¿Seguro que desea eliminar la información de {name}?
                       </p>
                       <div
                         style={{
@@ -299,7 +319,11 @@ const PetCard = ({
                         >
                           Cancelar
                         </Button>
-                        <Button style={ModalStyle.boton} onClick={handleDelete}>
+                        <Button
+                          style={ModalStyle.boton}
+                          onClick={handleDelete}
+                          data-test-id="delete-finished"
+                        >
                           Aceptar
                         </Button>
                       </div>

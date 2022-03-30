@@ -102,12 +102,12 @@ export const Register = () => {
               >
                 <FormControlLabel
                   value="paseador"
-                  control={<Radio />}
+                  control={<Radio data-test-id="register-walker" />}
                   label="Soy paseador"
                 />
                 <FormControlLabel
                   value="cliente"
-                  control={<Radio />}
+                  control={<Radio data-test-id="register-user" />}
                   label="Soy cliente"
                 />
               </RadioGroup>
@@ -131,6 +131,7 @@ export const Register = () => {
                   id="name"
                   label="Nombre"
                   {...register("firstname")}
+                  data-test-id="register-name"
                 />
                 <TextField
                   required
@@ -138,6 +139,7 @@ export const Register = () => {
                   id="lastName"
                   label="Apellido"
                   {...register("lastname")}
+                  data-test-id="register-lastname"
                 />
                 <TextField
                   style={{ width: "100%" }}
@@ -146,6 +148,7 @@ export const Register = () => {
                   id="email"
                   label="Correo electrónico"
                   {...register("email")}
+                  data-test-id="register-email"
                 />
                 <TextField
                   style={{ width: "100%" }}
@@ -154,6 +157,7 @@ export const Register = () => {
                   {...register("password", {
                     required: "Password is required!",
                   })}
+                  data-test-id="register-password"
                 />
                 {errors.password && (
                   <p
@@ -172,6 +176,7 @@ export const Register = () => {
                   type="password"
                   id="confirmPassword"
                   label="Confirmar contraseña"
+                  data-test-id="register-password-confirm"
                   {...register("passwordConfirmation", {
                     required: "Please confirm password!",
                     validate: {
@@ -201,19 +206,25 @@ export const Register = () => {
                   id="phone"
                   label="Teléfono Fijo/Móvil"
                   {...register("phone")}
+                  data-test-id="register-phone"
                 />
                 <FormControl style={{ width: "100%", margin: "10px" }}>
                   <InputLabel id="distrito-label">Distrito*</InputLabel>
                   <Select
                     labelId="distrito-label"
                     id="distrito"
+                    data-test-id="register-select"
                     value={distrito}
                     label="Distrito*"
                     required
                     onChange={handleChangeDistrict}
                   >
                     {distritos.map((distrito, i) => (
-                      <MenuItem key={i} value={distrito}>
+                      <MenuItem
+                        key={i}
+                        value={distrito}
+                        data-test-id={distrito}
+                      >
                         {distrito}
                       </MenuItem>
                     ))}
@@ -225,12 +236,14 @@ export const Register = () => {
                   id="address"
                   label="Dirección"
                   {...register("address")}
+                  data-test-id="register-address"
                 />
               </Box>
               <Button
                 variant="contained"
                 className="botonRegister"
                 type="submit"
+                data-test-id="register-success"
               >
                 Registrarse
               </Button>

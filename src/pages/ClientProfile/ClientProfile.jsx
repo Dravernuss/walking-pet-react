@@ -184,20 +184,20 @@ const ClientProfile = () => {
         </div>
         <div className="info-containerC">
           <h2 className="info">Dirección:</h2>
-          <p className="info-presentacionC">
+          <p className="info-presentacionC" data-test-id="info-user-address">
             {user?.address}{" "}
-            <strong>
-              {}
-              {user?.district}
-            </strong>
+            <strong data-test-id="info-user-district"> {user?.district}</strong>
           </p>
           <h2 className="info">Teléfono:</h2>
-          <p className="info-presentacionC">{user?.phone}</p>
+          <p className="info-presentacionC" data-test-id="info-user-phone">
+            {user?.phone}
+          </p>
 
           <div>
             {ROLE === "user" ? (
               <div className="actions">
                 <Button
+                  data-test-id="user-profile-view-dates"
                   className="boton"
                   onClick={() => navigate("/datesclient")}
                 >
@@ -208,7 +208,11 @@ const ClientProfile = () => {
                   ></img>
                   Ver mis Citas
                 </Button>
-                <Button className="boton" onClick={handleOpen}>
+                <Button
+                  className="boton"
+                  onClick={handleOpen}
+                  data-test-id="user-profile-edit"
+                >
                   <img
                     className="dogButton"
                     src={imagenes.img10}
@@ -248,7 +252,9 @@ const ClientProfile = () => {
                         >
                           Distrito
                         </InputLabel>
+
                         <Select
+                          data-test-id="edit-user-district"
                           labelId="demo-simple-select-autowidth-label"
                           id="demo-simple-select-autowidth"
                           label="Distrito"
@@ -258,13 +264,18 @@ const ClientProfile = () => {
                           required
                         >
                           {distritos.map((distritoSel) => (
-                            <MenuItem key={distritoSel} value={distritoSel}>
+                            <MenuItem
+                              data-test-id={distritoSel}
+                              key={distritoSel}
+                              value={distritoSel}
+                            >
                               {distritoSel}
                             </MenuItem>
                           ))}
                         </Select>
 
                         <TextField
+                          data-test-id="edit-user-address"
                           className="input"
                           style={{ margin: "10px 0px" }}
                           label="Dirección"
@@ -274,6 +285,7 @@ const ClientProfile = () => {
                           required
                         />
                         <TextField
+                          data-test-id="edit-user-phone"
                           className="input"
                           style={{ margin: "10px 0px" }}
                           label="Teléfono de Contacto"
@@ -307,6 +319,7 @@ const ClientProfile = () => {
                               }}
                               component="span"
                               onClick={showWidgetPhotoUser}
+                              data-test-id="choose-file"
                             >
                               Choose File
                             </Button>
@@ -325,7 +338,11 @@ const ClientProfile = () => {
                           >
                             Cerrar
                           </Button>
-                          <Button type="submit" style={ModalStyle.boton}>
+                          <Button
+                            data-test-id="edit-user-finish"
+                            type="submit"
+                            style={ModalStyle.boton}
+                          >
                             Finalizar
                           </Button>
                         </div>
@@ -343,7 +360,11 @@ const ClientProfile = () => {
       <div className="petsContainer">
         {ROLE === "user" ? (
           <>
-            <Button className="addPet" onClick={handleOpenAdd}>
+            <Button
+              className="addPet"
+              onClick={handleOpenAdd}
+              data-test-id="create-pet"
+            >
               <img className="add" src={imagenes.img13} alt="..."></img>
               Añadir Mascota
             </Button>
@@ -375,6 +396,7 @@ const ClientProfile = () => {
                       size="small"
                       type="text"
                       required
+                      data-test-id="pet-name"
                     />
                     <TextField
                       className="input"
@@ -384,6 +406,7 @@ const ClientProfile = () => {
                       type="number"
                       inputProps={{ min: 1, max: 20 }}
                       required
+                      data-test-id="pet-age"
                     />
                     <FormControl fullWidth style={{ margin: "10px 0px" }}>
                       <InputLabel size="small" id="sexo">
@@ -397,9 +420,14 @@ const ClientProfile = () => {
                         label="Sexo"
                         size="small"
                         required
+                        data-test-id="open-sex"
                       >
-                        <MenuItem value="Hembra">Hembra</MenuItem>
-                        <MenuItem value="Macho">Macho</MenuItem>
+                        <MenuItem value="Hembra" data-test-id="sex-female">
+                          Hembra
+                        </MenuItem>
+                        <MenuItem value="Macho" data-test-id="sex-male">
+                          Macho
+                        </MenuItem>
                       </Select>
                     </FormControl>
                     <FormControl fullWidth style={{ margin: "10px 0px" }}>
@@ -414,9 +442,14 @@ const ClientProfile = () => {
                         label="Raza"
                         size="small"
                         required
+                        data-test-id="open-breed"
                       >
                         {razas.map((razaSel) => (
-                          <MenuItem key={razaSel} value={razaSel}>
+                          <MenuItem
+                            key={razaSel}
+                            value={razaSel}
+                            data-test-id={razaSel}
+                          >
                             {razaSel}
                           </MenuItem>
                         ))}
@@ -434,10 +467,17 @@ const ClientProfile = () => {
                         label="Tamaño"
                         size="small"
                         required
+                        data-test-id="open-size"
                       >
-                        <MenuItem value="Grande">Grande</MenuItem>
-                        <MenuItem value="Mediano">Mediano</MenuItem>
-                        <MenuItem value="Pequeño">Pequeño</MenuItem>
+                        <MenuItem value="Grande" data-test-id="size-big">
+                          Grande
+                        </MenuItem>
+                        <MenuItem value="Mediano" data-test-id="size-medium">
+                          Mediano
+                        </MenuItem>
+                        <MenuItem value="Pequeño" data-test-id="size-small">
+                          Pequeño
+                        </MenuItem>
                       </Select>
                     </FormControl>
                     <FormControl fullWidth style={{ margin: "10px 0px" }}>
@@ -452,10 +492,23 @@ const ClientProfile = () => {
                         label="Carácter"
                         size="small"
                         required
+                        data-test-id="open-nature"
                       >
-                        <MenuItem value="Tímido">Tímido</MenuItem>
-                        <MenuItem value="Amigable">Amigable</MenuItem>
-                        <MenuItem value="Agresivo">Agresivo</MenuItem>
+                        <MenuItem value="Tímido" data-test-id="nature-shy">
+                          Tímido
+                        </MenuItem>
+                        <MenuItem
+                          value="Amigable"
+                          data-test-id="nature-friendly"
+                        >
+                          Amigable
+                        </MenuItem>
+                        <MenuItem
+                          value="Agresivo"
+                          data-test-id="nature-agresive"
+                        >
+                          Agresivo
+                        </MenuItem>
                       </Select>
                     </FormControl>
                     <TextField
@@ -466,6 +519,7 @@ const ClientProfile = () => {
                       type="text"
                       multiline
                       rows={4}
+                      data-test-id="additional-info"
                     />
                     <p
                       style={{
@@ -492,6 +546,7 @@ const ClientProfile = () => {
                           }}
                           component="span"
                           onClick={showWidgetPhotoPet}
+                          data-test-id="choose-file"
                         >
                           Choose File
                         </Button>
@@ -512,6 +567,7 @@ const ClientProfile = () => {
                         type="submit"
                         className="botonDisabled"
                         disabled={photoPetUrl === ""}
+                        data-test-id="create-finished"
                       >
                         Añadir
                       </Button>
@@ -525,7 +581,7 @@ const ClientProfile = () => {
           <></>
         )}
 
-        <div className="pets">
+        <div className="pets" data-test-id="list-pets">
           {pets?.length !== 0 ? (
             pets?.map((pet, i) => {
               return (

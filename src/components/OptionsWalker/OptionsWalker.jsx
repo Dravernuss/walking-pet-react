@@ -94,6 +94,7 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
         ) : (
           <>
             <Button
+              data-test-id="accepted"
               onClick={handleOpenAccept}
               disabled={accepted === 1 || date_state !== "Sin Confirmar"}
               className="botonC"
@@ -134,7 +135,11 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
                   <Button style={ModalStyle.boton} onClick={handleCloseAccept}>
                     Cancelar
                   </Button>
-                  <Button style={ModalStyle.boton} onClick={handleAcceptDate}>
+                  <Button
+                    style={ModalStyle.boton}
+                    onClick={handleAcceptDate}
+                    data-test-id="date-accept-true"
+                  >
                     Aceptar
                   </Button>
                 </div>
@@ -150,6 +155,7 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
               onClick={handleOpenCancel}
               disabled={accepted === 0 || date_state !== "Sin Confirmar"}
               className="botonC"
+              data-test-id="rejected"
             >
               ❌
             </Button>
@@ -187,7 +193,11 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
                   <Button style={ModalStyle.boton} onClick={handleCloseCancel}>
                     Cancelar
                   </Button>
-                  <Button style={ModalStyle.boton} onClick={handleRejectDate}>
+                  <Button
+                    style={ModalStyle.boton}
+                    onClick={handleRejectDate}
+                    data-test-id="date-reject-true"
+                  >
                     Aceptar
                   </Button>
                 </div>
@@ -196,7 +206,11 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
           </>
         )}
       </ButtonGroup>
-      <Button onClick={handleOpenDetails} className="botonT">
+      <Button
+        onClick={handleOpenDetails}
+        className="botonT"
+        data-test-id="details"
+      >
         Ver Detalles
       </Button>
       <Modal
@@ -205,7 +219,7 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={ModalStyle.style} className="boxModal">
+        <Box sx={ModalStyle.style} className="boxModal" data-test-id="details">
           <div style={ModalStyle.header}>
             <Typography
               id="modal-modal-title"
@@ -224,6 +238,7 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
               <a
                 className="toWalker"
                 onClick={() => navigate(`/client/${dateInfo.user_id}`)}
+                data-test-id="clientprofile"
               >
                 {dateInfo?.user_name}
               </a>
@@ -280,7 +295,11 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
                 justifyContent: "center",
               }}
             >
-              <Button style={ModalStyle.boton} onClick={handleCloseDetails}>
+              <Button
+                data-test-id="volver"
+                style={ModalStyle.boton}
+                onClick={handleCloseDetails}
+              >
                 Volver
               </Button>
             </div>
@@ -293,7 +312,9 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
                   borderTop: "1px solid grey",
                 }}
               >
-                <Button onClick={handleOpenChild}>Cancelar Cita</Button>
+                <Button onClick={handleOpenChild} data-test-id="cancel-date">
+                  Cancelar Cita
+                </Button>
                 <Modal
                   open={openChild}
                   onClose={handleCloseChild}
@@ -334,6 +355,7 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
                       <Button
                         style={ModalStyle.boton}
                         onClick={handleCancelDate}
+                        data-test-id="cancel-true"
                       >
                         Aceptar
                       </Button>

@@ -12,6 +12,7 @@ export const ThanksForJoin = () => {
         justifyContent: "center",
         alignContent: "center",
       }}
+      data-test-id="thank-join"
     >
       <p
         className="registerWalker__message"
@@ -39,6 +40,7 @@ export const ThanksForJoin = () => {
           fontFamily: "Roboto-bold",
         }}
         href="/"
+        data-test-id="return"
       >
         Ir al inicio
       </Button>

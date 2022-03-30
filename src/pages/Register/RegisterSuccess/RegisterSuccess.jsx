@@ -14,7 +14,11 @@ export const RegisterSuccess = () => {
           <p className="registerSuccess__message">
             ¡BIENVENIDO A LA COMUNIDAD DE WALKING PET!
           </p>
-          <Button className="buttonSuccess" variant="contained">
+          <Button
+            className="buttonSuccess"
+            variant="contained"
+            data-test-id="register-done"
+          >
             <Link to="/" style={{ textDecoration: "none" }}>
               Ir al inicio
             </Link>

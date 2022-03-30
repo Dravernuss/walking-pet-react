@@ -7,7 +7,7 @@ import Modal from "@mui/material/Modal";
 import { useSelector } from "react-redux";
 import { convertTime24to12 } from "../../utils/functions.js";
 
-const OptionsAdmin = (dateId) => {
+const OptionsAdmin = (dateId, index) => {
   const [openDetails, setOpenDetails] = useState(false);
   const [dateSelected, setDateSelected] = useState("");
 
@@ -28,7 +28,11 @@ const OptionsAdmin = (dateId) => {
 
   return (
     <>
-      <Button onClick={handleOpenDetails} className="botonT">
+      <Button
+        onClick={handleOpenDetails}
+        className="botonT"
+        data-test-id={dateId.index + "details"}
+      >
         Ver Detalles
       </Button>
       <Modal
@@ -36,6 +40,7 @@ const OptionsAdmin = (dateId) => {
         onClose={handleCloseDetails}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        data-test-id="modal"
       >
         <Box sx={ModalStyle.style} className="boxModal">
           <div style={ModalStyle.header}>
@@ -104,7 +109,11 @@ const OptionsAdmin = (dateId) => {
                 justifyContent: "center",
               }}
             >
-              <Button style={ModalStyle.boton} onClick={handleCloseDetails}>
+              <Button
+                style={ModalStyle.boton}
+                onClick={handleCloseDetails}
+                data-test-id="volver"
+              >
                 Volver
               </Button>
             </div>

@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateWalkerAsync } from "../../slices/walkerSlice.js";
 
-const OptionsRegisterWalker = ({ walker, estado, uploaded }) => {
+const OptionsRegisterWalker = ({ walker, estado, uploaded, index }) => {
   const dispatch = useDispatch();
   const [usingApi, setUsingApi] = useState(null);
   const [openDetails, setOpenDetails] = useState(false);
@@ -236,6 +236,7 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded }) => {
                       multiline
                       rows={4}
                       disabled={!estado}
+                      data-test-id="admin-comment"
                     />
                     <div
                       style={{
@@ -259,6 +260,7 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded }) => {
                         }
                         onClick={handleOpenAccept}
                         className="buttonOR"
+                        data-test-id="accept"
                       >
                         Aceptar
                       </Button>
@@ -302,6 +304,7 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded }) => {
                             <Button
                               style={ModalStyle.boton}
                               onClick={() => handleCloseAccept(walker._id)}
+                              data-test-id="accept-end"
                             >
                               Aceptar
                             </Button>
@@ -316,6 +319,7 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded }) => {
                         onClick={handleOpenCancel}
                         disabled={!estado}
                         className="buttonOR"
+                        data-test-id="reject"
                       >
                         Rechazar
                       </Button>
@@ -359,6 +363,7 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded }) => {
                             <Button
                               style={ModalStyle.boton}
                               onClick={() => handleCloseCancel(walker._id)}
+                              data-test-id="reject-end"
                             >
                               Rechazar
                             </Button>

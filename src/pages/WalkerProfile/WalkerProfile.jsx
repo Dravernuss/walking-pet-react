@@ -122,7 +122,7 @@ const WalkerProfile = () => {
         <div className="cardP">
           <Avatar src={thisWalker?.photo_url} className="card-img-topP" />
           <figcaption>
-            <span>S./ {thisWalker?.price}</span>
+            <span data-test-id="walker-price">S./ {thisWalker?.price}</span>
           </figcaption>
           <h2 className="card-titleP">
             {thisWalker?.firstname} {thisWalker?.lastname}
@@ -137,7 +137,7 @@ const WalkerProfile = () => {
           <p className="card-calificationP">
             {parseFloat(`${thisWalker?.rating}`).toFixed(1)}
           </p>
-          <p className="card-textP">
+          <p className="card-textP" data-test-id="walker-greeting">
             {thisWalker?.greeting}
             <br></br>
             <span>
@@ -154,9 +154,11 @@ const WalkerProfile = () => {
         </div>
         <div className="info-container">
           <p className="info">Presentación:</p>
-          <p className="info-presentacion">{thisWalker?.presentation}</p>
+          <p className="info-presentacion" data-test-id="walker-presentation">
+            {thisWalker?.presentation}
+          </p>
           <p className="info">Disponible en:</p>
-          <div className="chip-container">
+          <div className="chip-container" data-test-id="walker-districts">
             {thisWalker ? (
               thisWalker.avalaible_districts.map((district) => {
                 return <Chip key={district} label={district} />;
@@ -178,6 +180,7 @@ const WalkerProfile = () => {
                   onClick={() =>
                     navigate(`/walker/${thisWalker?._id}/askfordate`)
                   }
+                  data-test-id="ask-date"
                 >
                   <img
                     className="dogButton"
@@ -201,7 +204,11 @@ const WalkerProfile = () => {
             ) : (
               <>
                 <div className="actions">
-                  <Button className="boton" href="/dateswalker">
+                  <Button
+                    className="boton"
+                    href="/dateswalker"
+                    data-test-id="walker-dates"
+                  >
                     <img
                       className="dogButton"
                       src={imagenes.img9}
@@ -209,7 +216,11 @@ const WalkerProfile = () => {
                     ></img>
                     Ver mis Citas
                   </Button>
-                  <Button className="boton" onClick={handleOpen}>
+                  <Button
+                    className="boton"
+                    onClick={handleOpen}
+                    data-test-id="walker-profile-edit"
+                  >
                     <img
                       className="dogButton"
                       src={imagenes.img10}
@@ -248,6 +259,7 @@ const WalkerProfile = () => {
                             type="number"
                             margin="normal"
                             inputProps={{ min: 1, max: 100 }}
+                            data-test-id="edit-walker-price"
                           />
                           <Autocomplete
                             multiple
@@ -255,7 +267,7 @@ const WalkerProfile = () => {
                             disableCloseOnSelect
                             options={distritos}
                             renderOption={(props, option, { selected }) => (
-                              <li {...props}>
+                              <li {...props} data-test-id="list-districts">
                                 <Checkbox
                                   icon={icon}
                                   checkedIcon={checkedIcon}
@@ -272,6 +284,7 @@ const WalkerProfile = () => {
                             value={selectDistricts}
                             renderInput={(params) => (
                               <TextField
+                                data-test-id="edit-walker-district"
                                 {...params}
                                 className="input"
                                 label="Distritos en los que trabajará"
@@ -281,6 +294,7 @@ const WalkerProfile = () => {
                             )}
                           />
                           <TextField
+                            data-test-id="edit-walker-greeting"
                             required
                             defaultValue={thisWalker?.greeting}
                             className="input"
@@ -293,6 +307,7 @@ const WalkerProfile = () => {
                           />
                           <TextField
                             required
+                            data-test-id="edit-walker-presentation"
                             defaultValue={thisWalker?.presentation}
                             className="input"
                             margin="normal"
@@ -327,6 +342,7 @@ const WalkerProfile = () => {
                                 }}
                                 component="span"
                                 onClick={showWidgetPhotoWalker}
+                                data-test-id="choose-file"
                               >
                                 Choose File
                               </Button>
@@ -344,6 +360,7 @@ const WalkerProfile = () => {
                                 <GreenSwitch
                                   onChange={() => setReady(!ready)}
                                   checked={ready}
+                                  data-test-id="edit-walker-available"
                                 />
                               }
                               label=""
@@ -367,7 +384,11 @@ const WalkerProfile = () => {
                             >
                               Cerrar
                             </Button>
-                            <Button style={ModalStyle.boton} type="submit">
+                            <Button
+                              style={ModalStyle.boton}
+                              type="submit"
+                              data-test-id="edit-walker-finish"
+                            >
                               Finalizar
                             </Button>
                           </div>
@@ -376,47 +397,52 @@ const WalkerProfile = () => {
                     </Box>
                   </Modal>
                 </div>
-                {thisWalker?.ready === true ? (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginTop: "1rem",
-                      fontFamily: "Rambla-Regular",
-                    }}
-                  >
+                <div data-test-id="walker-available">
+                  {thisWalker?.ready === true ? (
                     <div
                       style={{
-                        width: "1rem",
-                        height: "1rem",
-                        borderRadius: "50%",
-                        background: "#99CC42",
-                        marginRight: "0.5rem",
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: "1rem",
+                        fontFamily: "Rambla-Regular",
                       }}
-                    />
-                    <strong> DISPONIBLE</strong>
-                  </div>
-                ) : (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginTop: "1rem",
-                      fontFamily: "Rambla-Regular",
-                    }}
-                  >
+                    >
+                      <div
+                        style={{
+                          width: "1rem",
+                          height: "1rem",
+                          borderRadius: "50%",
+                          background: "#99CC42",
+                          marginRight: "0.5rem",
+                        }}
+                      />
+                      <strong data-test-id="walker-available">
+                        {" "}
+                        DISPONIBLE
+                      </strong>
+                    </div>
+                  ) : (
                     <div
                       style={{
-                        width: "1rem",
-                        height: "1rem",
-                        borderRadius: "50%",
-                        background: "gray",
-                        marginRight: "0.5rem",
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: "1rem",
+                        fontFamily: "Rambla-Regular",
                       }}
-                    />
-                    <strong> NO DISPONIBLE</strong>
-                  </div>
-                )}
+                    >
+                      <div
+                        style={{
+                          width: "1rem",
+                          height: "1rem",
+                          borderRadius: "50%",
+                          background: "gray",
+                          marginRight: "0.5rem",
+                        }}
+                      />
+                      <strong> NO DISPONIBLE</strong>
+                    </div>
+                  )}
+                </div>
               </>
             )}
           </div>

@@ -77,7 +77,7 @@ const DatesWalker = () => {
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
-              <TableBody size="small">
+              <TableBody size="small" data-test-id="walker-list-dates">
                 {dates?.map((date, i) => (
                   <StyledTableRow key={i}>
                     <StyledTableCell
@@ -100,6 +100,7 @@ const DatesWalker = () => {
                     <StyledTableCell className="cell" align="left">
                       <OptionsWalker
                         index={i}
+                        data-test-id={i}
                         id={date?._id}
                         accepted={date?.accepted}
                         date_state={date?.date_state}

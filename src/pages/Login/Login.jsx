@@ -82,7 +82,7 @@ const Login = () => {
             <FormControlLabel
               className="radio_button"
               value="walker"
-              control={<Radio />}
+              control={<Radio data-test-id="login-radio-walker" />}
               label="Soy paseador"
               checked={role === "walker"}
               onClick={() => setRole("walker")}
@@ -90,7 +90,7 @@ const Login = () => {
             <FormControlLabel
               className="radio_button"
               value="user"
-              control={<Radio />}
+              control={<Radio data-test-id="login-radio-user" />}
               label="Soy cliente"
               checked={role === "user"}
               onClick={() => setRole("user")}
@@ -110,15 +110,22 @@ const Login = () => {
                 id="email"
                 type="email"
                 label="Correo electrónico"
+                data-test-id="login-email"
               />
               <TextField
                 type="password"
                 required
                 id="password"
                 label="Contraseña"
+                data-test-id="login-password"
               />
             </Box>
-            <Button type="submit" variant="contained" className="button_login">
+            <Button
+              data-test-id="login-success"
+              type="submit"
+              variant="contained"
+              className="button_login"
+            >
               Ingresar
             </Button>
           </form>

@@ -78,7 +78,7 @@ const DatesClient = () => {
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody data-test-id="user-list-dates">
                 {dates?.map((date, i) => (
                   <StyledTableRow key={i}>
                     <StyledTableCell
@@ -99,7 +99,11 @@ const DatesClient = () => {
                       {date.date_state}
                     </StyledTableCell>
                     <StyledTableCell className="cellOptions" align="center">
-                      <OptionsClient date_id={date._id} index={i} />
+                      <OptionsClient
+                        date_id={date._id}
+                        index={i}
+                        data-test-id={i}
+                      />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

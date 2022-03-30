@@ -158,6 +158,7 @@ export const AskForDate = () => {
                   <p>Fecha del paseo:</p>
 
                   <TextField
+                    data-test-id="date-date"
                     required
                     id="date"
                     label="Seleccione una fecha"
@@ -172,6 +173,7 @@ export const AskForDate = () => {
                 <FormControl className="formAsk">
                   <p>Hora de inicio:</p>
                   <TextField
+                    data-test-id="date-hour"
                     id="time"
                     required
                     label="Seleccione el horario"
@@ -190,6 +192,7 @@ export const AskForDate = () => {
                 <FormControl className="formAsk">
                   <p>Cantidad de horas:</p>
                   <Select
+                    data-test-id="date-time"
                     required
                     displayEmpty
                     inputProps={{ "aria-label": "Without label" }}
@@ -201,7 +204,11 @@ export const AskForDate = () => {
                       <em>Seleccione la cantidad de horas</em>
                     </MenuItem>
                     {horasPaseo.map((horaPaseo, i) => (
-                      <MenuItem key={i} value={horaPaseo}>
+                      <MenuItem
+                        key={i}
+                        value={horaPaseo}
+                        data-test-id={horaPaseo}
+                      >
                         {horaPaseo === 1
                           ? `${horaPaseo} Hora`
                           : `${horaPaseo} Horas`}
@@ -312,6 +319,7 @@ export const AskForDate = () => {
                           key={i}
                           control={
                             <Checkbox
+                              data-test-id={pet.name}
                               onChange={(e) => {
                                 handleSelectDogs(pet, e);
                               }}
@@ -328,6 +336,7 @@ export const AskForDate = () => {
             </div>
             <div className="askForDate__container-fares-confirm">
               <Button
+                data-test-id="reserve-date"
                 variant="contained"
                 className="botonDisabled"
                 style={{

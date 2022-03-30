@@ -273,6 +273,7 @@ const OptionsReport = (reportsId) => {
                     Mensaje al Paseador
                   </Typography>
                   <TextField
+                    data-test-id="message-walker"
                     defaultValue={
                       reportSelected[0] ? reportSelected[0].message_walker : ""
                     }
@@ -303,6 +304,7 @@ const OptionsReport = (reportsId) => {
                       }
                       onClick={handleOpenPaseador}
                       disabled={reportSelected[0]?.comment_state === "Revisado"}
+                      data-test-id="send-walker"
                     >
                       Enviar
                     </Button>
@@ -346,6 +348,7 @@ const OptionsReport = (reportsId) => {
                           <Button
                             style={ModalStyle.boton}
                             onClick={handleSendMessageWalker}
+                            data-test-id="walker-yes"
                           >
                             Aceptar
                           </Button>
@@ -378,6 +381,7 @@ const OptionsReport = (reportsId) => {
                     InputProps={{
                       readOnly: reportSelected[0]?.comment_state === "Revisado",
                     }}
+                    data-test-id="message-user"
                   />
                   <div
                     style={{
@@ -394,6 +398,7 @@ const OptionsReport = (reportsId) => {
                       }
                       onClick={handleOpenCliente}
                       disabled={reportSelected[0]?.comment_state === "Revisado"}
+                      data-test-id="send-user"
                     >
                       Enviar
                     </Button>
@@ -437,6 +442,7 @@ const OptionsReport = (reportsId) => {
                           <Button
                             style={ModalStyle.boton}
                             onClick={handleSendMessageUser}
+                            data-test-id="user-yes"
                           >
                             Aceptar
                           </Button>
@@ -462,6 +468,7 @@ const OptionsReport = (reportsId) => {
                   }
                   onClick={handleFinishReport}
                   disabled={reportSelected[0]?.comment_state === "Revisado"}
+                  data-test-id="report-finished"
                 >
                   Terminar Reporte
                 </Button>

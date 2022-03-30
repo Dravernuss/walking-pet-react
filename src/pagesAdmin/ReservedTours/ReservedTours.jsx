@@ -94,7 +94,7 @@ const ReservedTours = () => {
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody date-test-id="list-dates-admin">
                 {allDatesInformation &&
                   allDatesInformation[0] &&
                   allDatesInformation[0].map((date, i) => (
@@ -125,7 +125,7 @@ const ReservedTours = () => {
                         {date.date_state}/{date.paid ? "Pagado" : "No Pagado"}
                       </StyledTableCell>
                       <StyledTableCell className="cell" align="left">
-                        <OptionsAdmin dateId={date._id} />
+                        <OptionsAdmin dateId={date._id} index={i} />
                       </StyledTableCell>
                     </StyledTableRow>
                   ))}

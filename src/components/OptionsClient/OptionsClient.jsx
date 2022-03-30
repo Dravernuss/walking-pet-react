@@ -251,8 +251,9 @@ const OptionsClient = ({ date_id, index }) => {
         disabled={
           !(!dateInfo?.calificated && dateInfo?.date_state === "Realizado")
         }
+        data-test-id={index + "start-calification"}
       >
-        Calificar
+        {dateInfo?.calificated === true ? "Calificado" : "Calificar"}
       </Button>
       <Modal
         open={openCalificar}
@@ -301,6 +302,7 @@ const OptionsClient = ({ date_id, index }) => {
                   setValue(newValue);
                 }}
                 size="large"
+                data-test-id="rating"
               />
             </div>
             <TextField
@@ -311,6 +313,7 @@ const OptionsClient = ({ date_id, index }) => {
               type="text"
               multiline
               rows={4}
+              data-test-id="comentary"
             />
             <div
               style={{
@@ -322,7 +325,11 @@ const OptionsClient = ({ date_id, index }) => {
               className="parrafos"
             >
               <p className="inconveniente">¿Algún inconveniente?</p>
-              <p className="reportHere" onClick={handleOpenReporte}>
+              <p
+                data-test-id="report-start"
+                className="reportHere"
+                onClick={handleOpenReporte}
+              >
                 Repórtalo aquí
               </p>
             </div>
@@ -342,6 +349,7 @@ const OptionsClient = ({ date_id, index }) => {
                 className="botonDisabled"
                 type="submit"
                 disabled={value === 0}
+                data-test-id="comentary-finished"
               >
                 Enviar
               </Button>
@@ -368,7 +376,11 @@ const OptionsClient = ({ date_id, index }) => {
               Calificación Recibida
             </Typography>
           </div>
-          <div style={ModalStyle.body} className="boxModalBody">
+          <div
+            style={ModalStyle.body}
+            className="boxModalBody"
+            data-test-id="final-calification"
+          >
             <Typography
               variant="h3"
               fontSize="40px"
@@ -383,7 +395,11 @@ const OptionsClient = ({ date_id, index }) => {
                 justifyContent: "center",
               }}
             >
-              <Button style={ModalStyle.boton} onClick={handleEndCalificacion}>
+              <Button
+                style={ModalStyle.boton}
+                onClick={handleEndCalificacion}
+                data-test-id="close-comment"
+              >
                 Cerrar
               </Button>
             </div>
@@ -448,6 +464,7 @@ const OptionsClient = ({ date_id, index }) => {
                   setValue(newValue);
                 }}
                 size="large"
+                data-test-id="rating"
               />
             </div>
             <TextField
@@ -456,6 +473,7 @@ const OptionsClient = ({ date_id, index }) => {
               type="text"
               multiline
               rows={6}
+              data-test-id="report"
             />
             <p
               style={{
@@ -482,6 +500,7 @@ const OptionsClient = ({ date_id, index }) => {
                   }}
                   component="span"
                   onClick={showWidgetPhotoReport}
+                  data-test-id="choose-file"
                 >
                   Choose File
                 </Button>
@@ -502,6 +521,7 @@ const OptionsClient = ({ date_id, index }) => {
                 className="botonDisabled"
                 type="submit"
                 disabled={value === 0}
+                data-test-id="report-end"
               >
                 Enviar
               </Button>
@@ -528,7 +548,11 @@ const OptionsClient = ({ date_id, index }) => {
               Reporte Recibido
             </Typography>
           </div>
-          <div style={ModalStyle.body} className="boxModalBody">
+          <div
+            style={ModalStyle.body}
+            className="boxModalBody"
+            data-test-id="report-received"
+          >
             <Typography
               variant="h3"
               fontSize="25px"
@@ -545,7 +569,11 @@ const OptionsClient = ({ date_id, index }) => {
                 justifyContent: "center",
               }}
             >
-              <Button style={ModalStyle.boton} onClick={handleEndReporte}>
+              <Button
+                style={ModalStyle.boton}
+                onClick={handleEndReporte}
+                data-test-id="report-finished"
+              >
                 Cerrar
               </Button>
             </div>
@@ -572,7 +600,7 @@ const OptionsClient = ({ date_id, index }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={ModalStyle.style} className="boxModal">
+        <Box sx={ModalStyle.style} className="boxModal" data-test-id="details">
           <div style={ModalStyle.header}>
             <Typography
               id="modal-modal-title"
@@ -594,6 +622,7 @@ const OptionsClient = ({ date_id, index }) => {
               <a
                 className="toWalker"
                 onClick={() => navigate(`/walker/${dateInfo.walker_id}`)}
+                data-test-id="walkerprofile"
               >
                 {dateInfo?.walker_name}
               </a>
@@ -647,7 +676,11 @@ const OptionsClient = ({ date_id, index }) => {
                 justifyContent: "center",
               }}
             >
-              <Button style={ModalStyle.boton} onClick={handleCloseDetails}>
+              <Button
+                style={ModalStyle.boton}
+                onClick={handleCloseDetails}
+                data-test-id="volver"
+              >
                 Volver
               </Button>
             </div>
@@ -661,7 +694,9 @@ const OptionsClient = ({ date_id, index }) => {
                   borderTop: "1px solid grey",
                 }}
               >
-                <Button onClick={handleOpenChild}>Cancelar Cita</Button>
+                <Button onClick={handleOpenChild} data-test-id="cancel-date">
+                  Cancelar Cita
+                </Button>
                 <Modal
                   open={openChild}
                   onClose={handleCloseChild}
@@ -702,6 +737,7 @@ const OptionsClient = ({ date_id, index }) => {
                       <Button
                         style={ModalStyle.boton}
                         onClick={handleCancelDate}
+                        data-test-id="cancel-accepted"
                       >
                         Aceptar
                       </Button>

@@ -6,8 +6,11 @@ import Avatar from "@mui/material/Avatar";
 import imagenes from "../../images/imagenes.jsx";
 import "./_NavBar.scss";
 import { Divider } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { textTransform } from "@mui/system";
 
 const NavBarAdmin = () => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -15,6 +18,18 @@ const NavBarAdmin = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const reservedtours = () => {
+    setAnchorEl(null);
+    navigate("/reservedtours");
+  };
+  const walkerregistration = () => {
+    setAnchorEl(null);
+    navigate("/walkerregistration");
+  };
+  const reports = () => {
+    setAnchorEl(null);
+    navigate("/reports");
   };
 
   const endSession = async () => {
@@ -35,6 +50,7 @@ const NavBarAdmin = () => {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
+          data-test-id="open-menu"
         >
           <Avatar />
           <img src={imagenes.img2} alt=" "></img>
@@ -47,42 +63,54 @@ const NavBarAdmin = () => {
           MenuListProps={{
             "aria-labelledby": "basic-button",
           }}
+          data-test-id="list-menu"
         >
-          <MenuItem onClick={handleClose}>
-            <Button href="/reservedtours">
-              <p
-                style={{
-                  color: "black",
-                  fontFamily: "Roboto-Regular",
-                }}
-              >
-                Paseos Reservados
-              </p>
-            </Button>
+          <MenuItem onClick={reservedtours}>
+            <p
+              style={{
+                color: "black",
+                fontFamily: "Roboto-Regular",
+                textTransform: "uppercase",
+              }}
+            >
+              Paseos Reservados
+            </p>
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleClose}>
-            <Button href="/walkerregistration">
-              <p style={{ color: "black", fontFamily: "Roboto-Regular" }}>
-                Registro de Paseadores
-              </p>
-            </Button>
+          <MenuItem onClick={walkerregistration}>
+            <p
+              style={{
+                color: "black",
+                fontFamily: "Roboto-Regular",
+                textTransform: "uppercase",
+              }}
+            >
+              Registro de Paseadores
+            </p>
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleClose}>
-            <Button href="/reports">
-              <p style={{ color: "black", fontFamily: "Roboto-Regular" }}>
-                Reportes y Quejas
-              </p>
-            </Button>
+          <MenuItem onClick={reports}>
+            <p
+              style={{
+                color: "black",
+                fontFamily: "Roboto-Regular",
+                textTransform: "uppercase",
+              }}
+            >
+              Reportes y Quejas
+            </p>
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleClose}>
-            <Button onClick={endSession}>
-              <p style={{ color: "black", fontFamily: "Roboto-Regular" }}>
-                Cerrar Sesión
-              </p>
-            </Button>
+          <MenuItem onClick={endSession}>
+            <p
+              style={{
+                color: "black",
+                fontFamily: "Roboto-Regular",
+                textTransform: "uppercase",
+              }}
+            >
+              Cerrar Sesión
+            </p>
           </MenuItem>
         </Menu>
       </div>

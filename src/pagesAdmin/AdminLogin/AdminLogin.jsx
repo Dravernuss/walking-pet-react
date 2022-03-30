@@ -58,30 +58,20 @@ const AdminLogin = () => {
               noValidate
               autoComplete="off"
             >
-              <TextField required id="email" label="Correo electrónico" />
+              <TextField
+                required
+                id="email"
+                label="Correo electrónico"
+                data-test-id="login-email"
+              />
               <TextField
                 required
                 id="password"
                 type="password"
                 label="Contraseña"
+                data-test-id="login-password"
               />
             </Box>
-            {/* <Button
-              variant="contained"
-              style={{
-                backgroundColor: "#FFFF",
-                color: "#000",
-                width: "35%",
-                padding: "10px 0",
-                margin: "30px auto 0",
-                borderRadius: "15px",
-                fontSize: "15px",
-                fontFamily: "Roboto-bold",
-              }}
-              href="/reservedtours"
-            >
-              Ingresar
-            </Button> */}
             <Button
               type="submit"
               variant="contained"
@@ -95,6 +85,7 @@ const AdminLogin = () => {
                 fontSize: "15px",
                 fontFamily: "Roboto-bold",
               }}
+              data-test-id="login"
             >
               Ingresar
             </Button>

@@ -45,7 +45,11 @@ const NavBar = () => {
 
   return (
     <div className="navbar">
-      <Button variant="text" onClick={() => navigate("/principalpage")}>
+      <Button
+        data-test-id="button-logo"
+        variant="text"
+        onClick={() => navigate("/principalpage")}
+      >
         <img src={imagenes.img1} alt=" " width="200"></img>
       </Button>
       <div className="userInfo">
@@ -60,6 +64,7 @@ const NavBar = () => {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
+          data-test-id="open-menu"
         >
           <Avatar
             src={`${ROLE === "user" ? user?.photo_url : walker?.photo_url}`}
@@ -76,6 +81,7 @@ const NavBar = () => {
           MenuListProps={{
             "aria-labelledby": "basic-button",
           }}
+          data-test-id="list-menu"
         >
           <MenuItem
             style={{ width: "100%", padding: "0" }}
@@ -158,10 +164,9 @@ const NavBar = () => {
           )}
           <MenuItem
             style={{ width: "100%", padding: "0" }}
-            onClick={handleClose}
+            onClick={endSession}
           >
             <Button
-              onClick={endSession}
               style={{
                 color: "black",
                 fontFamily: "Roboto-Regular",

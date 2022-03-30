@@ -32,13 +32,22 @@ const DateInfo = () => {
           <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
             DIRECCIÓN: {dateInfo?.client_address}
           </p>
-          <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+          <p
+            style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+            data-test-id="date"
+          >
             FECHA: {dateInfo?.date_day.split("-").reverse().join("-")}
           </p>
-          <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+          <p
+            style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+            data-test-id="hour"
+          >
             HORARIO: {convertTime24to12(dateInfo?.date_hour)}
           </p>
-          <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
+          <p
+            style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+            data-test-id="time"
+          >
             TIEMPO: {dateInfo?.date_time}{" "}
             {dateInfo?.date_time === 1 ? "Hora" : "Horas"}
           </p>
@@ -48,16 +57,19 @@ const DateInfo = () => {
           <p style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}>
             Mascota(s):
           </p>
-          {dateInfo?.pets_name.map((petName, i) => {
-            return (
-              <p
-                key={i}
-                style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
-              >
-                * {petName}
-              </p>
-            );
-          })}
+          <div data-test-id="pets">
+            {dateInfo?.pets_name.map((petName, i) => {
+              return (
+                <p
+                  key={i}
+                  style={{ margin: "15px 0", fontFamily: "Roboto-Regular" }}
+                >
+                  * {petName}
+                </p>
+              );
+            })}
+          </div>
+
           <p
             style={{
               margin: "5px 0",
@@ -82,6 +94,7 @@ const DateInfo = () => {
         variant="text"
         className="botonRegresar"
         onClick={() => navigate("/principalpage")}
+        data-test-id="return-principalpage"
       >
         Regresar al Menu Principal
       </Button>

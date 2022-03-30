@@ -62,6 +62,7 @@ export const VerifyIdentity = ({ changeView }) => {
             className="buttonChoose"
             component="span"
             onClick={showWidgetPhotoDni}
+            data-test-id="choose-file"
           >
             Choose File
           </Button>
@@ -77,6 +78,7 @@ export const VerifyIdentity = ({ changeView }) => {
             className="nextStep"
             type="submit"
             disabled={photoDniUrl === ""}
+            data-test-id="next"
           >
             Siguiente
           </Button>

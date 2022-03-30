@@ -74,7 +74,7 @@ const PrincipalPage = (props) => {
         Seleccione su distrito
       </h4>
       <Box sx={{ overflow: "auto" }} className="buttonBox">
-        <List>
+        <List data-test-id="district-list">
           <ListItem
             button
             onClick={() => {
@@ -186,12 +186,15 @@ const PrincipalPage = (props) => {
                 <MenuIcon />
               </IconButton>
             </div>
-            <p className="titleWalkers__message">
+            <p
+              className="titleWalkers__message"
+              data-test-id="district-select-title"
+            >
               Encuentra tu paseador ideal en {distritoSelected}
             </p>
           </div>
 
-          <div className="card_container">
+          <div className="card_container" data-test-id="walker-list">
             {paseadoresD?.length > 0 ? (
               paseadoresD?.map((key, i) => {
                 return (

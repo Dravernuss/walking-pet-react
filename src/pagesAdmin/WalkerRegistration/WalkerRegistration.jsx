@@ -102,7 +102,7 @@ const WalkerRegistration = () => {
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody data-test-id="list-walkers-admin">
                 {allWalkersInformation &&
                   allWalkersInformation[0] &&
                   allWalkersInformation[0].map((walker) => (
