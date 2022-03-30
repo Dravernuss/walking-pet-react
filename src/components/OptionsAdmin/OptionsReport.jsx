@@ -250,7 +250,7 @@ const OptionsReport = (reportsId) => {
                         ? reportSelected[0].report_photo_url
                         : ""
                     }
-                    width="200"
+                    style={{ maxWidth: "200px", maxHeight: "200px" }}
                     alt=""
                   />
                 </div>
