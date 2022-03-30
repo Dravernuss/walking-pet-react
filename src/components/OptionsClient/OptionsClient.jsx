@@ -201,7 +201,7 @@ const OptionsClient = ({ date_id, index }) => {
     external: "false",
 
     //Atributos opcionales
-    response: "http://localhost:3000/datesclient",
+    response: "https://walkingpet.netlify.app/datesclient",
 
     //Atributos cliente
     name_billing: dateInfo?.user_name,
