@@ -22,6 +22,8 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded, index }) => {
   const handleOpenDetails = () => setOpenDetails(true);
   const handleCloseDetails = () => setOpenDetails(false);
   const handleOpenAccept = () => setOpenAccept(true);
+  const [openBan, setOpenBan] = useState(false);
+
   const [adminComment, setAdminComment] = useState("");
   useEffect(() => {
     if (usingApi) {
@@ -68,11 +70,73 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded, index }) => {
     }
     setOpenCancel(false);
   };
+
+  const handleOpenBan = (id) => {
+    setOpenBan(true);
+    console.log("abri", openBan);
+  };
+
+  const handleCloseBan = (id) => {
+    if (typeof id === "string" && walker.registration_state === "Aprobado") {
+      setUsingApi({
+        id: id,
+        status: {
+          registration_state: "Bloqueado",
+          avalaible: false,
+          ready: false,
+        },
+      });
+    }
+    if (typeof id === "string" && walker.registration_state === "Bloqueado") {
+      setUsingApi({
+        id: id,
+        status: {
+          registration_state: "Aprobado",
+          avalaible: true,
+        },
+      });
+    }
+    setOpenBan(false);
+  };
+
   return (
     <>
-      <Button onClick={handleOpenDetails} className="botonT">
-        Detalles
-      </Button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
+        <Button onClick={handleOpenDetails} className="botonT">
+          Detalles
+        </Button>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          {walker.avalaible ? (
+            <Button
+              disabled={walker.registration_state === "Rechazado"}
+              style={{ fontSize: "15px" }}
+              onClick={handleOpenBan}
+            >
+              🚫
+            </Button>
+          ) : (
+            <Button
+              disabled={walker.registration_state === "Rechazado"}
+              style={{ fontSize: "15px" }}
+              onClick={handleOpenBan}
+            >
+              🟢
+            </Button>
+          )}
+        </div>
+      </div>
       <Modal
         open={openDetails}
         onClose={handleCloseDetails}
@@ -375,6 +439,51 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded, index }) => {
                 </div>
               </div>
             </div>
+          </div>
+        </Box>
+      </Modal>
+      <Modal
+        open={openBan}
+        onClose={handleCloseBan}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <Box
+          sx={{
+            ...ModalStyle.style,
+            width: 400,
+            backgroundColor: "white",
+            border: "1px solid black",
+            padding: "2rem",
+            borderRadius: "20px",
+            textAlign: "center",
+          }}
+          className="boxModalOpcion"
+        >
+          <p id="child-modal-description" style={{ marginBottom: "10px" }}>
+            {walker.registration_state === "Bloqueado"
+              ? "¿Seguro que desea desbloquear a este paseador?"
+              : "¿Seguro que desea bloquear a este paseador?"}
+          </p>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              columnGap: "10px",
+            }}
+          >
+            <Button style={ModalStyle.boton} onClick={handleCloseBan}>
+              Cancelar
+            </Button>
+            <Button
+              style={ModalStyle.boton}
+              onClick={() => handleCloseBan(walker._id)}
+              data-test-id="accept-end"
+            >
+              {walker.registration_state === "Bloqueado"
+                ? "Desbloquear"
+                : "Bloquear"}
+            </Button>
           </div>
         </Box>
       </Modal>

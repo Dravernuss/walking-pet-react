@@ -97,8 +97,8 @@ const WalkerRegistration = () => {
                   <StyledTableCell className="cell" align="left">
                     Aprobación
                   </StyledTableCell>
-                  <StyledTableCell className="cell" align="left">
-                    Ver Información
+                  <StyledTableCell className="cell" align="center">
+                    Opciones
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -132,7 +132,7 @@ const WalkerRegistration = () => {
                       <StyledTableCell className="cell" align="left">
                         {walker.registration_state}
                       </StyledTableCell>
-                      <StyledTableCell className="cell" align="left">
+                      <StyledTableCell className="cell" align="center">
                         <OptionsRegisterWalker
                           walker={walker}
                           estado={
