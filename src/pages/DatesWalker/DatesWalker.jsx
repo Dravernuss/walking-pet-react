@@ -104,6 +104,7 @@ const DatesWalker = () => {
                         id={date?._id}
                         accepted={date?.accepted}
                         date_state={date?.date_state}
+                        paid={date?.paid}
                       />
                     </StyledTableCell>
                   </StyledTableRow>

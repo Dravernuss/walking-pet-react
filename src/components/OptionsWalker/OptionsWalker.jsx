@@ -22,7 +22,7 @@ import {
 //1 : Aceptado
 //2 : Sin Confirmar
 
-const OptionsWalker = ({ accepted, date_state, index, id }) => {
+const OptionsWalker = ({ accepted, date_state, index, id, paid }) => {
   const navigate = useNavigate();
   const [openDetails, setOpenDetails] = useState(false);
   const [openChild, setOpenChild] = useState(false);
@@ -303,7 +303,7 @@ const OptionsWalker = ({ accepted, date_state, index, id }) => {
                 Volver
               </Button>
             </div>
-            {accepted === 1 && date_state === "Confirmado" ? (
+            {accepted === 1 && date_state === "Confirmado" && paid === false ? (
               <div
                 style={{
                   display: "flex",

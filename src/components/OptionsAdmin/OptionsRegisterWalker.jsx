@@ -120,7 +120,10 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded, index }) => {
         >
           {walker.avalaible ? (
             <Button
-              disabled={walker.registration_state === "Rechazado"}
+              disabled={
+                walker.registration_state === "Rechazado" ||
+                walker.registration_state === "Sin Revisar"
+              }
               style={{ fontSize: "15px" }}
               onClick={handleOpenBan}
             >
@@ -128,7 +131,10 @@ const OptionsRegisterWalker = ({ walker, estado, uploaded, index }) => {
             </Button>
           ) : (
             <Button
-              disabled={walker.registration_state === "Rechazado"}
+              disabled={
+                walker.registration_state === "Rechazado" ||
+                walker.registration_state === "Sin Revisar"
+              }
               style={{ fontSize: "15px" }}
               onClick={handleOpenBan}
             >
